@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Fri Oct 13 23:18:57 SGT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-015f-1651-22c8-000009c63010 
-on database directory memory:C:\Users\faceb\Documents\GitHub\SSAD_911\testdb with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
-Loaded from file:/C:/Users/faceb/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
+Sat Oct 14 10:43:21 SGT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-015f-18c3-b9e8-00000af321a0 
+on database directory memory:C:\Users\boonleng\Documents\GitHub\SSAD_911\testdb with class loader sun.misc.Launcher$AppClassLoader@764c12b6 
+Loaded from file:/C:/Users/boonleng/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_144-b01
-user.dir=C:\Users\faceb\Documents\GitHub\SSAD_911
+java.runtime.version=1.8.0_121-b13
+user.dir=C:\Users\boonleng\Documents\GitHub\SSAD_911
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
