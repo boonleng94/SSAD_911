@@ -13,7 +13,6 @@ public class LoginController {
 	public ModelAndView firstPage() {
 		return new ModelAndView("login");
 	}
-<<<<<<< HEAD:src/main/java/com/javainuse/controllers/LoginController.java
 
 	// generate hash for the password using SHA-256
 	public String hash(String password) throws Exception {
@@ -31,6 +30,3 @@ public class LoginController {
 		return sb.toString();
 	}
 }
-=======
-}
->>>>>>> 155d85f1b86ac0c2334a86117fa9c78f88f1e2e5:src/main/java/app/LoginController.java
