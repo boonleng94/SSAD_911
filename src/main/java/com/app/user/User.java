@@ -33,8 +33,8 @@ public class User {
 		return userID;
 	}
 
-	public void setUserID(int operatorID) {
-		this.userID = operatorID;
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 	
 	public String getUsername() {
@@ -68,8 +68,9 @@ public class User {
 	public void setliaisonOfficer(boolean liaisonOfficer) {
 		this.liaisonOfficer = liaisonOfficer;
 	}
+	
 	@Override
 	public String toString() {
-		return "User [operatorID=" + userID + ", username=" + username + ", password=" + password + ", name=" + name + ", liaisonOfficer=" + liaisonOfficer + "]";
+		return "User [userID=" + userID + ", username=" + username + ", password=" + password + ", name=" + name + ", liaisonOfficer=" + liaisonOfficer + "]";
 	}
 }

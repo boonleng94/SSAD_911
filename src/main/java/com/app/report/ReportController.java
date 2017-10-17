@@ -1,5 +1,4 @@
 package com.app.report;
-/*package com.javainuse.report;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javainuse.operator.*;
+import com.app.user.User;
 
 @RestController
 public class ReportController {
@@ -24,35 +23,35 @@ public class ReportController {
 	}
 
 	@RequestMapping("/operator/{id}/report")
-	public List<Report> getAllOperatorReports(@PathVariable String id){
-		return reportService.getAllOperatorReports(id);
+	public List<Report> getAllOperatorReports(@PathVariable int userID){
+		return reportService.getAllOperatorReports(userID);
 	}
 	
 	//curly braces for inputs
 	@RequestMapping("/report/{id}")
-	public Report getReport(@PathVariable String id){ //need use @pathvariable. convention to keep names same
-		return reportService.getReport(id);
+	public Report getReport(@PathVariable int reportID){ //need use @pathvariable. convention to keep names same
+		return reportService.getReport(reportID);
 	}
 	
-	@RequestMapping("/operator/{operatorId}/report/{id}")
-	public Report getOperatorReport(@PathVariable String id){ //need use @pathvariable. convention to keep names same
-		return reportService.getReport(id);
-	}
+	//@RequestMapping("/operator/{operatorId}/report/{id}")
+	//public Report getOperatorReport(@PathVariable String id){ //need use @pathvariable. convention to keep names same
+	//	return reportService.getReport(id);
+	//}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/operator/{operatorId}/report")
-	public void addReport(@RequestBody Report report, @PathVariable String operatorId){
-		report.setOperator(new Operator(operatorId,"",""));
+	public void addReport(@RequestBody Report report, @PathVariable int userID){
+		report.setOperator(new User(userID,"","", null, false));
 		reportService.addReport(report);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/operator/{operatorId}/report/{id}")
-	public void updateReport(@RequestBody Report report, @PathVariable String operatorId, @PathVariable String id){
-		report.setOperator(new Operator(operatorId,"",""));
-		reportService.updateReport(id, report);
+	public void updateReport(@RequestBody Report report, @PathVariable int userID, @PathVariable int reportID){
+		report.setOperator(new User(userID,"","", null, false));
+		reportService.updateReport(reportID, report);
 	}
 
 	@RequestMapping(method=RequestMethod.DELETE, value="/operator/{operatorId}/report/{id}")
 	public void deleteReport(@PathVariable String id){
 		reportService.deleteReport(id);
 	}
-}*/
+}

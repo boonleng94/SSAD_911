@@ -1,68 +1,188 @@
 package com.app.report;
-/*package report;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-import operator.*;
+import com.app.user.User;
 
 @Entity
+@Table(name = "reports", schema = "911")
 public class Report {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String userId;
-	private String password;
-	private String name;
+	private int reportID;
+	private String date;
+	private String callStartTime;
+	private String calLEndTime;
+	
+	private String callerName;
+	private String callerNRIC;
+	private String callerLocation;
+	
+	private String incidentNature;
+	private String estimatedStartTime;
+	private String estimatedEndTime;
+	private int noOfCasualties;
+	private String incidentLocation;
+	private String additionalNotes;
+	private String incidentCategory;
+	
+	private int operatorID;
+	private String versionID;
+	private String changelog;
 	
 	@ManyToOne
-	private Operator operator;
+	private User operator;
 
 	public Report() {
 		
 	}
-	
-	public Report(String userId, String password, String name, String operatorId) {
-		super();
-		this.userId = userId;
-		this.password = password;
-		this.name = name;
-		this.operator = new Operator(operatorId, "", "");
+
+	public int getReportID() {
+		return reportID;
 	}
 
-	public String getUserId() {
-		return userId;
+	public void setReportID(int reportID) {
+		this.reportID = reportID;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public String getDate() {
+		return date;
 	}
 
-	public String getPassword() {
-		return password;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public String getCallStartTime() {
+		return callStartTime;
 	}
 
-	public String getName() {
-		return name;
+	public void setCallStartTime(String callStartTime) {
+		this.callStartTime = callStartTime;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getCalLEndTime() {
+		return calLEndTime;
 	}
-	
-	public Operator getOperator() {
+
+	public void setCalLEndTime(String calLEndTime) {
+		this.calLEndTime = calLEndTime;
+	}
+
+	public String getCallerName() {
+		return callerName;
+	}
+
+	public void setCallerName(String callerName) {
+		this.callerName = callerName;
+	}
+
+	public String getCallerNRIC() {
+		return callerNRIC;
+	}
+
+	public void setCallerNRIC(String callerNRIC) {
+		this.callerNRIC = callerNRIC;
+	}
+
+	public String getCallerLocation() {
+		return callerLocation;
+	}
+
+	public void setCallerLocation(String callerLocation) {
+		this.callerLocation = callerLocation;
+	}
+
+	public String getIncidentNature() {
+		return incidentNature;
+	}
+
+	public void setIncidentNature(String incidentNature) {
+		this.incidentNature = incidentNature;
+	}
+
+	public String getEstimatedStartTime() {
+		return estimatedStartTime;
+	}
+
+	public void setEstimatedStartTime(String estimatedStartTime) {
+		this.estimatedStartTime = estimatedStartTime;
+	}
+
+	public String getEstimatedEndTime() {
+		return estimatedEndTime;
+	}
+
+	public void setEstimatedEndTime(String estimatedEndTime) {
+		this.estimatedEndTime = estimatedEndTime;
+	}
+
+	public int getNoOfCasualties() {
+		return noOfCasualties;
+	}
+
+	public void setNoOfCasualties(int noOfCasualties) {
+		this.noOfCasualties = noOfCasualties;
+	}
+
+	public String getIncidentLocation() {
+		return incidentLocation;
+	}
+
+	public void setIncidentLocation(String incidentLocation) {
+		this.incidentLocation = incidentLocation;
+	}
+
+	public String getAdditionalNotes() {
+		return additionalNotes;
+	}
+
+	public void setAdditionalNotes(String additionalNotes) {
+		this.additionalNotes = additionalNotes;
+	}
+
+	public String getIncidentCategory() {
+		return incidentCategory;
+	}
+
+	public void setIncidentCategory(String incidentCategory) {
+		this.incidentCategory = incidentCategory;
+	}
+
+	public int getOperatorID() {
+		return operatorID;
+	}
+
+	public void setOperatorID(int operatorID) {
+		this.operatorID = operatorID;
+	}
+
+	public String getVersionID() {
+		return versionID;
+	}
+
+	public void setVersionID(String versionID) {
+		this.versionID = versionID;
+	}
+
+	public String getChangelog() {
+		return changelog;
+	}
+
+	public void setChangelog(String changelog) {
+		this.changelog = changelog;
+	}
+
+	public User getOperator() {
 		return operator;
 	}
 
-	public void setOperator(Operator operator) {
+	public void setOperator(User operator) {
 		this.operator = operator;
 	}
+	
+	
 }
-*/

@@ -1,16 +1,14 @@
 package com.app.cmoapi;
-/*//Client side
+//Client side
 //Specify their URI
 //Create a method like createReport() to POST to their service
-package cmoapi;
-
 import java.net.URI;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.web.client.RestTemplate;
 
-import com.javainuse.report.CallReport;
+import com.app.cmoapi.CallReport;
 
 public class NineOneOneClient {
 
@@ -30,7 +28,6 @@ public class NineOneOneClient {
 			for (LinkedHashMap<String, Object> map : callReportsMap) {
 				if (i++ == callReportsMap.size()) {
 					// end
-					
 					System.out.println("crisisID=" + map.get("crisisID") + "," + " name=" + map.get("name") + ","
 							+ " positionIn911=" + map.get("positionIn911") + "," + " crisisType=" + map.get("crisisType") + ","
 							+ " affectedArea=" + map.get("affectedArea") + "," + " crisisDate=" + map.get("crisisDate") + ","
@@ -87,8 +84,9 @@ public class NineOneOneClient {
 
 	public static void main(String args[]) {
 		createCallReport();
-		getCallReport();
-		listAllCallReports();
-		listLatestCallReport();
+		//the rest of the methods not needed. only call create to send to CMO
+		//getCallReport();
+		//listAllCallReports();
+		//listLatestCallReport();
 	}
-}*/
+}

@@ -1,5 +1,4 @@
 package com.app.report;
-/*package com.javainuse.report;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,25 +18,25 @@ public class ReportService {
 		return reports;
 	}
 	
-	public List<Report> getAllOperatorReports(String operatorId){
+	public List<Report> getAllOperatorReports(int userID){
 		List<Report> reports = new ArrayList<>();
-		reportRepository.findByOperatorUserId(operatorId).forEach(reports::add); //query all reports based on operatorId
+		reportRepository.findByOperatorUserID(userID).forEach(reports::add); //query all reports based on operatorId
 		return reports;
 	}
 
-	public Report getReport(String id){
-		return reportRepository.findOne(id);
+	public Report getReport(int reportID){
+		return reportRepository.findOne(reportID);
 	}
 	
 	public void addReport(Report operator){
 		reportRepository.save(operator);
 	}
 	
-	public void updateReport(String id, Report operator){
+	public void updateReport(int reportID, Report operator){
 		reportRepository.save(operator); //repository smart enough to find tuple with stated id
 	}
 
 	public void deleteReport(String id){
 		reportRepository.delete(id);
 	}
-}*/
+}

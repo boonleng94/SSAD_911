@@ -22,3 +22,4 @@ AUTO_INCREMENT = 1001;
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Operator_1', '0');
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator2', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Operator_2', '0');
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('cmolo1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'CMOLO_1', '1');
+
