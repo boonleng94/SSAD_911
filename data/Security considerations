@@ -1,0 +1,8 @@
+//spring.jpa.hibernate.ddl-auto=none
+
+None - revoke all privileges from the MySQL user connected to the Spring application, 
+
+//GRANT INSERT, SELECT, UPDATE, DELETE ON `911`.* TO '911_operator'@'localhost';
+ONLY SELECT, UPDATE, INSERT, DELETE operations
+
+Gives our application only the privileges necessary to make changes to ONLY the data of the database and not the structure (schema).

@@ -12,7 +12,8 @@ public class Operator {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String userId;
+	private String operatorID;
+	private String username; 
 	private String password;
 	private String name;
 	
@@ -20,9 +21,9 @@ public class Operator {
 		
 	}
 	
-	public Operator(String userId, String password, String name) {
+	public Operator(String operatorID, String password, String name) {
 		super();
-		this.userId = userId;
+		this.operatorID = operatorID;
 		this.password = password;
 		this.name = name;
 	}
@@ -43,12 +44,20 @@ public class Operator {
 		return sb.toString();
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getOperatorID() {
+		return operatorID;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setOperatorID(String operatorID) {
+		this.operatorID = operatorID;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -69,6 +78,6 @@ public class Operator {
 
 	@Override
 	public String toString() {
-		return "Operator [userId=" + userId + ", password=" + password + ", name=" + name + "]";
+		return "Operator [operatorID=" + operatorID + ", username=" + username + ", password=" + password + ", name=" + name + "]";
 	}
 }
