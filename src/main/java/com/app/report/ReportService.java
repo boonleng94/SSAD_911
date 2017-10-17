@@ -1,10 +1,4 @@
-<<<<<<< HEAD:src/main/java/com/app/report/ReportService.java
-<<<<<<< HEAD:src/main/java/com/app/report/ReportService.java
 package com.app.report;
-=======
->>>>>>> 7fe5a0048e227664dc0ee5c8dbe9dfd06a920fc2:src/main/java/com/javainuse/report/ReportService.java
-=======
->>>>>>> 7fe5a0048e227664dc0ee5c8dbe9dfd06a920fc2:src/main/java/com/javainuse/report/ReportService.java
 /*package com.javainuse.report;
 
 import java.util.ArrayList;
@@ -27,7 +21,7 @@ public class ReportService {
 	
 	public List<Report> getAllOperatorReports(String operatorId){
 		List<Report> reports = new ArrayList<>();
-		reportRepository.findByOperatorId(operatorId).forEach(reports::add); //query all reports based on operatorId
+		reportRepository.findByOperatorUserId(operatorId).forEach(reports::add); //query all reports based on operatorId
 		return reports;
 	}
 
