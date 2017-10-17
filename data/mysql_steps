@@ -1,6 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 1. Install MySQL Workbench and MySQLServer
 =======
+=======
+>>>>>>> 7fe5a0048e227664dc0ee5c8dbe9dfd06a920fc2
 1. Install MySQL Workbench and MySQLServer https://dev.mysql.com/downloads/file/?id=473605
 2. Run MySQL Workbench, create new connection: 911_connection (127.0.0.1:3306) using root account (dedicated connection for 911)
 3. Run the below queries in MySQL cmdline/workbench 
@@ -17,6 +20,9 @@ ALTER TABLE `911`.`operator` AUTO_INCREMENT = 1001 ;
 CREATE USER '911_operator'@'localhost' IDENTIFIED BY 'password';
 GRANT INSERT, SELECT, UPDATE, DELETE ON `911`.* TO '911_operator'@'localhost';
 INSERT INTO `911`.`operator` (`username`, `password`, `name`) VALUES ('testoperator', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Test_Operator');
+<<<<<<< HEAD
+>>>>>>> 7fe5a0048e227664dc0ee5c8dbe9dfd06a920fc2
+=======
 >>>>>>> 7fe5a0048e227664dc0ee5c8dbe9dfd06a920fc2
 
 2. Run MySQL Workbench, create new connection: 911_connection (127.0.0.1:3306)(dedicated connection for 911)
