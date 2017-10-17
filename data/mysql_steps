@@ -1,8 +1,11 @@
-1. Install MySQL Workbench and MySQLServer https://dev.mysql.com/downloads/file/?id=412167
+<<<<<<< HEAD
+1. Install MySQL Workbench and MySQLServer
+=======
+1. Install MySQL Workbench and MySQLServer https://dev.mysql.com/downloads/file/?id=473605
 2. Run MySQL Workbench, create new connection: 911_connection (127.0.0.1:3306) using root account (dedicated connection for 911)
 3. Run the below queries in MySQL cmdline/workbench 
 CREATE SCHEMA `911`;
-CREATE TABLE `911`.`operators` (
+CREATE TABLE `911`.`operator` (
   `operatorID` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(256) NOT NULL,
@@ -10,32 +13,31 @@ CREATE TABLE `911`.`operators` (
   PRIMARY KEY (`operatorID`),
   UNIQUE INDEX `operatorID_UNIQUE` (`operatorID` ASC),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC));
-ALTER TABLE `911`.`operators` AUTO_INCREMENT = 1001 ;
-CREATE USER '911_operator'@'localhost';
+ALTER TABLE `911`.`operator` AUTO_INCREMENT = 1001 ;
+CREATE USER '911_operator'@'localhost' IDENTIFIED BY 'password';
 GRANT INSERT, SELECT, UPDATE, DELETE ON `911`.* TO '911_operator'@'localhost';
-INSERT INTO `911`.`operators` (`username`, `password`, `name`) VALUES ('testoperator', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Test_Operator');
+INSERT INTO `911`.`operator` (`username`, `password`, `name`) VALUES ('testoperator', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Test_Operator');
+>>>>>>> 7fe5a0048e227664dc0ee5c8dbe9dfd06a920fc2
 
-//new database named 911
+2. Run MySQL Workbench, create new connection: 911_connection (127.0.0.1:3306)(dedicated connection for 911)
+
+3. Run the below queries in MySQL workbench to make dedicated 911_user account
+CREATE USER '911_user'@'localhost' IDENTIFIED BY 'password';
+GRANT INSERT, SELECT, UPDATE, DELETE ON `911`.* TO '911_user'@'localhost';
+
+4. Run the below queries to make a 911 schema and tables
 CREATE SCHEMA `911`;
-
-//new table named operators
-CREATE TABLE `911`.`operators` (
-  `operatorID` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE `911`.`users` (
+  `userID` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(256) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`operatorID`),
-  UNIQUE INDEX `operatorID_UNIQUE` (`operatorID` ASC),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC));
-
-//operatorID starts from 1001
-ALTER TABLE `911`.`operators` AUTO_INCREMENT = 1001 ;
-
-//new user named 911_operator
-CREATE USER '911_operator'@'localhost';
-
-//911_operator can only do CRUD on 911 schema (non-admin)
-GRANT INSERT, SELECT, UPDATE, DELETE ON `911`.* TO '911_operator'@'localhost';
-
-//dummy operator insertion password=P@ssw0rd (hashed)
-INSERT INTO `911`.`operators` (`username`, `password`, `name`) VALUES ('testoperator', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Test_Operator');
+  `liaison_officer` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`userID`),
+  UNIQUE INDEX `userID_UNIQUE` (`userID` ASC),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
+ENGINE = InnoDB
+AUTO_INCREMENT = 1001;
+INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Operator_1', '0');
+INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator2', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Operator_2', '0');
+INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('cmolo1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'CMOLO_1', '1');

@@ -1,4 +1,8 @@
-package com.javainuse.report;
+<<<<<<< HEAD:src/main/java/com/app/report/ReportController.java
+package com.app.report;
+=======
+>>>>>>> 7fe5a0048e227664dc0ee5c8dbe9dfd06a920fc2:src/main/java/com/javainuse/report/ReportController.java
+/*package com.javainuse.report;
 
 import java.util.List;
 
@@ -54,4 +58,4 @@ public class ReportController {
 	public void deleteReport(@PathVariable String id){
 		reportService.deleteReport(id);
 	}
-}
+}*/

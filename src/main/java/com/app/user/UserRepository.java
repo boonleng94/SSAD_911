@@ -1,13 +1,13 @@
-package com.javainuse.operator;
+package com.app.user;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface OperatorRepository extends CrudRepository<Operator, String>{
+public interface UserRepository extends CrudRepository<User, String>{
 	 
 	@Modifying
-	@Query("delete from Operator where username = :username")
-	void delete(@Param("username") int id);
+	@Query("delete from User where username = :username")
+	void delete(@Param("username") String username);
 }

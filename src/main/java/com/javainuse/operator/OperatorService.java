@@ -1,5 +1,6 @@
 package com.javainuse.operator;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,19 +24,42 @@ public class OperatorService {
 		return operators;
 	}
 
-	public Operator getOperator(String id){
-		return operatorRepository.findOne(id);
+	public Operator getOperator(int id){
+		List<Operator> operators = getAllOperators();
+		Operator returnedOperator;
+		for(int i = 0; i < operators.size(); i++){
+			if(operators.get(i).getOperatorID() == id){
+				return operators.get(i);
+			}
+		}
+		return null;
 	}
 	
 	public void addOperator(Operator operator){
 		operatorRepository.save(operator);
 	}
 	
-	public void updateOperator(String id, Operator operator){
+	public void updateOperator(int id, Operator operator){
 		operatorRepository.save(operator); //repository smart enough to find tuple with stated id
 	}
 
-	public void deleteOperator(String id){
+	public void deleteOperator(int id){
 		operatorRepository.delete(id);
+	}
+	
+	// generate hash for the password using SHA-256
+	public String hash(String password) throws Exception {
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		md.update(password.getBytes());
+
+		byte byteData[] = md.digest();
+
+		// convert the byte to hex format method 1
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < byteData.length; i++) {
+			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+		}
+
+		return sb.toString();
 	}
 }
