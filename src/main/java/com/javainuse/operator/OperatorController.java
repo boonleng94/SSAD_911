@@ -22,7 +22,7 @@ public class OperatorController {
 	
 	//curly braces for inputs
 	@RequestMapping("/operator/{id}")
-	public Operator getOperator(@PathVariable String id){ //need use @pathvariable. convention to keep names same
+	public Operator getOperator(@PathVariable int id){ //need use @pathvariable. convention to keep names same
 		return operatorService.getOperator(id);
 	}
 	
@@ -32,12 +32,12 @@ public class OperatorController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/operator/{id}")
-	public void updateOperator(@RequestBody Operator operator, @PathVariable String id){
+	public void updateOperator(@RequestBody Operator operator, @PathVariable int id){
 		operatorService.updateOperator(id, operator);
 	}
 
 	@RequestMapping(method=RequestMethod.DELETE, value="/operator/{id}")
-	public void deleteOperator(@PathVariable String id){
+	public void deleteOperator(@PathVariable int id){
 		operatorService.deleteOperator(id);
 	}
 }

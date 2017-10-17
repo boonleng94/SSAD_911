@@ -24,19 +24,26 @@ public class OperatorService {
 		return operators;
 	}
 
-	public Operator getOperator(String id){
-		return operatorRepository.findOne(id);
+	public Operator getOperator(int id){
+		List<Operator> operators = getAllOperators();
+		Operator returnedOperator;
+		for(int i = 0; i < operators.size(); i++){
+			if(operators.get(i).getOperatorID() == id){
+				return operators.get(i);
+			}
+		}
+		return null;
 	}
 	
 	public void addOperator(Operator operator){
 		operatorRepository.save(operator);
 	}
 	
-	public void updateOperator(String id, Operator operator){
+	public void updateOperator(int id, Operator operator){
 		operatorRepository.save(operator); //repository smart enough to find tuple with stated id
 	}
 
-	public void deleteOperator(String id){
+	public void deleteOperator(int id){
 		operatorRepository.delete(id);
 	}
 	

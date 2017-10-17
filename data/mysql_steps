@@ -2,7 +2,7 @@
 2. Run MySQL Workbench, create new connection: 911_connection (127.0.0.1:3306) using root account (dedicated connection for 911)
 3. Run the below queries in MySQL cmdline/workbench 
 CREATE SCHEMA `911`;
-CREATE TABLE `911`.`operators` (
+CREATE TABLE `911`.`operator` (
   `operatorID` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(256) NOT NULL,
