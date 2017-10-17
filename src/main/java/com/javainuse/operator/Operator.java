@@ -11,8 +11,8 @@ import javax.persistence.Id;
 public class Operator {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String operatorID;
+	//@GeneratedValue(strategy=GenerationType.AUTO)
+	private int operatorID;
 	private String username; 
 	private String password;
 	private String name;
@@ -21,7 +21,7 @@ public class Operator {
 		
 	}
 	
-	public Operator(String operatorID, String password, String name) {
+	public Operator(int operatorID, String password, String name) {
 		super();
 		this.operatorID = operatorID;
 		this.password = password;
@@ -44,11 +44,11 @@ public class Operator {
 		return sb.toString();
 	}
 
-	public String getOperatorID() {
+	public int getOperatorID() {
 		return operatorID;
 	}
 
-	public void setOperatorID(String operatorID) {
+	public void setOperatorID(int operatorID) {
 		this.operatorID = operatorID;
 	}
 	

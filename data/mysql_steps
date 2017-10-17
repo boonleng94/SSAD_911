@@ -10,10 +10,10 @@ CREATE TABLE `911`.`operators` (
   PRIMARY KEY (`operatorID`),
   UNIQUE INDEX `operatorID_UNIQUE` (`operatorID` ASC),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC));
-ALTER TABLE `911`.`operators` AUTO_INCREMENT = 1001 ;
+ALTER TABLE `911`.`operator` AUTO_INCREMENT = 1001 ;
 CREATE USER '911_operator'@'localhost' IDENTIFIED BY 'password';
 GRANT INSERT, SELECT, UPDATE, DELETE ON `911`.* TO '911_operator'@'localhost';
-INSERT INTO `911`.`operators` (`username`, `password`, `name`) VALUES ('testoperator', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Test_Operator');
+INSERT INTO `911`.`operator` (`username`, `password`, `name`) VALUES ('testoperator', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Test_Operator');
 
 //new database named 911
 CREATE SCHEMA `911`;
