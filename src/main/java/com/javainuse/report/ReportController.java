@@ -1,4 +1,4 @@
-package com.javainuse.report;
+/*package com.javainuse.report;
 
 import java.util.List;
 
@@ -54,4 +54,4 @@ public class ReportController {
 	public void deleteReport(@PathVariable String id){
 		reportService.deleteReport(id);
 	}
-}
+}*/

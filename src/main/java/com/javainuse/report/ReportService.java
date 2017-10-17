@@ -1,4 +1,4 @@
-package com.javainuse.report;
+/*package com.javainuse.report;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class ReportService {
 	
 	public List<Report> getAllOperatorReports(String operatorId){
 		List<Report> reports = new ArrayList<>();
-		reportRepository.findByOperatorUserId(operatorId).forEach(reports::add); //query all reports based on operatorId
+		reportRepository.findByOperatorId(operatorId).forEach(reports::add); //query all reports based on operatorId
 		return reports;
 	}
 
@@ -39,4 +39,4 @@ public class ReportService {
 	public void deleteReport(String id){
 		reportRepository.delete(id);
 	}
-}
+}*/
