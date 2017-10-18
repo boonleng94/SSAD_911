@@ -1,5 +1,8 @@
 package com.app.report;
 
+import java.sql.Date;
+import java.sql.Time;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -13,28 +16,28 @@ public class Report {
 
 	@Id
 	private int reportID;
-	private String date;
-	private String callStartTime;
-	private String calLEndTime;
+	private Date date;
+	private Time callStartTime;
+	private Time callEndTime;
 	
 	private String callerName;
-	private String callerNRIC;
+	private String callerNric;
 	private String callerLocation;
 	
 	private String incidentNature;
-	private String estimatedStartTime;
-	private String estimatedEndTime;
+	private Time estimatedStartTime;
+	private Time estimatedEndTime;
 	private int noOfCasualties;
 	private String incidentLocation;
 	private String additionalNotes;
 	private String incidentCategory;
 	
-	private int operatorID;
-	private String versionID;
+	private int operatorUserID;
+	private String versionId;
 	private String changelog;
 	
-	@ManyToOne
-	private User operator;
+//	@ManyToOne
+//	private User operator;
 
 	public Report() {
 		
@@ -48,28 +51,28 @@ public class Report {
 		this.reportID = reportID;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
-	public String getCallStartTime() {
+	public Time getCallStartTime() {
 		return callStartTime;
 	}
 
-	public void setCallStartTime(String callStartTime) {
+	public void setCallStartTime(Time callStartTime) {
 		this.callStartTime = callStartTime;
 	}
 
-	public String getCalLEndTime() {
-		return calLEndTime;
+	public Time getCallEndTime() {
+		return callEndTime;
 	}
 
-	public void setCalLEndTime(String calLEndTime) {
-		this.calLEndTime = calLEndTime;
+	public void setCallEndTime(Time calLEndTime) {
+		this.callEndTime = calLEndTime;
 	}
 
 	public String getCallerName() {
@@ -80,12 +83,12 @@ public class Report {
 		this.callerName = callerName;
 	}
 
-	public String getCallerNRIC() {
-		return callerNRIC;
+	public String getCallerNric() {
+		return callerNric;
 	}
 
-	public void setCallerNRIC(String callerNRIC) {
-		this.callerNRIC = callerNRIC;
+	public void setCallerNric(String callerNRIC) {
+		this.callerNric = callerNRIC;
 	}
 
 	public String getCallerLocation() {
@@ -104,19 +107,19 @@ public class Report {
 		this.incidentNature = incidentNature;
 	}
 
-	public String getEstimatedStartTime() {
+	public Time getEstimatedStartTime() {
 		return estimatedStartTime;
 	}
 
-	public void setEstimatedStartTime(String estimatedStartTime) {
+	public void setEstimatedStartTime(Time estimatedStartTime) {
 		this.estimatedStartTime = estimatedStartTime;
 	}
 
-	public String getEstimatedEndTime() {
+	public Time getEstimatedEndTime() {
 		return estimatedEndTime;
 	}
 
-	public void setEstimatedEndTime(String estimatedEndTime) {
+	public void setEstimatedEndTime(Time estimatedEndTime) {
 		this.estimatedEndTime = estimatedEndTime;
 	}
 
@@ -152,20 +155,20 @@ public class Report {
 		this.incidentCategory = incidentCategory;
 	}
 
-	public int getOperatorID() {
-		return operatorID;
+	public int getoperatorUserID() {
+		return operatorUserID;
 	}
 
-	public void setOperatorID(int operatorID) {
-		this.operatorID = operatorID;
+	public void setoperatorUserID(int operatorUserID) {
+		this.operatorUserID = operatorUserID;
 	}
 
-	public String getVersionID() {
-		return versionID;
+	public String getVersionId() {
+		return versionId;
 	}
 
-	public void setVersionID(String versionID) {
-		this.versionID = versionID;
+	public void setVersionId(String versionId) {
+		this.versionId = versionId;
 	}
 
 	public String getChangelog() {
@@ -176,13 +179,11 @@ public class Report {
 		this.changelog = changelog;
 	}
 
-	public User getOperator() {
-		return operator;
-	}
-
-	public void setOperator(User operator) {
-		this.operator = operator;
-	}
-	
-	
+//	public User getOperator() {
+//		return operator;
+//	}
+//
+//	public void setOperator(User operator) {
+//		this.operator = operator;
+//	}
 }

@@ -23,3 +23,29 @@ INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VA
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator2', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Operator_2', '0');
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('cmolo1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'CMOLO_1', '1');
 
+
+//ZEHAO
+5. Run this to make reports table:
+CREATE TABLE `reports` (
+  `reportID` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `call_start_time` time NOT NULL,
+  `call_end_time` time NOT NULL,
+  `caller_name` varchar(256) DEFAULT NULL,
+  `caller_Nric` varchar(9) DEFAULT NULL,
+  `caller_location` varchar(256) DEFAULT NULL,
+  `incident_nature` varchar(45) DEFAULT NULL,
+  `estimated_start_time` time DEFAULT NULL,
+  `estimated_end_time` time DEFAULT NULL,
+  `no_of_casualties` int(11) DEFAULT NULL,
+  `incident_location` varchar(256) DEFAULT NULL,
+  `additional_notes` varchar(512) DEFAULT NULL,
+  `incident_category` varchar(45) DEFAULT NULL,
+  `operator_userID` int(11) NOT NULL,
+  `version_id` varchar(256) DEFAULT NULL,
+  `changelog` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`reportID`),
+  UNIQUE KEY `reportID_UNIQUE` (`reportID`),
+  KEY `operatorID_idx` (`operator_userID`),
+  CONSTRAINT `operatorID` FOREIGN KEY (`operator_userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

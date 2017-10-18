@@ -16,20 +16,19 @@
 
 	<body>
 		<div class="login-form">
-			<h1>Crisis Management System</h1>
+			<h1>operatorhome ${userID}</h1>
 			<form action="/login" method="POST">
-			<div class="form-group ">
-				<input type="text" class="form-control" placeholder="Username" id="username" name="username">
-				<i class="fa fa-user"></i>
-			</div>
-			<div class="form-group log-status">
-				<input type="password" class="form-control" placeholder="Password" id="password" name="password">
-				<i class="fa fa-lock"></i>
-			</div>
-			<span class="alertlogin">Invalid Credentials</span>
-			<button type="submit" class="log-btn" >Log in</button>
+				<div class="form-group ">
+					<input type="text" class="form-control" placeholder="Username" id="username" name="username">
+					<i class="fa fa-user"></i>
+				</div>
+				<div class="form-group log-status">
+					<input type="password" class="form-control" placeholder="Password" id="password" name="password">
+					<i class="fa fa-lock"></i>
+				</div>
+				<span class="alertlogin">Invalid Credentials</span>
+				<button type="submit" class="log-btn" >Log in</button>
 			</form>
 		</div>
-
 	</body>
 </html>
