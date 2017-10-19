@@ -1,20 +1,24 @@
 package com.app.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-<<<<<<< HEAD:src/main/java/com/app/controller/LoginPageController.java
-<<<<<<< HEAD:src/main/java/com/app/controller/LoginPageController.java
 import com.app.user.User;
 import com.app.user.UserController;
+import com.app.user.UserService;
 
 @Controller
 @SessionAttributes("userID")
 public class LoginPageController {
 
-//	@Autowired
-//	UserService userService = new UserService();
+	@Autowired
+	UserService userService = new UserService();
 	
 	@RequestMapping("/")
 	public ModelAndView firstPage(ModelMap model) {
@@ -43,7 +47,9 @@ public class LoginPageController {
 		
 		try {
 			String hashedPassword = HashController.hash(password);
-			user =  UserController.getUserByUsernameAndHashedPassword(username, hashedPassword);
+//			user =  UserController.getUserByUsernameAndHashedPassword(username, hashedPassword);
+			user = userService.getUserByLogin(username, hashedPassword);
+			//user = userService.getUser(1001);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,21 +65,5 @@ public class LoginPageController {
 //			else
 				return new ModelAndView("redirect:/home");
 		}
-=======
-@Controller
-public class LoginController {
-
-	@RequestMapping("/login")
-	public ModelAndView firstPage() {
-		return new ModelAndView("login");
->>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done:src/main/java/com/app/controller/LoginController.java
-=======
-@Controller
-public class LoginController {
-
-	@RequestMapping("/login")
-	public ModelAndView firstPage() {
-		return new ModelAndView("login");
->>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done:src/main/java/com/app/controller/LoginController.java
 	}
 }

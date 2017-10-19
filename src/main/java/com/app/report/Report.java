@@ -15,22 +15,10 @@ public class Report {
 	private int reportID;
 	private String date;
 	private String callStartTime;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 	private String callEndTime;
-=======
-	private String calLEndTime;
->>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done
-=======
-	private String calLEndTime;
->>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done
-=======
-	private String calLEndTime;
->>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done
 	
 	private String callerName;
-	private String callerNRIC;
+	private String callerNric;
 	private String callerLocation;
 	
 	private String incidentNature;
@@ -41,12 +29,12 @@ public class Report {
 	private String additionalNotes;
 	private String incidentCategory;
 	
-	private int operatorID;
-	private String versionID;
+	private int operatorUserID;
+	private String versionId;
 	private String changelog;
 	
-	@ManyToOne
-	private User operator;
+//	@ManyToOne
+//	private User operator;
 
 	public Report() {
 		
@@ -76,39 +64,12 @@ public class Report {
 		this.callStartTime = callStartTime;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 	public String getCallEndTime() {
 		return callEndTime;
 	}
 
 	public void setCallEndTime(String calLEndTime) {
 		this.callEndTime = calLEndTime;
-=======
-	public String getCalLEndTime() {
-		return calLEndTime;
-	}
-
-	public void setCalLEndTime(String calLEndTime) {
-		this.calLEndTime = calLEndTime;
->>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done
-=======
-	public String getCalLEndTime() {
-		return calLEndTime;
-	}
-
-	public void setCalLEndTime(String calLEndTime) {
-		this.calLEndTime = calLEndTime;
->>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done
-=======
-	public String getCalLEndTime() {
-		return calLEndTime;
-	}
-
-	public void setCalLEndTime(String calLEndTime) {
-		this.calLEndTime = calLEndTime;
->>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done
 	}
 
 	public String getCallerName() {
@@ -119,12 +80,12 @@ public class Report {
 		this.callerName = callerName;
 	}
 
-	public String getCallerNRIC() {
-		return callerNRIC;
+	public String getCallerNric() {
+		return callerNric;
 	}
 
-	public void setCallerNRIC(String callerNRIC) {
-		this.callerNRIC = callerNRIC;
+	public void setCallerNric(String callerNRIC) {
+		this.callerNric = callerNRIC;
 	}
 
 	public String getCallerLocation() {
@@ -191,20 +152,20 @@ public class Report {
 		this.incidentCategory = incidentCategory;
 	}
 
-	public int getOperatorID() {
-		return operatorID;
+	public int getoperatorUserID() {
+		return operatorUserID;
 	}
 
-	public void setOperatorID(int operatorID) {
-		this.operatorID = operatorID;
+	public void setoperatorUserID(int operatorUserID) {
+		this.operatorUserID = operatorUserID;
 	}
 
-	public String getVersionID() {
-		return versionID;
+	public String getVersionId() {
+		return versionId;
 	}
 
-	public void setVersionID(String versionID) {
-		this.versionID = versionID;
+	public void setVersionId(String versionId) {
+		this.versionId = versionId;
 	}
 
 	public String getChangelog() {
@@ -215,13 +176,11 @@ public class Report {
 		this.changelog = changelog;
 	}
 
-	public User getOperator() {
-		return operator;
-	}
-
-	public void setOperator(User operator) {
-		this.operator = operator;
-	}
-	
-	
+//	public User getOperator() {
+//		return operator;
+//	}
+//
+//	public void setOperator(User operator) {
+//		this.operator = operator;
+//	}
 }
