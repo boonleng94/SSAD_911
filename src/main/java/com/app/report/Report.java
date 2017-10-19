@@ -1,8 +1,5 @@
 package com.app.report;
 
-import java.sql.Date;
-import java.sql.Time;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -16,17 +13,17 @@ public class Report {
 
 	@Id
 	private int reportID;
-	private Date date;
-	private Time callStartTime;
-	private Time callEndTime;
+	private String date;
+	private String callStartTime;
+	private String callEndTime;
 	
 	private String callerName;
 	private String callerNric;
 	private String callerLocation;
 	
 	private String incidentNature;
-	private Time estimatedStartTime;
-	private Time estimatedEndTime;
+	private String estimatedStartTime;
+	private String estimatedEndTime;
 	private int noOfCasualties;
 	private String incidentLocation;
 	private String additionalNotes;
@@ -51,27 +48,27 @@ public class Report {
 		this.reportID = reportID;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public Time getCallStartTime() {
+	public String getCallStartTime() {
 		return callStartTime;
 	}
 
-	public void setCallStartTime(Time callStartTime) {
+	public void setCallStartTime(String callStartTime) {
 		this.callStartTime = callStartTime;
 	}
 
-	public Time getCallEndTime() {
+	public String getCallEndTime() {
 		return callEndTime;
 	}
 
-	public void setCallEndTime(Time calLEndTime) {
+	public void setCallEndTime(String calLEndTime) {
 		this.callEndTime = calLEndTime;
 	}
 
@@ -107,19 +104,19 @@ public class Report {
 		this.incidentNature = incidentNature;
 	}
 
-	public Time getEstimatedStartTime() {
+	public String getEstimatedStartTime() {
 		return estimatedStartTime;
 	}
 
-	public void setEstimatedStartTime(Time estimatedStartTime) {
+	public void setEstimatedStartTime(String estimatedStartTime) {
 		this.estimatedStartTime = estimatedStartTime;
 	}
 
-	public Time getEstimatedEndTime() {
+	public String getEstimatedEndTime() {
 		return estimatedEndTime;
 	}
 
-	public void setEstimatedEndTime(Time estimatedEndTime) {
+	public void setEstimatedEndTime(String estimatedEndTime) {
 		this.estimatedEndTime = estimatedEndTime;
 	}
 

@@ -26,17 +26,17 @@ INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VA
 
 //ZEHAO
 5. Run this to make reports table:
-CREATE TABLE `reports` (
+CREATE TABLE `911`.`reports` (
   `reportID` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `call_start_time` time NOT NULL,
-  `call_end_time` time NOT NULL,
+  `date` VARCHAR(45) NOT NULL,
+  `call_start_time` VARCHAR(45) NOT NULL,
+  `call_end_time` VARCHAR(45) NOT NULL,
   `caller_name` varchar(256) DEFAULT NULL,
   `caller_Nric` varchar(9) DEFAULT NULL,
   `caller_location` varchar(256) DEFAULT NULL,
   `incident_nature` varchar(45) DEFAULT NULL,
-  `estimated_start_time` time DEFAULT NULL,
-  `estimated_end_time` time DEFAULT NULL,
+  `estimated_start_time` VARCHAR(45) DEFAULT NULL,
+  `estimated_end_time` VARCHAR(45) DEFAULT NULL,
   `no_of_casualties` int(11) DEFAULT NULL,
   `incident_location` varchar(256) DEFAULT NULL,
   `additional_notes` varchar(512) DEFAULT NULL,
@@ -49,3 +49,16 @@ CREATE TABLE `reports` (
   KEY `operatorID_idx` (`operator_userID`),
   CONSTRAINT `operatorID` FOREIGN KEY (`operator_userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+6. Run this table to make nrics table for verifications: 
+CREATE TABLE `911`.`nrics` (
+  `nric` VARCHAR(9) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `address` VARCHAR(45) NOT NULL,
+  `dob` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`nric`),
+  UNIQUE INDEX `nric_UNIQUE` (`nric` ASC));
+INSERT INTO `911`.`nrics` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A', 'Tan Koon Long', 'S123456 #05-05', '121292');
+INSERT INTO `911`.`nrics` (`nric`, `name`, `address`, `dob`) VALUES ('S9111342B', 'Jasvin Singh', 'S581561 #08-10', '050991');
+INSERT INTO `911`.`nrics` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A', 'Rachel Siew Kuan Er', 'S984125 #16-16', '250582');
+
