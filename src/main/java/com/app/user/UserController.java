@@ -45,7 +45,7 @@ public class UserController {
 	//STATIC METHODS
 	//check if user is LO or not via userID
 	public static boolean validateUserAccess(int userInSession){
-		return userService.getUser(userInSession).getliaisonOfficer();
+		return userService.getUser(userInSession).getLiaisonOfficer();
 	}
 
 	//return User via username and hashedpassword

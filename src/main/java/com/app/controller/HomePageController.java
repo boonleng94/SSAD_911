@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.app.user.UserController;
-import com.sun.security.auth.module.LdapLoginModule;
-
-import javafx.scene.control.Alert;
 
 //ANNOTATE CONTROLLER TO LET MAVEN TREAT IT LIKE A CONTROLLER
 @Controller
