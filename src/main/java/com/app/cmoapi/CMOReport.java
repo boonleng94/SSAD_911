@@ -1,6 +1,6 @@
 package com.app.cmoapi;
 
-public class CallReport {
+public class CMOReport {
 	private long crisisID;				//id
 	private String name;				//sender name
 	private String positionIn911;		//Liaison Officer
@@ -11,11 +11,11 @@ public class CallReport {
 	private String crisisDetails;		//Detailed information on the crisis
 
 	
-    public CallReport(){
+    public CMOReport(){
         crisisID=0;
     }
 
-	public CallReport(long crisisID, String name, String positionIn911, String crisisType, String affectedArea,
+	public CMOReport(long crisisID, String name, String positionIn911, String crisisType, String affectedArea,
 			String crisisDate, String estimatedStartTime, String crisisDetails) {
 		this.crisisID = crisisID;
 		this.name = name;
@@ -107,7 +107,7 @@ public class CallReport {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        CallReport other = (CallReport) obj;
+        CMOReport other = (CMOReport) obj;
         if (crisisID != other.crisisID)
             return false;
         return true;

@@ -2,18 +2,16 @@ package com.app.cmoapi;
 //Client side
 //Specify their URI
 //Create a method like createReport() to POST to their service
-import java.net.URI;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 import org.springframework.web.client.RestTemplate;
 
-import com.app.cmoapi.CallReport;
+import com.app.cmoapi.CMOReport;
 
-public class NineOneOneClient {
+public class CMOReportSender {
 
 	public static final String REST_SERVICE_URI = "http://localhost:8080/911toCMO";
 
+	/*
 	// GET
 	@SuppressWarnings({ "unchecked"})
 	private static void listLatestCallReport() {
@@ -68,25 +66,25 @@ public class NineOneOneClient {
 		System.out.println("Testing get Call Report API----------");
 
 		RestTemplate restTemplate = new RestTemplate();
-		CallReport callReport = restTemplate.getForObject(REST_SERVICE_URI + "/callReport/1", CallReport.class);
+		CMOReport callReport = restTemplate.getForObject(REST_SERVICE_URI + "/callReport/1", CMOReport.class);
 		System.out.println(callReport);
 	}
+	 */
 
 	// POST 
 	private static void createCallReport() {
-	System.out.println("Testing create Call Report API----------");
-
-	RestTemplate restTemplate = new RestTemplate();
-	CallReport callReport = new CallReport(10, "Test10", "911 Liaison Officer" , "Type10", "Area10", "Date10", "Time10", "Detail10");
-	URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/callReport/", callReport,
-			CallReport.class);System.out.println("Location : "+uri.toASCIIString());
+		CMOReport callReport = new CMOReport(10, "Test10", "911 Liaison Officer", "Type10", "Area10", "Date10", "Time10", "Detail10");
+		RestTemplate restTemplate = new RestTemplate();
+		
+		restTemplate.postForLocation(REST_SERVICE_URI + "/callReport/", callReport, CMOReport.class);
 	}
 
 	public static void main(String args[]) {
 		createCallReport();
-		//the rest of the methods not needed. only call create to send to CMO
-		//getCallReport();
-		//listAllCallReports();
-		//listLatestCallReport();
+		
+		/*the rest of the methods not needed. only call create to send to CMO
+		getCallReport();
+		listAllCallReports();
+		listLatestCallReport();*/
 	}
 }

@@ -12,4 +12,6 @@ public interface UserRepository extends CrudRepository<User, String>{
 	public void delete(@Param("username") String username);
 	
 	public User findFirstByUsernameAndPassword(String username, String password);
+
+	public User findFirstByUserID(int userID);
 }

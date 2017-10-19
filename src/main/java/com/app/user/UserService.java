@@ -43,4 +43,8 @@ public class UserService {
 	public User getUserByLogin(String username, String password){
 		return userRepository.findFirstByUsernameAndPassword(username, password);
 	}
+	
+	public User getUserByUserID(int userID){
+		return userRepository.findFirstByUserID(userID);
+	}
 }

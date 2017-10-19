@@ -1,35 +1,46 @@
+<!-- index.html -->
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Crisis Management System | Login</title>
+<html lang="en">
 
-		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-		<script  src="static/js/login.js"></script>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
 
-		<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
-		<link href="static/css/bootstrap.min.css" rel="stylesheet">
-		<link href="static/css/style.css" rel="stylesheet">
-		<link href="static/css/login.css" rel="stylesheet" >
+    <!-- Custom styles for this template -->
+    <link href="static/css/login.css" rel="stylesheet"> 
 
-	</head>
+     <!-- jQuery -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
-	<body>
-		<div class="login-form">
-			<h1>Crisis Management System</h1>
-			<form action="/login" method="POST">
-			<div class="form-group ">
-				<input type="text" class="form-control" placeholder="Username" id="username" name="username">
-				<i class="fa fa-user"></i>
-			</div>
-			<div class="form-group log-status">
-				<input type="password" class="form-control" placeholder="Password" id="password" name="password">
-				<i class="fa fa-lock"></i>
-			</div>
-			<span class="alertlogin">Invalid Credentials</span>
-			<button type="submit" class="log-btn" >Log in</button>
-			</form>
-		</div>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="static/js/bootstrap.min.js"></script>  
 
-	</body>
+    <!-- Custom JavaScript -->
+    <script src="static/js/main.js"></script>
+    
+    <title>911 Call Center</title>
+</head>
+
+<body>
+    <div class="container">
+      <form class="form-signin" action="/login" method="POST">
+        <h1 class="form-signin-heading text-center">Operator Login</h1>
+        <br />
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+        <br />
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+        <label><input type="checkbox" value="remember-me"> Remember me</label>
+        </div>       
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      </form>
+    </div>
+</body>
+
 </html>

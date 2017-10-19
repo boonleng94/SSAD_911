@@ -49,7 +49,7 @@ CREATE TABLE `911`.`reports` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 AUTO_INCREMENT = 1001;
 
-6. Run this table to make registry table for verifications: 
+6. Run this to make registry table for verifications: 
 CREATE TABLE `911`.`registry` (
   `nric` VARCHAR(9) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
@@ -57,6 +57,6 @@ CREATE TABLE `911`.`registry` (
   `dob` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`nric`),
   UNIQUE INDEX `nric_UNIQUE` (`nric` ASC));
-INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A', 'Tan Koon Long', 'S123456 #05-05', '121292');
+INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S9265146C', 'Tan Koon Long', 'S123456 #05-05', '121292');
 INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S9111342B', 'Jasvin Singh', 'S581561 #08-10', '050991');
-INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S9295126A', 'Rachel Siew Kuan Er', 'S984125 #16-16', '250582');
+INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A', 'Rachel Siew Kuan Er', 'S984125 #16-16', '250582');

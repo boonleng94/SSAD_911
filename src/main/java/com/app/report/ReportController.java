@@ -3,10 +3,6 @@ package com.app.report;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,38 +11,31 @@ public class ReportController {
 	@Autowired
 	private ReportService reportService;
 	
-	@RequestMapping("/report")
 	public List<Report> getAllReports(){
 		return reportService.getAllReports();
 	}
 
 	//get all reports from 1 operator via ID
-	@RequestMapping("/operator/{userID}/report")
-	public List<Report> getAllOperatorReports(@PathVariable int userID){
+	public List<Report> getAllOperatorReports(int userID){
 		return reportService.getAllOperatorReports(userID);
 	}
 	
-	//curly braces for inputs
-	@RequestMapping("/report/{id}")
-	public Report getReport(@PathVariable int reportID){ //need use @pathvariable. convention to keep names same
+	public Report getReport(int reportID){
 		return reportService.getReport(reportID);
 	}
 	
 	//method to save report
-	@RequestMapping(method=RequestMethod.POST, value="/operator/{operatorId}/report")
-	public void addReport(@RequestBody Report report, @PathVariable int userID){
+	public void addReport(Report report, int userID){
 		report.setoperatorUserID(userID);
 		reportService.addReport(report);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, value="/operator/{userID}/report/{reportID}")
-	public void updateReport(@RequestBody Report report, @PathVariable int userID, @PathVariable int reportID){
+	public void updateReport(Report report, int userID, int reportID){
 		report.setoperatorUserID(userID);
 		reportService.updateReport(reportID, report);
 	}
 
-	@RequestMapping(method=RequestMethod.DELETE, value="/operator/{operatorId}/report/{reportID}")
-	public void deleteReport(@PathVariable String reportID){
+	public void deleteReport(String reportID){
 		reportService.deleteReport(reportID);
 	}
 }
