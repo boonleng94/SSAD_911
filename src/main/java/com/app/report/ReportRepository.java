@@ -11,13 +11,11 @@ public interface ReportRepository extends CrudRepository<Report, String>{
 	
 	//creating a custom .findBy function that finds reports based on operatorId // SYNTAX IS: findByEntityAttribute
 	public List<Report> findByOperatorUserID(int userID);
-
-	@Modifying
-	@Query("from Report where reportID = :reportID")
+	
 	public Report findOne(int reportID);
 		
 	@Modifying
-	@Query("delete from Report where reportID = :reportID")
+	@Query("delete from Reports where reportID = :reportID")
 	void delete(@Param("reportID") int reportID);
 
 }
