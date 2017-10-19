@@ -23,11 +23,9 @@ INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VA
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator2', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Operator_2', '0');
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('cmolo1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'CMOLO_1', '1');
 
-
-//ZEHAO
 5. Run this to make reports table:
 CREATE TABLE `911`.`reports` (
-  `reportID` int(11) NOT NULL,
+  `reportID` int(11) NOT NULL AUTO_INCREMENT,
   `date` VARCHAR(45) NOT NULL,
   `call_start_time` VARCHAR(45) NOT NULL,
   `call_end_time` VARCHAR(45) NOT NULL,
@@ -48,9 +46,10 @@ CREATE TABLE `911`.`reports` (
   UNIQUE KEY `reportID_UNIQUE` (`reportID`),
   KEY `operatorID_idx` (`operator_userID`),
   CONSTRAINT `operatorID` FOREIGN KEY (`operator_userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+AUTO_INCREMENT = 1001;
 
-6. Run this table to make nrics table for verifications: 
+6. Run this table to make registry table for verifications: 
 CREATE TABLE `911`.`registry` (
   `nric` VARCHAR(9) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
@@ -58,7 +57,6 @@ CREATE TABLE `911`.`registry` (
   `dob` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`nric`),
   UNIQUE INDEX `nric_UNIQUE` (`nric` ASC));
-INSERT INTO `911`.`nrics` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A', 'Tan Koon Long', 'S123456 #05-05', '121292');
-INSERT INTO `911`.`nrics` (`nric`, `name`, `address`, `dob`) VALUES ('S9111342B', 'Jasvin Singh', 'S581561 #08-10', '050991');
-INSERT INTO `911`.`nrics` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A', 'Rachel Siew Kuan Er', 'S984125 #16-16', '250582');
-
+INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A', 'Tan Koon Long', 'S123456 #05-05', '121292');
+INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S9111342B', 'Jasvin Singh', 'S581561 #08-10', '050991');
+INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S9295126A', 'Rachel Siew Kuan Er', 'S984125 #16-16', '250582');

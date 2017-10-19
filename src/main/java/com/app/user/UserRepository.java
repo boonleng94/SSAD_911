@@ -11,9 +11,5 @@ public interface UserRepository extends CrudRepository<User, String>{
 	@Query("delete from User where username = :username")
 	public void delete(@Param("username") String username);
 	
-	//@Query(value = "SELECT * FROM user WHERE username = /"?0/" AND password = ?1", nativeQuery=true)
-//	@Query("select from User where username = :username and password = :password")
-//	public User getUserByLogin(@Param("username") String username, @Param("password") String password);
-	
 	public User findFirstByUsernameAndPassword(String username, String password);
 }

@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.app.user.User;
 import com.app.user.UserController;
-import com.app.user.UserService;
 
 @Controller
 @SessionAttributes("userID")
@@ -31,13 +30,9 @@ public class LoginPageController {
 		//if session has user
 		if(userInSession == 0)
 			return new ModelAndView("login");
-		//else if its not a LO
-		//else if(userController.validateUserAccess(userInSession))
+		//else go to homepage
 		else
 			return new ModelAndView("redirect:/home");
-		//else if its a LO
-		//else
-		//	return new ModelAndView("redirect:/operatorHome");
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
@@ -53,17 +48,13 @@ public class LoginPageController {
 		}
 		
 		if(user == null){
-			//NEED DYNAMIC WARNING / ERROR PAGE
 			model.put("errorMessage", "Please log in!");
 			model.put("errorRedirect", "/");
-			return new ModelAndView("redirect:/warning");
+			return new ModelAndView("/warning");
 		}
 		else{
 			model.put("userID", user.getUserID());
-//			if(user.getLiaisonOfficer())
-				return new ModelAndView("redirect:/home");
-//			else
-//				return new ModelAndView("redirect:/operatorHome");
+			return new ModelAndView("redirect:/home");
 		}
 	}
 }

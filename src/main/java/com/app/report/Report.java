@@ -32,9 +32,6 @@ public class Report {
 	private int operatorUserID;
 	private String versionId;
 	private String changelog;
-	
-//	@ManyToOne
-//	private User operator;
 
 	public Report() {
 		
@@ -175,12 +172,4 @@ public class Report {
 	public void setChangelog(String changelog) {
 		this.changelog = changelog;
 	}
-
-//	public User getOperator() {
-//		return operator;
-//	}
-//
-//	public void setOperator(User operator) {
-//		this.operator = operator;
-//	}
 }
