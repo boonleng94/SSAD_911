@@ -21,7 +21,6 @@ public class LoginController {
 	
 	@RequestMapping("/")
 	public ModelAndView firstPage(ModelMap model) {
-		
 		int userInSession = 0;
 		
 		if(model.get("userID") != null) {
@@ -32,7 +31,7 @@ public class LoginController {
 		if(userInSession == 0)
 			return new ModelAndView("login");
 		//else if its not a LO
-		else if(userService.getUser(userInSession).getliaisonOfficer())
+		else if(userService.getUser(userInSession).getLiaisonOfficer())
 			return new ModelAndView("redirect:/officerHome");
 		//else if its a LO
 		else
@@ -41,7 +40,6 @@ public class LoginController {
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public ModelAndView handleLoginRequest(@RequestParam String username, @RequestParam String password, ModelMap model) {
-
 		String hashedPassword;
 		User user = null;
 		
@@ -49,7 +47,6 @@ public class LoginController {
 			hashedPassword = HashController.hash(password);
 			user =  userService.getUserByLogin(username, hashedPassword);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -58,7 +55,7 @@ public class LoginController {
 		}
 		else{
 			model.put("userID", user.getUserID());
-			if(user.getliaisonOfficer())
+			if(user.getLiaisonOfficer())
 				return new ModelAndView("redirect:/officerHome");
 			else
 				return new ModelAndView("redirect:/operatorHome");
