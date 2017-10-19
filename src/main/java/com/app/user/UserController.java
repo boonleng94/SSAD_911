@@ -14,7 +14,7 @@ public class UserController {
 	
 	//ALWAYS RMB TO AUTOWIRE SERVICES THAT CONNECTS TO REPOSITORIES!!!!
 	@Autowired
-	private UserService userService;
+	private static UserService userService;
 	
 	@RequestMapping("/user")
 	public List<User> returnAllUser(){
@@ -41,4 +41,16 @@ public class UserController {
 	public void deleteUser(@PathVariable String id){
 		userService.deleteUser(id);
 	}
+	
+	//STATIC METHODS
+	//check if user is LO or not via userID
+	public static boolean validateUserAccess(int userInSession){
+		return userService.getUser(userInSession).getliaisonOfficer();
+	}
+
+	//return User via username and hashedpassword
+	public static User getUserByUsernameAndHashedPassword(String username, String hashedPassword){
+		return userService.getUserByLogin(username, hashedPassword);
+	}
+	
 }
