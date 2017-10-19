@@ -25,6 +25,7 @@ INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VA
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 //ZEHAO
 5. Run this to make reports table:
@@ -64,6 +65,8 @@ INSERT INTO `911`.`nrics` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A'
 INSERT INTO `911`.`nrics` (`nric`, `name`, `address`, `dob`) VALUES ('S9111342B', 'Jasvin Singh', 'S581561 #08-10', '050991');
 INSERT INTO `911`.`nrics` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A', 'Rachel Siew Kuan Er', 'S984125 #16-16', '250582');
 
+=======
+>>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done
 =======
 >>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done
 =======

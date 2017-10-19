@@ -17,7 +17,11 @@ public class Report {
 	private String callStartTime;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	private String callEndTime;
+=======
+	private String calLEndTime;
+>>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done
 =======
 	private String calLEndTime;
 >>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done
@@ -74,12 +78,21 @@ public class Report {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public String getCallEndTime() {
 		return callEndTime;
 	}
 
 	public void setCallEndTime(String calLEndTime) {
 		this.callEndTime = calLEndTime;
+=======
+	public String getCalLEndTime() {
+		return calLEndTime;
+	}
+
+	public void setCalLEndTime(String calLEndTime) {
+		this.calLEndTime = calLEndTime;
+>>>>>>> parent of 9c66c41... login functions mostly done + report basic functionalities done
 =======
 	public String getCalLEndTime() {
 		return calLEndTime;

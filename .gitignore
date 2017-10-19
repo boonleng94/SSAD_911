@@ -23,3 +23,10 @@ nbdist/
 .nb-gradle/
 src/main/java/com/app/controller/LoginPageController.java
 src/main/java/com/app/controller/LoginPageController.java
+src/main/webapp/WEB-INF/jsp/operatorhome.jsp
+src/main/java/com/app/controller/LoginController.java
+data/mysql_steps
+src/main/webapp/WEB-INF/jsp/operatorhome.jsp
+src/main/java/com/app/report/Report.java
+src/main/java/com/app/controller/LoginController.java
+data/mysql_steps
