@@ -61,7 +61,7 @@ public class User {
 		this.name = name;
 	}
 
-	public boolean getLiaisonOfficer() {
+	public boolean getliaisonOfficer() {
 		return liaisonOfficer;
 	}
 
