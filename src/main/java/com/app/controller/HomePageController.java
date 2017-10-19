@@ -3,14 +3,10 @@ package com.app.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.app.user.UserController;
-import com.sun.security.auth.module.LdapLoginModule;
-
-import javafx.scene.control.Alert;
 
 //ANNOTATE CONTROLLER TO LET MAVEN TREAT IT LIKE A CONTROLLER
 @Controller

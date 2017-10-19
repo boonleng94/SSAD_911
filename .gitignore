@@ -21,3 +21,5 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+src/main/java/com/app/controller/LoginPageController.java
+src/main/java/com/app/controller/LoginPageController.java
