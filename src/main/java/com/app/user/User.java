@@ -65,7 +65,7 @@ public class User {
 		return liaisonOfficer;
 	}
 
-	public void setliaisonOfficer(boolean liaisonOfficer) {
+	public void setLiaisonOfficer(boolean liaisonOfficer) {
 		this.liaisonOfficer = liaisonOfficer;
 	}
 	

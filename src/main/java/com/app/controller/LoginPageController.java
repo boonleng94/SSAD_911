@@ -18,11 +18,10 @@ import com.app.user.UserService;
 public class LoginPageController {
 
 	@Autowired
-	UserService userService = new UserService();
+	UserController userController = new UserController();
 	
 	@RequestMapping("/")
 	public ModelAndView firstPage(ModelMap model) {
-		
 		int userInSession = 0;
 		
 		if(model.get("userID") != null) {
@@ -33,37 +32,38 @@ public class LoginPageController {
 		if(userInSession == 0)
 			return new ModelAndView("login");
 		//else if its not a LO
-		else if(UserController.validateUserAccess(userInSession))
-			return new ModelAndView("redirect:/officerHome");
-		//else if its a LO
+		//else if(userController.validateUserAccess(userInSession))
 		else
-			return new ModelAndView("redirect:/operatorHome");
+			return new ModelAndView("redirect:/home");
+		//else if its a LO
+		//else
+		//	return new ModelAndView("redirect:/operatorHome");
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public ModelAndView handleLoginRequest(@RequestParam String username, @RequestParam String password, ModelMap model) {
-
+		String hashedPassword;
 		User user = null;
 		
 		try {
-			String hashedPassword = HashController.hash(password);
-//			user =  UserController.getUserByUsernameAndHashedPassword(username, hashedPassword);
-			user = userService.getUserByLogin(username, hashedPassword);
-			//user = userService.getUser(1001);
+			hashedPassword = HashController.hash(password);
+			user =  userController.getUserByUsernameAndHashedPassword(username, hashedPassword);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		if(user == null){
-			return new ModelAndView("redirect:/");
+			//NEED DYNAMIC WARNING / ERROR PAGE
+			model.put("errorMessage", "Please log in!");
+			model.put("errorRedirect", "/");
+			return new ModelAndView("redirect:/warning");
 		}
 		else{
 			model.put("userID", user.getUserID());
-//			if(user.getliaisonOfficer())
-//				return new ModelAndView("redirect:/officerHome");
-//			else
+//			if(user.getLiaisonOfficer())
 				return new ModelAndView("redirect:/home");
+//			else
+//				return new ModelAndView("redirect:/operatorHome");
 		}
 	}
 }

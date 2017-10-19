@@ -3,7 +3,6 @@ package com.app.user;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,7 @@ public class UserController {
 	
 	//ALWAYS RMB TO AUTOWIRE SERVICES THAT CONNECTS TO REPOSITORIES!!!!
 	@Autowired
-	private static UserService userService;
+	private UserService userService;
 	
 	@RequestMapping("/user")
 	public List<User> returnAllUser(){
@@ -45,13 +44,12 @@ public class UserController {
 	
 	//STATIC METHODS
 	//check if user is LO or not via userID
-	public static boolean validateUserAccess(int userInSession){
+	public boolean validateUserAccess(int userInSession){
 		return userService.getUser(userInSession).getLiaisonOfficer();
 	}
-
+	 
 	//return User via username and hashedpassword
-	public static User getUserByUsernameAndHashedPassword(String username, String hashedPassword){
+	public User getUserByUsernameAndHashedPassword(String username, String hashedPassword){
 		return userService.getUserByLogin(username, hashedPassword);
-//		return userService.getUser(1001);
 	}
 }

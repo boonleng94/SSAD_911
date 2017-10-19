@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
 	@Autowired
-	private static UserRepository userRepository;
+	private UserRepository userRepository;
 	
 	public List<User> getAllUsers(){
 		List<User> users = new ArrayList<>();
@@ -41,7 +41,6 @@ public class UserService {
 	}
 	
 	public User getUserByLogin(String username, String password){
-		//return userRepository.findFirstByUsernameAndPassword(username, password);
 		return userRepository.findFirstByUsernameAndPassword(username, password);
 	}
 }

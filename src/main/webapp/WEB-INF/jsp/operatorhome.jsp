@@ -17,7 +17,7 @@
 	<body>
 		<div class="login-form">
 			<h1>operatorhome ${userID}</h1>
-			<form action="/operatorHome" method="POST">
+			<form action="/login" method="POST">
 				<div class="form-group ">
 					<input type="text" class="form-control" placeholder="Username" id="username" name="username">
 					<i class="fa fa-user"></i>
