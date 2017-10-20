@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,13 +52,14 @@ public class WebpageController implements ErrorController{
 	@RequestMapping("/home")
 	public ModelAndView homePage(ModelMap model) {
 		if(model.get("userID") == null || (int) model.get("userID") == 0) {
-			model.put("message", "You are not logged in!");
+			model.put("message", "Please log in first.");
 			model.put("redirect", "/");
 			return new ModelAndView("/message");
 		} 
 		
 		else {
-			if (userController.validateUserAccess((int) model.get("userID")))
+			model.put("name", user.getName());
+			if (userController.isLiaisonOfficer((int) model.get("userID")))
 				return new ModelAndView("officerhome");
 			else
 				return new ModelAndView("operatorhome");
@@ -69,18 +71,18 @@ public class WebpageController implements ErrorController{
 	 * Mapping for new report page
 	 * Used by operator for creating a new emergency report upon receiving 911 call
 	 * And inserting into the database
-	 * ONLY Operator can create report????????????????????????? (supposed to or what?)
+	 * ZH: ONLY OPERATOR CAN CREATE REPORT
 	 */
 	@RequestMapping("/newReport")
 	public ModelAndView reportPage(ModelMap model) {
 		if(model.get("userID") == null || (int) model.get("userID") == 0) {
-			model.put("message", "You are not logged in!");
+			model.put("message", "Please log in first.");
 			model.put("redirect", "/");
 			return new ModelAndView("/message");
 		}
 		
-		if (userController.validateUserAccess((int) model.get("userID"))) {
-			model.put("message", "You are not authorized!");
+		if (userController.isLiaisonOfficer((int) model.get("userID"))) {
+			model.put("message", "You are not authorized. Only operators are allowed to create new reports.");
 			model.put("redirect", "/home");
 			return new ModelAndView("/message");
 		}
@@ -90,15 +92,31 @@ public class WebpageController implements ErrorController{
 			return new ModelAndView("newreport");
 		}
 	}
-	
+
 	/**
-	 * Mapping for message page
-	 * Used for displaying dynamic messages to the user
-	 * Examples: login warnings, logout message
+	 * Mapping for displaying selected report page
+	 * Used for displaying selected reports to edit / authenticate
+	 * NEED KNOW HOW DOES UI INTERACTS (SEND REPORT ID OR WHOLE REPORT?)
 	 */
-	@RequestMapping("/message")
-	public ModelAndView messagePage(ModelMap model) {
-		return new ModelAndView("message");
+	@RequestMapping(value = "/editReport", method=RequestMethod.POST)
+	public ModelAndView editReport(@RequestBody User user, ModelMap model) {
+		if(model.get("userID") == null || (int) model.get("userID") == 0) {
+			model.put("message", "Please log in first.");
+			model.put("redirect", "/");
+			return new ModelAndView("/message");
+		}
+		
+		if (userController.isLiaisonOfficer((int) model.get("userID"))) {
+			model.put("message", "You are not authorized. Only operators are allowed to create new reports.");
+			model.put("redirect", "/home");
+			return new ModelAndView("/message");
+		}
+		else {
+			user =  userController.getUserByUserID((int) model.get("userID"));
+			model.put("name", user.getName());
+			//STORE POST DATA INTO MODEL
+			return new ModelAndView("newreport");
+		}
 	}
 	
 	/**
@@ -106,7 +124,7 @@ public class WebpageController implements ErrorController{
 	 */
 	@RequestMapping(ERRORPATH)
 	public ModelAndView errorPage(ModelMap model) {
-		model.put("message", "This page is not available!");
+		model.put("message", "This page is not available.");
 		model.put("redirect", "/");
 		return new ModelAndView("message");
 	}
@@ -134,7 +152,7 @@ public class WebpageController implements ErrorController{
 		}
 		
 		if(user == null){
-			model.put("message", "Invalid Credentials!");
+			model.put("message", "Invalid Credentials. Please re-login again.");
 			model.put("redirect", "/");
 			return new ModelAndView("/message");
 		}

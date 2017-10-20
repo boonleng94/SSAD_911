@@ -19,16 +19,17 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="static/js/bootstrap.min.js"></script>  
 
-    <!-- Custom JavaScript -->
+    <!-- Custom JavaScript <--></-->
     <script src="static/js/main.js"></script>
     
     <title>911 Call Center</title>
 </head>
 
 <body>
-    <div class="container">
-      <form class="form-signin" action="/login" method="POST">
-        <h1 class="form-signin-heading text-center">Operator Login</h1>
+	<div class="container" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto; height: fit-content;">
+		<h1 class="form-signin-heading text-center" style="font-size: 40px;">Crisis Management System</h1>
+		<h2 class="form-signin-heading text-center" >911 Call Center</h2>
+      <form class="form-signin" action="/login" method="POST" style="padding-top:0;">
         <br />
         <label for="inputUsername" class="sr-only">Username</label>
         <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>

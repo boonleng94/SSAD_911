@@ -20,6 +20,7 @@ public class Report {
 	private String callerName;
 	private String callerNric;
 	private String callerLocation;
+	private boolean callerVerified;
 	
 	private String incidentNature;
 	private String estimatedStartTime;
@@ -30,8 +31,8 @@ public class Report {
 	private String incidentCategory;
 	
 	private int operatorUserID;
-	private String versionId;
-	private String changelog;
+	private String status;
+	private int officerUserID;
 
 	public Report() {
 		
@@ -91,6 +92,14 @@ public class Report {
 
 	public void setCallerLocation(String callerLocation) {
 		this.callerLocation = callerLocation;
+	}
+
+	public boolean getCallerVerified() {
+		return callerVerified;
+	}
+
+	public void setCallerVerified(boolean callerVerified) {
+		this.callerVerified = callerVerified;
 	}
 
 	public String getIncidentNature() {
@@ -157,19 +166,19 @@ public class Report {
 		this.operatorUserID = operatorUserID;
 	}
 
-	public String getVersionId() {
-		return versionId;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setVersionId(String versionId) {
-		this.versionId = versionId;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public String getChangelog() {
-		return changelog;
+	public int getOfficerUserID() {
+		return officerUserID;
 	}
 
-	public void setChangelog(String changelog) {
-		this.changelog = changelog;
+	public void setOfficerUserID(int officerUserID) {
+		this.officerUserID = officerUserID;
 	}
 }

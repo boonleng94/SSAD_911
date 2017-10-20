@@ -1295,6 +1295,7 @@ p {
   font-size: 16px;
   font-weight: 300;
   line-height: 1.4;
+  font-weight: bold;
 }
 @media (min-width: 768px) {
   .lead {
@@ -2510,7 +2511,6 @@ label {
   display: inline-block;
   max-width: 100%;
   margin-bottom: 5px;
-  font-weight: bold;
 }
 input[type="search"] {
   -webkit-box-sizing: border-box;
@@ -2980,7 +2980,7 @@ select[multiple].input-lg {
   .form-horizontal .control-label {
     padding-top: 7px;
     margin-bottom: 0;
-    text-align: right;
+    text-align: left;
   }
 }
 .form-horizontal .has-feedback .form-control-feedback {
@@ -6798,3 +6798,4 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+left

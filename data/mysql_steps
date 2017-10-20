@@ -6,7 +6,7 @@
 CREATE USER '911_user'@'localhost' IDENTIFIED BY 'password';
 GRANT INSERT, SELECT, UPDATE, DELETE ON `911`.* TO '911_user'@'localhost';
 
-4. Run the below queries to make a 911 schema and tables
+4. Run to make SCHEMA 911 and USER table
 CREATE SCHEMA `911`;
 CREATE TABLE `911`.`users` (
   `userID` INT NOT NULL AUTO_INCREMENT,
@@ -23,33 +23,55 @@ INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VA
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator2', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Operator_2', '0');
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('cmolo1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'CMOLO_1', '1');
 
-5. Run this to make reports table:
-CREATE TABLE `911`.`reports` (
+5. Run this to make REPORTS table and add dummy report:
+CREATE TABLE `reports` (
   `reportID` int(11) NOT NULL AUTO_INCREMENT,
-  `date` VARCHAR(45) NOT NULL,
-  `call_start_time` VARCHAR(45) NOT NULL,
-  `call_end_time` VARCHAR(45) NOT NULL,
+  `date` varchar(45) NOT NULL,
+  `call_start_time` varchar(45) NOT NULL,
+  `call_end_time` varchar(45) NOT NULL,
   `caller_name` varchar(256) DEFAULT NULL,
   `caller_Nric` varchar(9) DEFAULT NULL,
   `caller_location` varchar(256) DEFAULT NULL,
+  `caller_verified` tinyint(1) NOT NULL,
   `incident_nature` varchar(45) DEFAULT NULL,
-  `estimated_start_time` VARCHAR(45) DEFAULT NULL,
-  `estimated_end_time` VARCHAR(45) DEFAULT NULL,
+  `estimated_start_time` varchar(45) DEFAULT NULL,
+  `estimated_end_time` varchar(45) DEFAULT NULL,
   `no_of_casualties` int(11) DEFAULT NULL,
   `incident_location` varchar(256) DEFAULT NULL,
   `additional_notes` varchar(512) DEFAULT NULL,
   `incident_category` varchar(45) DEFAULT NULL,
   `operator_userID` int(11) NOT NULL,
-  `version_id` varchar(256) DEFAULT NULL,
-  `changelog` varchar(256) DEFAULT NULL,
+  `status` varchar(256) NOT NULL,
+  `officer_userID` int(11) DEFAULT NULL,
   PRIMARY KEY (`reportID`),
   UNIQUE KEY `reportID_UNIQUE` (`reportID`),
   KEY `operatorID_idx` (`operator_userID`),
   CONSTRAINT `operatorID` FOREIGN KEY (`operator_userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
-AUTO_INCREMENT = 1001;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-6. Run this to make registry table for verifications: 
+INSERT INTO `911`.`reports`
+(`reportID`,
+`date`,
+`call_start_time`,
+`call_end_time`,
+`caller_name`,
+`caller_Nric`,
+`caller_location`,
+`caller_verified`,
+`incident_nature`,
+`estimated_start_time`,
+`estimated_end_time`,
+`no_of_casualties`,
+`incident_location`,
+`additional_notes`,
+`incident_category`,
+`operator_userID`,
+`status`,
+`officer_userID`)
+VALUES
+('1', '05042016', '111111', '112222', 'Ivan Heng', 'S9449973I', 'Hougang', '0', 'Terrorism', '100000', '101010', '100', 'Hougang', 'Scary people', 'CAT1', '1001', 'Drafted', NULL);
+
+6. Run this to make REGISTRY table for verifications: 
 CREATE TABLE `911`.`registry` (
   `nric` VARCHAR(9) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
