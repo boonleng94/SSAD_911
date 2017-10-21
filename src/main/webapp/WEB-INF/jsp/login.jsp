@@ -33,7 +33,6 @@
         <br />
         <label for="inputUsername" class="sr-only">Username</label>
         <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-        <br />
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
         <div class="checkbox">

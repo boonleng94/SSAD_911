@@ -73,7 +73,7 @@ public class WebpageController implements ErrorController{
 	 * And inserting into the database
 	 * ZH: ONLY OPERATOR CAN CREATE REPORT
 	 */
-	@RequestMapping("/newReport")
+	@RequestMapping(value="/newReport")
 	public ModelAndView reportPage(ModelMap model) {
 		if(model.get("userID") == null || (int) model.get("userID") == 0) {
 			model.put("message", "Please log in first.");
@@ -92,13 +92,13 @@ public class WebpageController implements ErrorController{
 			return new ModelAndView("newreport");
 		}
 	}
-
+	
 	/**
 	 * Mapping for displaying selected report page
 	 * Used for displaying selected reports to edit / authenticate
 	 * NEED KNOW HOW DOES UI INTERACTS (SEND REPORT ID OR WHOLE REPORT?)
 	 */
-	@RequestMapping(value = "/editReport", method=RequestMethod.POST)
+	@RequestMapping(value ="/editReport", method=RequestMethod.POST)
 	public ModelAndView editReport(@RequestBody User user, ModelMap model) {
 		if(model.get("userID") == null || (int) model.get("userID") == 0) {
 			model.put("message", "Please log in first.");
@@ -119,6 +119,32 @@ public class WebpageController implements ErrorController{
 		}
 	}
 	
+	/**
+	 * Mapping for new report page
+	 * Used by operator for creating a new emergency report upon receiving 911 call
+	 * And inserting into the database
+	 * ZH: ONLY OPERATOR CAN CREATE REPORT
+	 */
+	@RequestMapping(value="/livefeed")
+	public ModelAndView liveFeedPage(ModelMap model) {
+		if(model.get("userID") == null || (int) model.get("userID") == 0) {
+			model.put("message", "Please log in first.");
+			model.put("redirect", "/");
+			return new ModelAndView("/message");
+		}
+		
+		if (userController.isLiaisonOfficer((int) model.get("userID"))) {
+			user =  userController.getUserByUserID((int) model.get("userID"));
+			model.put("name", user.getName());
+			return new ModelAndView("livefeed");
+		}
+		else {
+			model.put("message", "You are not authorized to view this page.");
+			model.put("redirect", "/home");
+			return new ModelAndView("/message");
+		}
+	}
+
 	/**
 	 * Mapping for error page
 	 */

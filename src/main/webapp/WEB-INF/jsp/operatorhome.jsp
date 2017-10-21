@@ -83,13 +83,13 @@
 
 			<div class="col-sm-6 col-sm-offset-3"><hr></div>
 
-			<div class="col-sm-12">
-				<div class="form-group form-group-sm">
-					<div class="col-sm-4 col-sm-offset-4">
-						<button type="button" class="btn btn-block btn-primary" id="new_submit">Create New Report</button>
-					</div>
-				</div>	
+		<div class="col-sm-12">
+			<div class="form-group form-group-sm">
+				<div class="col-sm-4 col-sm-offset-4">
+						<button type="button" class="btn btn-block btn-primary" id="new_submit" onclick="window.location.href='/newReport'">Create New Report</button>
+				</div>
 			</div>
 		</div>
+	</div>
 	</body>
 </html>
