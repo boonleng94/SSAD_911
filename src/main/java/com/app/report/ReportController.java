@@ -35,18 +35,22 @@ public class ReportController {
 	//method to save report
 	@RequestMapping(method=RequestMethod.POST, value="/operator/{operatorId}/report")
 	public void addReport(@RequestBody Report report, @PathVariable int userID){
-		report.setoperatorUserID(userID);
+		report.setOperatorUserID(userID);
 		reportService.addReport(report);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/operator/{userID}/report/{reportID}")
 	public void updateReport(@RequestBody Report report, @PathVariable int userID, @PathVariable int reportID){
-		report.setoperatorUserID(userID);
+		report.setOperatorUserID(userID);
 		reportService.updateReport(reportID, report);
 	}
 
 	@RequestMapping(method=RequestMethod.DELETE, value="/operator/{operatorId}/report/{reportID}")
 	public void deleteReport(@PathVariable String reportID){
 		reportService.deleteReport(reportID);
+	}
+	
+	public List<Report> getAllReportsforLO(){
+		return reportService.getReportsByCategoryAndNotStatus("CAT1", "Drafted");
 	}
 }

@@ -23,7 +23,7 @@
 		<!-- Custom JavaScript -->
 		<script src="static/js/main.js"></script>
 
-		<title>Crisis Management System | New Report</title>
+		<title>Crisis Management System | Edit Report</title>
 	</head>
 
 	<body>
@@ -56,7 +56,7 @@
 
 		<div class="container">
 			<div class="col-sm-12 text-center" style="margin-bottom: 30px">
-				<h1>New Report</h1>
+				<h1>Edit Report ${report.reportID}</h1>
 				<div class="col-sm-6 col-sm-offset-3"><hr></div>
 			</div>
 			<form class="form-horizontal">
@@ -66,35 +66,35 @@
 					<div class="form-group">
 						<label for="new_date_of_call" class="col-sm-4 control-label">Date of call</label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_date_of_call" placeholder="">
+							<input type="date" class="form-control" id="new_date_of_call" placeholder="" value="13-Jan-2017">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_call_start_time" class="col-sm-4 control-label">Call start time</label>
 						<div class="col-sm-8">
-							<input type="time" class="form-control" id="new_call_start_time" placeholder="">
+							<input type="time" class="form-control" id="new_call_start_time" placeholder="" value="${report.callStartTime}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_call_end_time" class="col-sm-4 control-label">Call end time</label>
 						<div class="col-sm-8">
-							<input type="time" class="form-control" id="new_name" placeholder="">
+							<input type="time" class="form-control" id="new_name" placeholder="" value="${report.callEndTime}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_call_location" class="col-sm-4 control-label">Call Location</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_call_location" placeholder="">
+							<input type="text" class="form-control" id="new_call_location" placeholder="" value="${report.callerLocation}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_call_coordinates" class="col-sm-4 control-label">Call Coordinates</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="new_call_coordinates_north" placeholder="">
+							<input type="text" class="form-control" id="new_call_coordinates_north" placeholder="" value="${report.callCoord_n}"	>
 						</div>
 						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">N</div>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="new_call_coordinates_east" placeholder="">
+							<input type="text" class="form-control" id="new_call_coordinates_east" placeholder="" value="${report.callCoord_e}">
 						</div>
 						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">E</div>
 					</div>
@@ -109,25 +109,25 @@
 					<div class="form-group">
 						<label for="new_caller_name" class="col-sm-4 control-label">Caller Name</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_caller_name" placeholder="">
+							<input type="text" class="form-control" id="new_caller_name" placeholder="" value="${report.callerName}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_caller_ic" class="col-sm-4 control-label">Caller IC Number</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_caller_ic" placeholder="">
+							<input type="text" class="form-control" id="new_caller_ic" placeholder="" value="${report.callerNric}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_caller_dob" class="col-sm-4 control-label">Caller Date of Birth</label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_caller_dob" placeholder="">
+							<input type="date" class="form-control" id="new_caller_dob" placeholder="" value="${report.callStartTime}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified</label>
 						<div class="col-sm-4 entry-placeholder" id="new_caller_verified" style="margin-top: 7px;">
-							No
+							${report.callerVerified == false ? "No" : "Yes"}
 						</div>
 						<div class="col-sm-4">
 							<button class="btn btn-secondary btn-block" type="submit">Verify Caller</button>
@@ -141,16 +141,16 @@
 						<div class="col-sm-8">
 							<select class="form-control" id="new_call_authenticity">
 								<option value="" disabled selected>Select an option</option>
-								<option value="unsure">Unsure</option>
-								<option value="authentic">Authentic</option>
-								<option value="prank">Prank Call</option>
+								<option value="Unsure" ${report.authenticity == "Unsure" ? 'selected="selected"' : ''}>Unsure</option>
+								<option value="Authentic" ${report.authenticity == "Authentic" ? 'selected="selected"' : ''}>Authentic</option>
+								<option value="Prank" ${report.authenticity == "Prank" ? 'selected="selected"' : ''}>Prank Call</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_reason" class="col-sm-4 control-label">Reason</label>
 						<div class="col-sm-8">
-							<textarea class="form-control" rows="3" id="new_reason"></textarea>
+							<textarea class="form-control" rows="3" id="new_reason">${report.reason}</textarea>
 						</div>
 					</div>
 				</div>
@@ -163,9 +163,9 @@
 						<div class="col-sm-8">
 							<select class="form-control" id="new_category">
 								<option value="" disabled selected>Select a Category</option>
-								<option value="1">Category 1</option>
-								<option value="2">Category 2</option>
-								<option value="3">Category 3</option>
+								<option value="CAT1" ${report.incidentCategory == "CAT1" ? 'selected="selected"' : ''}>Category 1</option>
+								<option value="CAT2" ${report.incidentCategory == "CAT2" ? 'selected="selected"' : ''}>Category 2</option>
+								<option value="CAT3" ${report.incidentCategory == "CAT3" ? 'selected="selected"' : ''}>Category 3</option>
 							</select>
 						</div>
 					</div>
@@ -174,30 +174,30 @@
 						<div class="col-sm-8">
 							<select class="form-control" id="new_nature">
 								<option value="" disabled selected>Select an option</option>
-								<option value="Aggravated Assault">Aggravated Assault</option>
-								<option value="Arson">Arson</option>
-								<option value="Animal Abuse">Animal Abuse</option>
-								<option value="Burglary">Burglary</option>
-								<option value="Civil Unrest">Civil Unrest</option>
-								<option value="Homicide">Criminal Homicide</option>
-								<option value="Death">Death</option>
-								<option value="Disease Outbreak">Disease Outbreak</option>
-								<option value="Domestic Violence">Domestic Violence</option>
-								<option value="Hate Crime">Hate Crime</option>
-								<option value="Invasion">Invasion</option>
-								<option value="Larceny">Larceny</option>
-								<option value="Missing Person">Missing Person</option>
-								<option value="Motor Vehicle Accident">Motor Vehicle Accident</option>
-								<option value="Natural Disaster">Natural Disaster</option>
-								<option value="Possession of Contrabrand">Possession of Contrabrand</option>
-								<option value="Robbery">Robbery</option>
-								<option value="Sexual Assault">Sexual Assault</option>
-								<option value="Sexual Harassment">Sexual Harassment</option>
-								<option value="Simple Assault">Simple Assault</option>
-								<option value="Smuggling">Smuggling</option>
-								<option value="Terrorism">Terrorism</option>
-								<option value="Theft">Theft</option>
-								<option value="Other">Other</option>
+								<option value="Aggravated Assault" ${report.incidentCategory == "Aggravated Assault" ? 'selected="selected"' : ''}>Aggravated Assault</option>
+								<option value="Arson" ${report.incidentNature == "Arson" ? 'selected="selected"' : ''}>Arson</option>
+								<option value="Animal Abuse" ${report.incidentNature == "Animal Abuse" ? 'selected="selected"' : ''}>Animal Abuse</option>
+								<option value="Burglary" ${report.incidentNature == "Burglary" ? 'selected="selected"' : ''}>Burglary</option>
+								<option value="Civil Unrest" ${report.incidentNature == "Civil Unrest" ? 'selected="selected"' : ''}>Civil Unrest</option>
+								<option value="Homicide" ${report.incidentNature == "Homicide" ? 'selected="selected"' : ''}>Criminal Homicide</option>
+								<option value="Death" ${report.incidentNature == "Death" ? 'selected="selected"' : ''}>Death</option>
+								<option value="Disease Outbreak" ${report.incidentNature == "Disease Outbreak" ? 'selected="selected"' : ''}>Disease Outbreak</option>
+								<option value="Domestic Violence" ${report.incidentNature == "Domestic Violence" ? 'selected="selected"' : ''}>Domestic Violence</option>
+								<option value="Hate Crime" ${report.incidentNature == "Hate Crime" ? 'selected="selected"' : ''}>Hate Crime</option>
+								<option value="Invasion" ${report.incidentNature == "Invasion" ? 'selected="selected"' : ''}>Invasion</option>
+								<option value="Larceny" ${report.incidentNature == "Larceny" ? 'selected="selected"' : ''}>Larceny</option>
+								<option value="Missing Person" ${report.incidentNature == "Missing Person" ? 'selected="selected"' : ''}>Missing Person</option>
+								<option value="Motor Vehicle Accident" ${report.incidentNature == "Motor Vehicle Accident" ? 'selected="selected"' : ''}>Motor Vehicle Accident</option>
+								<option value="Natural Disaster" ${report.incidentNature == "Natural Disaster" ? 'selected="selected"' : ''}>Natural Disaster</option>
+								<option value="Possession of Contrabrand" ${report.incidentNature == "Possession of Contrabrand" ? 'selected="selected"' : ''}>Possession of Contrabrand</option>
+								<option value="Robbery" ${report.incidentNature == "Robbery" ? 'selected="selected"' : ''}>Robbery</option>
+								<option value="Sexual Assault" ${report.incidentNature == "Sexual Assault" ? 'selected="selected"' : ''}>Sexual Assault</option>
+								<option value="Sexual Harassment" ${report.incidentNature == "Sexual Harassment" ? 'selected="selected"' : ''}>Sexual Harassment</option>
+								<option value="Simple Assault" ${report.incidentNature == "Simple Assault" ? 'selected="selected"' : ''}>Simple Assault</option>
+								<option value="Smuggling" ${report.incidentNature == "Smuggling" ? 'selected="selected"' : ''}>Smuggling</option>
+								<option value="Terrorism" ${report.incidentNature == "Terrorism" ? 'selected="selected"' : ''}>Terrorism</option>
+								<option value="Theft" ${report.incidentNature == "Theft" ? 'selected="selected"' : ''}>Theft</option>
+								<option value="Other" ${report.incidentNature == "Other" ? 'selected="selected"' : ''}>Other</option>
 							</select>
 						</div>
 					</div>
@@ -207,29 +207,29 @@
 					<div class="form-group">
 						<label for="new_estimated_start_date" class="col-sm-4 control-label">Estimated Start Date</label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_estimated_start_date" placeholder="">
+							<input type="date" class="form-control" id="new_estimated_start_date" placeholder="" value="${report.estimatedStartTime}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_estimated_start_time" class="col-sm-4 control-label">Estimated Start Time</label>
 						<div class="col-sm-8">
-							<input type="time" class="form-control" id="new_estimated_start_time" placeholder="">
+							<input type="time" class="form-control" id="new_estimated_start_time" placeholder="" value="${report.callStartTime}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_incident_location" class="col-sm-4 control-label">Incident Location</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_call_location" placeholder="">
+							<input type="text" class="form-control" id="new_call_location" placeholder="" value="${report.incidentLocation}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_incident_coordinates" class="col-sm-4 control-label">Incident Coordinates</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="new_incident_coordinates_north" placeholder="">
+							<input type="text" class="form-control" id="new_incident_coordinates_north" placeholder="" value="${report.incidentCoord_n}">
 						</div>
 						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">N</div>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="new_incident_coordinates_east" placeholder="">
+							<input type="text" class="form-control" id="new_incident_coordinates_east" placeholder="" value="${report.incidentCoord_e}">
 						</div>
 						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">E</div>
 					</div>
@@ -242,7 +242,7 @@
 					<div class="form-group col-sm-8" style="height: 40px;"><hr></div>
 					<div class="form-group" style="padding:0 15px;">
 						<p class="lead">Additional Notes</p>
-						<textarea class="form-control" rows="10" id="notes"></textarea>
+						<textarea class="form-control" rows="10" id="notes">${report.additionalNotes}</textarea>
 					</div>
 				</div>
 				<div class="col-sm-6 col-sm-offset-3"><hr></div>

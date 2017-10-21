@@ -25,7 +25,7 @@ public class ReportService {
 	}
 
 	public Report getReport(int reportID){
-		return reportRepository.findOne(reportID);
+		return reportRepository.findByReportID(reportID);
 	}
 	
 	public void addReport(Report operator){
@@ -38,5 +38,11 @@ public class ReportService {
 
 	public void deleteReport(String id){
 		reportRepository.delete(id);
+	}
+
+	public List<Report> getReportsByCategoryAndNotStatus(String cat, String notStatus){
+		List<Report> reports = reportRepository.findByIncidentCategoryAndStatusNot("CAT1", "Drafted");
+		reports.get(0);
+		return reportRepository.findByIncidentCategoryAndStatusNot("CAT1", "Drafted");
 	}
 }

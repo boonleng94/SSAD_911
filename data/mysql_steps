@@ -23,53 +23,164 @@ INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VA
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator2', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Operator_2', '0');
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('cmolo1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'CMOLO_1', '1');
 
-5. Run this to make REPORTS table and add dummy report:
+5. Run this to make REPORTS table and add 4 dummy reports:
 CREATE TABLE `reports` (
   `reportID` int(11) NOT NULL AUTO_INCREMENT,
   `date` varchar(45) NOT NULL,
   `call_start_time` varchar(45) NOT NULL,
   `call_end_time` varchar(45) NOT NULL,
+  `caller_location` varchar(256) DEFAULT NULL,
+  `call_coord_n` varchar(45) DEFAULT NULL,
+  `call_coord_e` varchar(45) DEFAULT NULL,
   `caller_name` varchar(256) DEFAULT NULL,
   `caller_Nric` varchar(9) DEFAULT NULL,
-  `caller_location` varchar(256) DEFAULT NULL,
+  `dob` varchar(45) DEFAULT NULL,
   `caller_verified` tinyint(1) NOT NULL,
+  `authenticity` varchar(45) DEFAULT NULL,
+  `reason` varchar(256) DEFAULT NULL,
+  `incident_category` varchar(45) DEFAULT NULL,
   `incident_nature` varchar(45) DEFAULT NULL,
+  `incident_date` varchar(45) DEFAULT NULL,
   `estimated_start_time` varchar(45) DEFAULT NULL,
   `estimated_end_time` varchar(45) DEFAULT NULL,
-  `no_of_casualties` int(11) DEFAULT NULL,
+  `no_of_casualties` int(11) DEFAULT '-1',
   `incident_location` varchar(256) DEFAULT NULL,
+  `incident_coord_n` varchar(45) DEFAULT NULL,
+  `incident_coord_e` varchar(45) DEFAULT NULL,
   `additional_notes` varchar(512) DEFAULT NULL,
-  `incident_category` varchar(45) DEFAULT NULL,
   `operator_userID` int(11) NOT NULL,
   `status` varchar(256) NOT NULL,
-  `officer_userID` int(11) DEFAULT NULL,
+  `officer_userID` int(11) DEFAULT '-1',
+  `crisisID` int(11) DEFAULT '-1',
   PRIMARY KEY (`reportID`),
   UNIQUE KEY `reportID_UNIQUE` (`reportID`),
   KEY `operatorID_idx` (`operator_userID`),
   CONSTRAINT `operatorID` FOREIGN KEY (`operator_userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 INSERT INTO `911`.`reports`
 (`reportID`,
 `date`,
 `call_start_time`,
 `call_end_time`,
+`caller_location`,
+`call_coord_n`,
+`call_coord_e`,
 `caller_name`,
 `caller_Nric`,
-`caller_location`,
+`dob`,
 `caller_verified`,
+`authenticity`,
+`reason`,
+`incident_category`,
 `incident_nature`,
+`incident_date`,
 `estimated_start_time`,
 `estimated_end_time`,
 `no_of_casualties`,
 `incident_location`,
+`incident_coord_n`,
+`incident_coord_e`,
 `additional_notes`,
-`incident_category`,
 `operator_userID`,
 `status`,
-`officer_userID`)
+`officer_userID`,
+`crisisID`)
 VALUES
-('1', '05042016', '111111', '112222', 'Ivan Heng', 'S9449973I', 'Hougang', '0', 'Terrorism', '100000', '101010', '100', 'Hougang', 'Scary people', 'CAT1', '1001', 'Drafted', NULL);
+('1', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT1', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1001', 'Submitted', '-1', '-1');
+
+INSERT INTO `911`.`reports`
+(`reportID`,
+`date`,
+`call_start_time`,
+`call_end_time`,
+`caller_location`,
+`call_coord_n`,
+`call_coord_e`,
+`caller_name`,
+`caller_Nric`,
+`dob`,
+`caller_verified`,
+`authenticity`,
+`reason`,
+`incident_category`,
+`incident_nature`,
+`incident_date`,
+`estimated_start_time`,
+`estimated_end_time`,
+`no_of_casualties`,
+`incident_location`,
+`incident_coord_n`,
+`incident_coord_e`,
+`additional_notes`,
+`operator_userID`,
+`status`,
+`officer_userID`,
+`crisisID`)
+VALUES
+('2', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT1', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1002', 'Verified', '1003', '1');
+
+INSERT INTO `911`.`reports`
+(`reportID`,
+`date`,
+`call_start_time`,
+`call_end_time`,
+`caller_location`,
+`call_coord_n`,
+`call_coord_e`,
+`caller_name`,
+`caller_Nric`,
+`dob`,
+`caller_verified`,
+`authenticity`,
+`reason`,
+`incident_category`,
+`incident_nature`,
+`incident_date`,
+`estimated_start_time`,
+`estimated_end_time`,
+`no_of_casualties`,
+`incident_location`,
+`incident_coord_n`,
+`incident_coord_e`,
+`additional_notes`,
+`operator_userID`,
+`status`,
+`officer_userID`,
+`crisisID`)
+VALUES
+('3', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT1', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1001', 'Drafted', '-1', '-1');
+
+INSERT INTO `911`.`reports`
+(`reportID`,
+`date`,
+`call_start_time`,
+`call_end_time`,
+`caller_location`,
+`call_coord_n`,
+`call_coord_e`,
+`caller_name`,
+`caller_Nric`,
+`dob`,
+`caller_verified`,
+`authenticity`,
+`reason`,
+`incident_category`,
+`incident_nature`,
+`incident_date`,
+`estimated_start_time`,
+`estimated_end_time`,
+`no_of_casualties`,
+`incident_location`,
+`incident_coord_n`,
+`incident_coord_e`,
+`additional_notes`,
+`operator_userID`,
+`status`,
+`officer_userID`,
+`crisisID`)
+VALUES
+('4', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT2', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1001', 'Submitted', '-1', '-1');
 
 6. Run this to make REGISTRY table for verifications: 
 CREATE TABLE `911`.`registry` (

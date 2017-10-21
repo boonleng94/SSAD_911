@@ -16,23 +16,32 @@ public class Report {
 	private String date;
 	private String callStartTime;
 	private String callEndTime;
+	private String callerLocation;
+	private String callCoord_n;
+	private String callCoord_e;
 	
 	private String callerName;
 	private String callerNric;
-	private String callerLocation;
+	private String dob;
 	private boolean callerVerified;
-	
+	private String authenticity;
+	private String reason;
+
+	private String incidentCategory;
 	private String incidentNature;
+	private String incidentDate;
 	private String estimatedStartTime;
 	private String estimatedEndTime;
 	private int noOfCasualties;
 	private String incidentLocation;
+	private String incidentCoord_n;
+	private String incidentCoord_e;
 	private String additionalNotes;
-	private String incidentCategory;
 	
 	private int operatorUserID;
 	private String status;
 	private int officerUserID;
+	private int crisisID;
 
 	public Report() {
 		
@@ -66,8 +75,32 @@ public class Report {
 		return callEndTime;
 	}
 
-	public void setCallEndTime(String calLEndTime) {
-		this.callEndTime = calLEndTime;
+	public void setCallEndTime(String callEndTime) {
+		this.callEndTime = callEndTime;
+	}
+
+	public String getCallerLocation() {
+		return callerLocation;
+	}
+
+	public void setCallerLocation(String callerLocation) {
+		this.callerLocation = callerLocation;
+	}
+
+	public String getCallCoord_n() {
+		return callCoord_n;
+	}
+
+	public void setCallCoord_n(String callCoord_n) {
+		this.callCoord_n = callCoord_n;
+	}
+
+	public String getCallCoord_e() {
+		return callCoord_e;
+	}
+
+	public void setCallCoord_e(String callCoord_e) {
+		this.callCoord_e = callCoord_e;
 	}
 
 	public String getCallerName() {
@@ -82,24 +115,48 @@ public class Report {
 		return callerNric;
 	}
 
-	public void setCallerNric(String callerNRIC) {
-		this.callerNric = callerNRIC;
+	public void setCallerNric(String callerNric) {
+		this.callerNric = callerNric;
 	}
 
-	public String getCallerLocation() {
-		return callerLocation;
+	public String getDob() {
+		return dob;
 	}
 
-	public void setCallerLocation(String callerLocation) {
-		this.callerLocation = callerLocation;
+	public void setDob(String dob) {
+		this.dob = dob;
 	}
 
-	public boolean getCallerVerified() {
+	public boolean isCallerVerified() {
 		return callerVerified;
 	}
 
 	public void setCallerVerified(boolean callerVerified) {
 		this.callerVerified = callerVerified;
+	}
+
+	public String getAuthenticity() {
+		return authenticity;
+	}
+
+	public void setAuthenticity(String authenticity) {
+		this.authenticity = authenticity;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public String getIncidentCategory() {
+		return incidentCategory;
+	}
+
+	public void setIncidentCategory(String incidentCategory) {
+		this.incidentCategory = incidentCategory;
 	}
 
 	public String getIncidentNature() {
@@ -108,6 +165,14 @@ public class Report {
 
 	public void setIncidentNature(String incidentNature) {
 		this.incidentNature = incidentNature;
+	}
+
+	public String getIncidentDate() {
+		return incidentDate;
+	}
+
+	public void setIncidentDate(String incidentDate) {
+		this.incidentDate = incidentDate;
 	}
 
 	public String getEstimatedStartTime() {
@@ -142,6 +207,22 @@ public class Report {
 		this.incidentLocation = incidentLocation;
 	}
 
+	public String getIncidentCoord_n() {
+		return incidentCoord_n;
+	}
+
+	public void setIncidentCoord_n(String incidentCoord_n) {
+		this.incidentCoord_n = incidentCoord_n;
+	}
+
+	public String getIncidentCoord_e() {
+		return incidentCoord_e;
+	}
+
+	public void setIncidentCoord_e(String incidentCoord_e) {
+		this.incidentCoord_e = incidentCoord_e;
+	}
+
 	public String getAdditionalNotes() {
 		return additionalNotes;
 	}
@@ -150,19 +231,11 @@ public class Report {
 		this.additionalNotes = additionalNotes;
 	}
 
-	public String getIncidentCategory() {
-		return incidentCategory;
-	}
-
-	public void setIncidentCategory(String incidentCategory) {
-		this.incidentCategory = incidentCategory;
-	}
-
-	public int getoperatorUserID() {
+	public int getOperatorUserID() {
 		return operatorUserID;
 	}
 
-	public void setoperatorUserID(int operatorUserID) {
+	public void setOperatorUserID(int operatorUserID) {
 		this.operatorUserID = operatorUserID;
 	}
 
@@ -181,4 +254,13 @@ public class Report {
 	public void setOfficerUserID(int officerUserID) {
 		this.officerUserID = officerUserID;
 	}
+
+	public int getCrisisID() {
+		return crisisID;
+	}
+
+	public void setCrisisID(int crisisID) {
+		this.crisisID = crisisID;
+	}
+
 }

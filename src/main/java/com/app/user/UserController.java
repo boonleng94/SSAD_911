@@ -42,7 +42,6 @@ public class UserController {
 		userService.deleteUser(id);
 	}
 	
-	//STATIC METHODS
 	//check if user is LO or not via userID
 	public boolean isLiaisonOfficer(int userInSession){
 		return userService.getUser(userInSession).getLiaisonOfficer();
@@ -56,5 +55,15 @@ public class UserController {
 	//return User via userID
 	public User getUserByUserID(int userID){
 		return userService.getUserByUserID(userID);
+	}
+	
+	//return all operators
+	public List<User> getAllOperators(){
+		return userService.getUserByLiaisonOfficer(false);
+	}
+
+	//return all LOs
+	public List<User> getAllOfficers(){
+		return userService.getUserByLiaisonOfficer(true);
 	}
 }

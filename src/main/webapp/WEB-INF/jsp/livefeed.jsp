@@ -37,7 +37,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Crisis Management System: 911 Call Center</a>
+				<a class="navbar-brand" href="/home">Crisis Management System: 911 Call Center</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

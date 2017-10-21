@@ -47,4 +47,8 @@ public class UserService {
 	public User getUserByUserID(int userID){
 		return userRepository.findFirstByUserID(userID);
 	}
+
+	public List<User> getUserByLiaisonOfficer(boolean liaisonOfficer){
+		return userRepository.findByLiaisonOfficer(liaisonOfficer);
+	}
 }

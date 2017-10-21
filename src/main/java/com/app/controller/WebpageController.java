@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
@@ -11,14 +13,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.app.report.Report;
+import com.app.report.ReportController;
 import com.app.user.User;
 import com.app.user.UserController;
 
 @Controller
 @SessionAttributes("userID")
 public class WebpageController implements ErrorController{
+	
 	@Autowired
 	UserController userController = new UserController();
+	
+	@Autowired
+	ReportController reportController = new ReportController();
+	
 	User user = new User();
 	private static final String ERRORPATH = "/error";
 	
@@ -56,12 +65,31 @@ public class WebpageController implements ErrorController{
 			model.put("redirect", "/");
 			return new ModelAndView("/message");
 		} 
-		
 		else {
 			model.put("name", user.getName());
-			if (userController.isLiaisonOfficer((int) model.get("userID")))
+			if (userController.isLiaisonOfficer((int) model.get("userID"))){
+				//DRAFTED / SUBMITTED / VERIFIED / SENT
+				
+//				for (Report report : reports) {
+//					String startDateString = "06/27/2007";
+//					DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); 
+//					Date startDate;
+//					try {
+//					    startDate = df.parse(startDateString);
+//					    report.setDate(df.format(startDate));
+//					} catch (ParseException e) {
+//					    e.printStackTrace();
+//					}
+//				}
+
+				List<Report> reports = reportController.getAllReportsforLO();
+				model.put("operatorList", userController.getAllOperators());
+				model.put("reportList", reports);
+				
 				return new ModelAndView("officerhome");
+			}
 			else
+				model.put("reportList", reportController.getAllOperatorReports((int) model.get("userID")));
 				return new ModelAndView("operatorhome");
 		}
 
@@ -96,10 +124,9 @@ public class WebpageController implements ErrorController{
 	/**
 	 * Mapping for displaying selected report page
 	 * Used for displaying selected reports to edit / authenticate
-	 * NEED KNOW HOW DOES UI INTERACTS (SEND REPORT ID OR WHOLE REPORT?)
 	 */
 	@RequestMapping(value ="/editReport", method=RequestMethod.POST)
-	public ModelAndView editReport(@RequestBody User user, ModelMap model) {
+	public ModelAndView editReportPage(@RequestParam int reportID, ModelMap model) {
 		if(model.get("userID") == null || (int) model.get("userID") == 0) {
 			model.put("message", "Please log in first.");
 			model.put("redirect", "/");
@@ -107,9 +134,10 @@ public class WebpageController implements ErrorController{
 		}
 		
 		if (userController.isLiaisonOfficer((int) model.get("userID"))) {
-			model.put("message", "You are not authorized. Only operators are allowed to create new reports.");
-			model.put("redirect", "/home");
-			return new ModelAndView("/message");
+			model.put("name", user.getName());
+			model.put("report", reportController.getReport(Integer.valueOf(reportID)));
+			//STORE POST DATA INTO MODEL
+			return new ModelAndView("officereditreport");
 		}
 		else {
 			user =  userController.getUserByUserID((int) model.get("userID"));
