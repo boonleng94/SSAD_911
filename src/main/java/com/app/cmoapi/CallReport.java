@@ -1,21 +1,22 @@
 package com.app.cmoapi;
 
-public class CMOReport {
-	private long crisisID;				//id
-	private String name;				//sender name
-	private String positionIn911;		//Liaison Officer
-	private String crisisType;			//Terrorist Attack
-	private String affectedArea;		//Orchard (1.301800, 103.837797)
-	private String crisisDate;			//20 September 2017
-	private String estimatedStartTime;	//1500 hours
-	private String crisisDetails;		//Detailed information on the crisis
-
+public class CallReport {
 	
-    public CMOReport(){
+	private long callReportID;
+	private long crisisID;
+	private String name; //name of LO
+	private String positionIn911; //CMO Liaison Officer
+	private String crisisType;
+	private String affectedArea; //Orchard (1.301800, 103.837797)
+	private String crisisDate; //
+	private String estimatedStartTime;
+	private String crisisDetails; //Caller Verified + Authenticity + No. of casualties + Additional Notes
+	
+    public CallReport(){
         crisisID=0;
     }
-
-	public CMOReport(long crisisID, String name, String positionIn911, String crisisType, String affectedArea,
+    
+	public CallReport(long callReportID, long crisisID, String name, String positionIn911, String crisisType, String affectedArea,
 			String crisisDate, String estimatedStartTime, String crisisDetails) {
 		this.crisisID = crisisID;
 		this.name = name;
@@ -27,7 +28,15 @@ public class CMOReport {
 		this.crisisDetails = crisisDetails;
 	}
  
-    public long getCrisisID() {
+	public long getCallReportID() {
+		return callReportID;
+	}
+
+	public void setCallReportID(long callReportID) {
+		this.callReportID = callReportID;
+	}
+	
+	public long getCrisisID() {
 		return crisisID;
 	}
 
@@ -107,7 +116,7 @@ public class CMOReport {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        CMOReport other = (CMOReport) obj;
+        CallReport other = (CallReport) obj;
         if (crisisID != other.crisisID)
             return false;
         return true;
@@ -115,10 +124,8 @@ public class CMOReport {
  
     @Override
 	public String toString() {
-		return "Report [crisisID=" + crisisID + ", name=" + name + ", positionIn911=" + positionIn911
+		return "Report [callReportID=" + callReportID + ", crisisID=" + crisisID + ", name=" + name + ", positionIn911=" + positionIn911
 				+ ", crisisType=" + crisisType + ", affectedArea=" + affectedArea + ", crisisDate=" + crisisDate
 				+ ", estimatedStartTime=" + estimatedStartTime + ", crisisDetails=" + crisisDetails + "]";
 	}
- 
- 
 }

@@ -2,10 +2,7 @@ package com.app.report;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.app.user.User;
 
 @Entity
 @Table(name = "reports", schema = "911")
@@ -46,7 +43,43 @@ public class Report {
 	public Report() {
 		
 	}
-
+    
+	public Report(int reportID, String date, String callStartTime, String callEndTime, String callerLocation,
+			String callCoord_n, String callCoord_e, String callerName, String callerNric, String dob,
+			boolean callerVerified, String authenticity, String reason, String incidentCategory, String incidentNature,
+			String incidentDate, String estimatedStartTime, String estimatedEndTime, int noOfCasualties,
+			String incidentLocation, String incidentCoord_n, String incidentCoord_e, String additionalNotes,
+			int operatorUserID, String status, int officerUserID, int crisisID) {
+		super();
+		this.reportID = reportID;
+		this.date = date;
+		this.callStartTime = callStartTime;
+		this.callEndTime = callEndTime;
+		this.callerLocation = callerLocation;
+		this.callCoord_n = callCoord_n;
+		this.callCoord_e = callCoord_e;
+		this.callerName = callerName;
+		this.callerNric = callerNric;
+		this.dob = dob;
+		this.callerVerified = callerVerified;
+		this.authenticity = authenticity;
+		this.reason = reason;
+		this.incidentCategory = incidentCategory;
+		this.incidentNature = incidentNature;
+		this.incidentDate = incidentDate;
+		this.estimatedStartTime = estimatedStartTime;
+		this.estimatedEndTime = estimatedEndTime;
+		this.noOfCasualties = noOfCasualties;
+		this.incidentLocation = incidentLocation;
+		this.incidentCoord_n = incidentCoord_n;
+		this.incidentCoord_e = incidentCoord_e;
+		this.additionalNotes = additionalNotes;
+		this.operatorUserID = operatorUserID;
+		this.status = status;
+		this.officerUserID = officerUserID;
+		this.crisisID = crisisID;
+	}
+	
 	public int getReportID() {
 		return reportID;
 	}

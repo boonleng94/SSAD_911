@@ -1,20 +1,26 @@
-package com.app.cmoapi;
 //Client side
 //Specify their URI
 //Create a method like createReport() to POST to their service
+package com.app.cmoapi;
+
+import java.net.URI;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.springframework.web.client.RestTemplate;
 
-import com.app.cmoapi.CMOReport;
+import com.app.cmoapi.CallReport;
+import com.app.report.Report;
+import com.app.user.User;
+import com.app.user.UserController;
 
-public class CMOReportSender {
+public class NineOneOneClient {
 
 	public static final String REST_SERVICE_URI = "http://localhost:8080/911toCMO";
 
-	/*
 	// GET
 	@SuppressWarnings({ "unchecked"})
-	private static void listLatestCallReport() {
+	public static void listLatestCallReport() {
 		int i = 1;
 		System.out.println("Testing receiving Call Report API-----------");
 
@@ -26,7 +32,8 @@ public class CMOReportSender {
 			for (LinkedHashMap<String, Object> map : callReportsMap) {
 				if (i++ == callReportsMap.size()) {
 					// end
-					System.out.println("crisisID=" + map.get("crisisID") + "," + " name=" + map.get("name") + ","
+					
+					System.out.println("callReportID=" + map.get("callReportID") + "crisisID=" + map.get("crisisID") + "," + " name=" + map.get("name") + ","
 							+ " positionIn911=" + map.get("positionIn911") + "," + " crisisType=" + map.get("crisisType") + ","
 							+ " affectedArea=" + map.get("affectedArea") + "," + " crisisDate=" + map.get("crisisDate") + ","
 							+ " estimatedStartTime=" + map.get("estimatedStartTime") + ","
@@ -40,7 +47,7 @@ public class CMOReportSender {
 
 	// GET
 	@SuppressWarnings({"unchecked" })
-	private static void listAllCallReports() {
+	public static void listAllCallReports() {
 		System.out.println("Testing receiving Call Report API-----------");
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -50,7 +57,7 @@ public class CMOReportSender {
 		if (callReportsMap != null) {
 			for (LinkedHashMap<String, Object> map : callReportsMap) {
 
-				System.out.println("crisisID=" + map.get("crisisID") + "," + " name=" + map.get("name") + ","
+				System.out.println("callReportID=" + map.get("callReportID") + "crisisID=" + map.get("crisisID") + "," + " name=" + map.get("name") + ","
 						+ " positionIn911=" + map.get("positionIn911") + "," + " crisisType=" + map.get("crisisType") + ","
 						+ " affectedArea=" + map.get("affectedArea") + "," + " crisisDate=" + map.get("crisisDate") + ","
 						+ " estimatedStartTime=" + map.get("estimatedStartTime") + ","
@@ -62,29 +69,32 @@ public class CMOReportSender {
 	}
 
 	// GET
-	private static void getCallReport() {
+	public static void getCallReport() {
 		System.out.println("Testing get Call Report API----------");
 
 		RestTemplate restTemplate = new RestTemplate();
-		CMOReport callReport = restTemplate.getForObject(REST_SERVICE_URI + "/callReport/1", CMOReport.class);
+		CallReport callReport = restTemplate.getForObject(REST_SERVICE_URI + "/callReport/1", CallReport.class);
 		System.out.println(callReport);
 	}
-	 */
 
 	// POST 
-	private static void createCallReport() {
-		CMOReport callReport = new CMOReport(10, "Test10", "911 Liaison Officer", "Type10", "Area10", "Date10", "Time10", "Detail10");
-		RestTemplate restTemplate = new RestTemplate();
-		
-		restTemplate.postForLocation(REST_SERVICE_URI + "/callReport/", callReport, CMOReport.class);
-	}
+	public static void createCallReport(Report report) {
+	System.out.println("Testing create Call Report API----------");
 
-	public static void main(String args[]) {
-		createCallReport();
-		
-		/*the rest of the methods not needed. only call create to send to CMO
-		getCallReport();
-		listAllCallReports();
-		listLatestCallReport();*/
+	RestTemplate restTemplate = new RestTemplate();
+	
+	UserController userContoller = new UserController();
+	String incidentDetails = "Caller is verified: " + ((report.isCallerVerified() == true) ? "Yes. "  : "No. ") + 
+			"Authenticity of call: " + report.getAuthenticity() + ". Reason: " + report.getReason() + ". " + 
+			"Number of casualties: " + report.getNoOfCasualties() + ". Additional notes: " + report.getAdditionalNotes() + ".";
+	User user = userContoller.getUserToSubmitReport(report.getOfficerUserID());
+	String name = user.getName();
+	
+	CallReport callReport = new CallReport(report.getReportID(), report.getCrisisID(), name, 
+			((userContoller.getUserToSubmitReport(report.getOfficerUserID()).getLiaisonOfficer() == true) ? "CMO Liaison Officer. "  : "Non-CMO Liaison Officer") , 
+			report.getIncidentNature() , report.getIncidentLocation() + "(" + report.getIncidentCoord_n() + "," + report.getIncidentCoord_e() + ")", 
+			report.getIncidentDate(), report.getEstimatedStartTime(), incidentDetails);
+	URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/callReport/", callReport, CallReport.class);
+	System.out.println("Location : "+uri.toASCIIString());
 	}
 }

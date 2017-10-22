@@ -32,8 +32,8 @@ public class ReportService {
 		reportRepository.save(operator);
 	}
 	
-	public void updateReport(int reportID, Report operator){
-		reportRepository.save(operator); //repository smart enough to find tuple with stated id
+	public Report updateReport(int reportID, Report report){
+		return reportRepository.save(report); //repository smart enough to find tuple with stated id
 	}
 
 	public void deleteReport(String id){

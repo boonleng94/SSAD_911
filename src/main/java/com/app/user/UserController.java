@@ -27,6 +27,12 @@ public class UserController {
 		return userService.getUser(id);
 	}
 	
+	//basic function NULL BUG. MIGHT HAVE TO BE CALLED VIA URL CALLING, NOT FUNCTION CALLING
+	@RequestMapping("/officer/getUserToSubmitReport")
+	public User getUserToSubmitReport(int id){
+		return userService.getUser(id);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST, value="/user")
 	public void addUser(@RequestBody User users){
 		userService.addUser(users);

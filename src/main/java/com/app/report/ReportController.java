@@ -42,9 +42,13 @@ public class ReportController {
 	@RequestMapping(method=RequestMethod.PUT, value="/operator/{userID}/report/{reportID}")
 	public void updateReport(@RequestBody Report report, @PathVariable int userID, @PathVariable int reportID){
 		report.setOperatorUserID(userID);
-		reportService.updateReport(reportID, report);
+		Report savedReport = reportService.updateReport(reportID, report);
 	}
-
+	
+	public Report updateReportOfficer(Report report, int officerID, int reportID){
+		return reportService.updateReport(reportID, report);
+	}
+	
 	@RequestMapping(method=RequestMethod.DELETE, value="/operator/{operatorId}/report/{reportID}")
 	public void deleteReport(@PathVariable String reportID){
 		reportService.deleteReport(reportID);

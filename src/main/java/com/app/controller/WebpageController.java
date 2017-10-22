@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.app.cmoapi.NineOneOneClient;
 import com.app.report.Report;
 import com.app.report.ReportController;
 import com.app.user.User;
@@ -136,14 +137,50 @@ public class WebpageController implements ErrorController{
 		if (userController.isLiaisonOfficer((int) model.get("userID"))) {
 			model.put("name", user.getName());
 			model.put("report", reportController.getReport(Integer.valueOf(reportID)));
-			//STORE POST DATA INTO MODEL
 			return new ModelAndView("officereditreport");
 		}
 		else {
 			user =  userController.getUserByUserID((int) model.get("userID"));
 			model.put("name", user.getName());
-			//STORE POST DATA INTO MODEL
 			return new ModelAndView("newreport");
+		}
+	}
+	
+	////NOT TESTED YET
+	/**
+	 * Mapping for saving POSTed report to update
+	 */
+	@RequestMapping(value ="/officerUpdateReport", method=RequestMethod.POST)
+	public ModelAndView updateReportPage(@RequestParam String reportID, @RequestParam String date, @RequestParam String callStartTime, @RequestParam String callEndTime, 
+			@RequestParam String callerLocation, @RequestParam String callCoord_n, @RequestParam String callCoord_e, @RequestParam String callerName, @RequestParam String callerNric, 
+			@RequestParam String dob, @RequestParam String callerVerified, @RequestParam String authenticity, @RequestParam String reason, @RequestParam String incidentCategory, 
+			@RequestParam String incidentNature, @RequestParam String incidentDate, @RequestParam String estimatedStartTime, /*@RequestParam String estimatedEndTime, */
+			/*@RequestParam String noOfCasualties,*/ @RequestParam String incidentLocation, @RequestParam String incidentCoord_n, @RequestParam String incidentCoord_e, 
+			@RequestParam String additionalNotes, @RequestParam String operatorUserID, /*@RequestParam String crisisID,*/ @RequestParam String action, ModelMap model) {
+		
+		if(model.get("userID") == null || (int) model.get("userID") == 0 || !userController.isLiaisonOfficer((int) model.get("userID"))) {
+			model.put("message", "Only Liaison Officers can access this page.");
+			model.put("redirect", "/");
+			return new ModelAndView("/message");
+		}
+		else{
+			model.put("name", user.getName());
+			model.put("report", reportController.getReport(Integer.valueOf(reportID)));
+			//STORE POST DATA INTO MODEL
+			Report tempReport = new Report(Integer.parseInt(reportID), date, callStartTime, callEndTime, callerLocation, callCoord_n, callCoord_e, callerName, callerNric, dob,
+					((callerVerified.equals("Yes")) ? true  : false), authenticity, reason, incidentCategory, incidentNature, incidentDate, estimatedStartTime, "0000000", 
+					Integer.parseInt("100"), incidentLocation, incidentCoord_n, incidentCoord_e, additionalNotes, Integer.parseInt(operatorUserID), "Verified", (int) model.get("userID"), Integer.parseInt("1"));
+			
+			Report savedReport = reportController.updateReportOfficer(tempReport, (int) model.get("userID"), Integer.parseInt(reportID));
+			
+			if(action.equals("submit")){
+				NineOneOneClient.createCallReport(savedReport);
+				savedReport.setStatus("Sent");
+				Report subtmittedReport = reportController.updateReportOfficer(savedReport, (int) model.get("userID"), Integer.parseInt(reportID));
+			}
+			
+			//BETTER IF STAY IN SAME PAGE THAN GOING BACK HOME
+			return new ModelAndView("/home");
 		}
 	}
 	
