@@ -60,7 +60,7 @@
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>Date & Time Created</th>
+							<th>Date & Time of Call</th>
 							<th>Date & Time Modified</th>
 							<th>Nature of Incident</th>
 							<th>Status</th>
@@ -73,7 +73,7 @@
 							<tr> 
 								<td><div class="table-entry">${report.reportID}</div></td>
 								<td><div class="table-entry">${report.date} ${report.callStartTime}</div></td>
-								<td><div class="table-entry">${report.date} ${report.callEndTime}</div></td>
+								<td><div class="table-entry">${report.dateTimeModified}</div></td>
 								<td><div class="table-entry">${report.incidentNature}</div></td>
 								<td><div class="table-entry">${report.status}</div></td>
 								<td><div class="table-entry">

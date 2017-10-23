@@ -52,11 +52,12 @@ CREATE TABLE `reports` (
   `status` varchar(256) NOT NULL,
   `officer_userID` int(11) DEFAULT '-1',
   `crisisID` int(11) DEFAULT '-1',
+  `date_time_modified` varchar(45) NOT NULL,
   PRIMARY KEY (`reportID`),
   UNIQUE KEY `reportID_UNIQUE` (`reportID`),
   KEY `operatorID_idx` (`operator_userID`),
   CONSTRAINT `operatorID` FOREIGN KEY (`operator_userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 INSERT INTO `911`.`reports`
 (`reportID`,
@@ -85,9 +86,10 @@ INSERT INTO `911`.`reports`
 `operator_userID`,
 `status`,
 `officer_userID`,
-`crisisID`)
+`crisisID`,
+`date_time_modified`)
 VALUES
-('1', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT1', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1001', 'Submitted', '-1', '-1');
+('1', '1994-11-05', '13:14:14', '12:14:15', 'Hougang', '11.203', '102.391', 'Ivan', 'S9449973I', '1111-02-11', '0', 'Unsure', 'idkasdasdasdasdsdsdasdasdasdasdasd', 'CAT1', 'Motor Vehicle Accident', '0111-11-11', '13:14:14', '0000000', '100', 'Hougang', '11.203', '102.391', 'idkasdaasdasdasd', '1001', 'Verified', '1003', '1', '2017-10-24 00:19:16');
 
 INSERT INTO `911`.`reports`
 (`reportID`,
@@ -116,9 +118,10 @@ INSERT INTO `911`.`reports`
 `operator_userID`,
 `status`,
 `officer_userID`,
-`crisisID`)
+`crisisID`,
+`date_time_modified`)
 VALUES
-('2', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT1', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1002', 'Verified', '1003', '1');
+('2', '1994-11-05', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '', '0', 'Unsure', 'idk', 'CAT1', 'Terrorism', '', '13:14:14', '0000000', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1002', 'Verified', '1003', '1', '2017-10-23 23:58:08');
 
 INSERT INTO `911`.`reports`
 (`reportID`,
@@ -147,9 +150,10 @@ INSERT INTO `911`.`reports`
 `operator_userID`,
 `status`,
 `officer_userID`,
-`crisisID`)
+`crisisID`,
+`date_time_modified`)
 VALUES
-('3', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT1', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1001', 'Drafted', '-1', '-1');
+('3', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT1', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1001', 'Drafted', '-1', '-1', '');
 
 INSERT INTO `911`.`reports`
 (`reportID`,
@@ -178,9 +182,10 @@ INSERT INTO `911`.`reports`
 `operator_userID`,
 `status`,
 `officer_userID`,
-`crisisID`)
+`crisisID`,
+`date_time_modified`)
 VALUES
-('4', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT2', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1001', 'Submitted', '-1', '-1');
+('4', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT2', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1001', 'Submitted', '-1', '-1', '');
 
 6. Run this to make REGISTRY table for verifications: 
 CREATE TABLE `911`.`registry` (

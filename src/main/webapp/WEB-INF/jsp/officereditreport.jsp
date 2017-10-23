@@ -68,7 +68,7 @@
 					<div class="form-group">
 						<label for="new_date_of_call" class="col-sm-4 control-label">Date of call</label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_date_of_call" placeholder="" value="13-Jan-2017" name="date">
+							<input type="date" class="form-control" id="new_date_of_call" placeholder="" value="1994-11-05" name="date">
 						</div>
 					</div>
 					<div class="form-group">
@@ -89,20 +89,20 @@
 							<input type="text" class="form-control" id="new_call_location" placeholder="" name="callerLocation" value="${report.callerLocation}">
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="margin-bottom: 5px;">
 						<label for="new_call_coordinates" class="col-sm-4 control-label">Call Coordinates</label>
-						<div class="col-sm-3">
+						<div class="col-sm-3" style="width: 20%; padding-right: 5px;">
 							<input type="text" class="form-control" id="new_call_coordinates_north" placeholder="" name="callCoord_n" value="${report.callCoord_n}"	>
 						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">N</div>
-						<div class="col-sm-3">
+						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px; padding:0;">Latitude</div>
+						<div class="col-sm-3" style="width: 20%; padding-right: 5px;">
 							<input type="text" class="form-control" id="new_call_coordinates_east" placeholder="" name="callCoord_e" value="${report.callCoord_e}">
 						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">E</div>
+						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px; padding:0;">Longitude</div>
 					</div>
-					<div class="col-sm-12">
-						<div class="col-sm-4 col-sm-offset-4">
-							<button class="btn btn-secondary btn-block" type="button" name="getCoords" value="getCoords" >Get Coordinates</button>
+					<div class="form-group">
+						<div class="getCoordsBtn col-sm-4 col-sm-offset-4" style="margin-left: 31%; width:240px; float:right;">
+								<button class="btn btn-secondary btn-block" type="submit" name="getCallerCoords" value="getCallerCoords" >Get Caller Coordinates</button>
 						</div>
 					</div>
 					<div class="col-sm-12">
@@ -123,7 +123,7 @@
 					<div class="form-group">
 						<label for="new_caller_dob" class="col-sm-4 control-label">Caller Date of Birth</label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_caller_dob" placeholder="" name="dob" value="${report.callStartTime}">
+							<input type="date" class="form-control" id="new_caller_dob" placeholder="" name="dob" value="${report.dob}">
 						</div>
 					</div>
 					<div class="form-group">
@@ -136,9 +136,11 @@
 							<button class="btn btn-secondary btn-block" type="button" name="verifyCaller" name="verifyCaller" >Verify Caller</button>
 						</div>
 					</div>
+					
 					<div class="col-sm-12">
 						<div class="col-sm-8 col-sm-offset-2"><hr></div>
 					</div>
+					
 					<div class="form-group">
 						<label for="new_authenticity" class="col-sm-4 control-label">Authenticity of Call</label>
 						<div class="col-sm-8">
@@ -153,7 +155,7 @@
 					<div class="form-group">
 						<label for="new_reason" class="col-sm-4 control-label">Reason</label>
 						<div class="col-sm-8">
-							<textarea class="form-control" rows="3" id="new_reason" name="reason">${report.reason}</textarea>
+							<textarea class="form-control" rows="5" id="new_reason" name="reason">${report.reason}</textarea>
 						</div>
 					</div>
 				</div>
@@ -204,9 +206,11 @@
 							</select>
 						</div>
 					</div>
-					<div class="col-sm-12">
+					
+					<div class="col-sm-12" style="height:49px;">
 						<div class="col-sm-8 col-sm-offset-2"><hr></div>
 					</div>
+					
 					<div class="form-group">
 						<label for="new_estimated_start_date" class="col-sm-4 control-label">Estimated Start Date</label>
 						<div class="col-sm-8">
@@ -220,32 +224,53 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="new_casualties" class="col-sm-4 control-label">Estimated Casualties</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="new_casualties" placeholder="" name="noOfCasualties" value="${report.noOfCasualties}">
+						</div>
+					</div>
+					<div class="form-group">
 						<label for="new_incident_location" class="col-sm-4 control-label">Incident Location</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="new_call_location" placeholder="" name="incidentLocation" value="${report.incidentLocation}">
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="margin-bottom: 5px;">
 						<label for="new_incident_coordinates" class="col-sm-4 control-label">Incident Coordinates</label>
-						<div class="col-sm-3">
+						<div class="col-sm-3" style="width: 20%; padding-right: 5px;">
 							<input type="text" class="form-control" id="new_incident_coordinates_north" placeholder="" name="incidentCoord_n" value="${report.incidentCoord_n}">
 						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">N</div>
-						<div class="col-sm-3">
+						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px; padding:0;">Latitude</div>
+						<div class="col-sm-3" style="width: 20%; padding-right: 5px;">
 							<input type="text" class="form-control" id="new_incident_coordinates_east" placeholder="" name="incidentCoord_e" value="${report.incidentCoord_e}">
 						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">E</div>
+						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px; padding:0;">Longitude</div>
 					</div>
-					<div class="col-sm-12">
-						<div class="col-sm-4 col-sm-offset-4">
-							<button class="btn btn-secondary btn-block" type="submit" name="" onclick="location.href='/livefeed'" value="getIncidentCoords">Get Coordinates</button>
+					<div class="form-group" style="margin-bottom: 5px;">
+						<div class="getCoordsBtn col-sm-4 col-sm-offset-4" style="margin-left: 31%; width:240px; float:right;">
+								<button class="btn btn-secondary btn-block" type="submit" name="getIncidentCoords" onclick="location.href='/getCoords'" value="getIncidentCoords">Get Incident Coordinates</button>
 						</div>
 					</div>
-					<div class="form-group col-sm-4"></div>
-					<div class="form-group col-sm-8" style="height: 40px;"><hr></div>
+					
+					<div class="form-group">
+						<div class="" style="width: 95%; margin:auto;">
+								<button class="btn btn-secondary btn-block" type="submit" name="checkLiveFeeds" onclick="location.href='/checkLiveFeeds'" value="checkLiveFeeds">Check Live Feeds</button>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="new_crisis_id" class="col-sm-4 control-label">Crisis ID</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="new_crisis_id" placeholder="" name="crisisID" value="${report.crisisID}">
+						</div>
+					</div>
+
+					<div class="form-group col-sm-4" style=""></div>
+					<div class="form-group col-sm-8" style="height: 30px;"><hr></div>
+					
 					<div class="form-group" style="padding:0 15px;">
 						<p class="lead">Additional Notes</p>
-						<textarea class="form-control" rows="10" id="notes" name="additionalNotes">${report.additionalNotes}</textarea>
+						<textarea class="form-control" rows="5" id="notes" name="additionalNotes">${report.additionalNotes}</textarea>
 					</div>
 				</div>
 				<div class="col-sm-6 col-sm-offset-3"><hr></div>

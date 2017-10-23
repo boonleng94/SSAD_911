@@ -1,5 +1,9 @@
 package com.app.report;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -39,6 +43,7 @@ public class Report {
 	private String status;
 	private int officerUserID;
 	private int crisisID;
+	private String dateTimeModified;
 
 	public Report() {
 		
@@ -78,6 +83,10 @@ public class Report {
 		this.status = status;
 		this.officerUserID = officerUserID;
 		this.crisisID = crisisID;
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date currentDate = new Date();		
+		this.dateTimeModified = dateFormat.format(currentDate);
 	}
 	
 	public int getReportID() {
@@ -296,4 +305,12 @@ public class Report {
 		this.crisisID = crisisID;
 	}
 
+
+	public String getDateTimeModified() {
+		return dateTimeModified;
+	}
+
+	public void setDateTimeModified(String dateTimeModified) {
+		this.dateTimeModified = dateTimeModified;
+	}
 }

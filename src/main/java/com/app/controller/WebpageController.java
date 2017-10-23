@@ -24,10 +24,10 @@ import com.app.user.UserController;
 public class WebpageController implements ErrorController{
 	
 	@Autowired
-	UserController userController = new UserController();
+	UserController userController;
 	
 	@Autowired
-	ReportController reportController = new ReportController();
+	ReportController reportController;
 	
 	User user = new User();
 	private static final String ERRORPATH = "/error";
@@ -146,7 +146,6 @@ public class WebpageController implements ErrorController{
 		}
 	}
 	
-	////NOT TESTED YET
 	/**
 	 * Mapping for saving POSTed report to update
 	 */
@@ -155,8 +154,8 @@ public class WebpageController implements ErrorController{
 			@RequestParam String callerLocation, @RequestParam String callCoord_n, @RequestParam String callCoord_e, @RequestParam String callerName, @RequestParam String callerNric, 
 			@RequestParam String dob, @RequestParam String callerVerified, @RequestParam String authenticity, @RequestParam String reason, @RequestParam String incidentCategory, 
 			@RequestParam String incidentNature, @RequestParam String incidentDate, @RequestParam String estimatedStartTime, /*@RequestParam String estimatedEndTime, */
-			/*@RequestParam String noOfCasualties,*/ @RequestParam String incidentLocation, @RequestParam String incidentCoord_n, @RequestParam String incidentCoord_e, 
-			@RequestParam String additionalNotes, @RequestParam String operatorUserID, /*@RequestParam String crisisID,*/ @RequestParam String action, ModelMap model) {
+			@RequestParam String noOfCasualties, @RequestParam String incidentLocation, @RequestParam String incidentCoord_n, @RequestParam String incidentCoord_e, 
+			@RequestParam String additionalNotes, @RequestParam String operatorUserID, @RequestParam String crisisID, @RequestParam String action, ModelMap model) {
 		
 		if(model.get("userID") == null || (int) model.get("userID") == 0 || !userController.isLiaisonOfficer((int) model.get("userID"))) {
 			model.put("message", "Only Liaison Officers can access this page.");
@@ -169,17 +168,18 @@ public class WebpageController implements ErrorController{
 			//STORE POST DATA INTO MODEL
 			Report tempReport = new Report(Integer.parseInt(reportID), date, callStartTime, callEndTime, callerLocation, callCoord_n, callCoord_e, callerName, callerNric, dob,
 					((callerVerified.equals("Yes")) ? true  : false), authenticity, reason, incidentCategory, incidentNature, incidentDate, estimatedStartTime, "0000000", 
-					Integer.parseInt("100"), incidentLocation, incidentCoord_n, incidentCoord_e, additionalNotes, Integer.parseInt(operatorUserID), "Verified", (int) model.get("userID"), Integer.parseInt("1"));
+					Integer.parseInt(noOfCasualties), incidentLocation, incidentCoord_n, incidentCoord_e, additionalNotes, Integer.parseInt(operatorUserID), "Verified", (int) model.get("userID"), Integer.parseInt(crisisID));
 			
 			Report savedReport = reportController.updateReportOfficer(tempReport, (int) model.get("userID"), Integer.parseInt(reportID));
 			
 			if(action.equals("submit")){
-				NineOneOneClient.createCallReport(savedReport);
+				User user = userController.getUserToSubmitReport(savedReport.getOfficerUserID());
+				NineOneOneClient.createCallReport(savedReport, user);
 				savedReport.setStatus("Sent");
-				Report subtmittedReport = reportController.updateReportOfficer(savedReport, (int) model.get("userID"), Integer.parseInt(reportID));
+				Report submittedReport = reportController.updateReportOfficer(savedReport, (int) model.get("userID"), Integer.parseInt(reportID));
 			}
 			
-			//BETTER IF STAY IN SAME PAGE THAN GOING BACK HOME
+			//Everything is updated, but error message still returns page not available
 			return new ModelAndView("/home");
 		}
 	}
