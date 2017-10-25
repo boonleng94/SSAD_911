@@ -1,5 +1,6 @@
 package com.app.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.app.report.Report;
 import com.app.report.ReportController;
 import com.app.user.User;
 import com.app.user.UserController;
+import com.app.geocoder.*;
 
 @Controller
 @SessionAttributes("userID")
@@ -25,7 +27,8 @@ public class WebpageController implements ErrorController{
 	
 	@Autowired
 	UserController userController;
-	
+	@Autowired 
+	GeocoderController geocodercontroller;
 	@Autowired
 	ReportController reportController;
 	
@@ -164,7 +167,7 @@ public class WebpageController implements ErrorController{
 		}
 		else{
 			model.put("name", user.getName());
-			model.put("report", reportController.getReport(Integer.valueOf(reportID)));
+			model.put("report", reportController.getReport(Integer.valueOf(reportID))/*Sends report object. To call variable, use report.(name)*/);
 			//STORE POST DATA INTO MODEL
 			Report tempReport = new Report(Integer.parseInt(reportID), date, callStartTime, callEndTime, callerLocation, callCoord_n, callCoord_e, callerName, callerNric, dob,
 					((callerVerified.equals("Yes")) ? true  : false), authenticity, reason, incidentCategory, incidentNature, incidentDate, estimatedStartTime, "0000000", 
@@ -263,5 +266,27 @@ public class WebpageController implements ErrorController{
 		model.put("message", "Logged out successfully");
 		model.put("redirect", "/");
 		return new ModelAndView("/message");
+	}
+	@RequestMapping(value="/getgeo")
+	public ModelAndView getGeoCode (ModelMap model,@RequestParam String address, @RequestParam String reportID)
+	{
+		Response response=null;
+		try {
+			 response= geocodercontroller.getGeoCode(address);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		results[] Result=response.getResults();
+		geometry geo = Result[2].getGeometry();//Change number if query does not work
+		location loc =geo.getLocation();
+		model.put("lat",loc.getLat() );
+		model.put("lng", loc.getLng());
+		
+		//update database
+		
+		//send post with report ID parameter to editreport
+		model.put("reportID", reportID);
+		return new ModelAndView("redirect:/editReport");//check user service 
 	}
 }
