@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import java.util.Collections;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.app.cmoapi.NineOneOneClient;
+import com.app.geocoder.*;
 import com.app.report.Report;
 import com.app.report.ReportController;
 import com.app.user.User;
@@ -28,7 +30,8 @@ public class WebpageController implements ErrorController{
 	
 	@Autowired
 	UserController userController;
-	
+	@Autowired 
+	GeocoderController geocodercontroller;	
 	@Autowired
 	ReportController reportController;
 	
@@ -168,7 +171,8 @@ public class WebpageController implements ErrorController{
 			return new ModelAndView("/message");
 		}
 		else{
-			model.put("name", user.getName());
+			model.put("report", reportController.getReport(Integer.valueOf(reportID))/*Sends report object. To call variable, use report.(name)*/);
+			//STORE POST DATA INTO MODEL
 			
 			Report updatedReport = reportController.getReport(Integer.valueOf(reportID));
 			updatedReport.setIncidentCategory(incidentCategory);
@@ -276,5 +280,27 @@ public class WebpageController implements ErrorController{
 		model.put("message", "Logged out successfully");
 		model.put("redirect", "/");
 		return new ModelAndView("/message");
+	}
+	@RequestMapping(value="/getgeo")
+	public ModelAndView getGeoCode (ModelMap model,@RequestParam String address, @RequestParam String reportID)
+	{
+		Response response=null;
+		try {
+			 response= geocodercontroller.getGeoCode(address);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		results[] Result=response.getResults();
+		geometry geo = Result[2].getGeometry();//Change number if query does not work
+		location loc =geo.getLocation();
+		model.put("lat",loc.getLat() );
+		model.put("lng", loc.getLng());
+		
+		//update database
+		
+		//send post with report ID parameter to editreport
+		model.put("reportID", reportID);
+		return new ModelAndView("redirect:/editReport");//check user service 
 	}
 }
