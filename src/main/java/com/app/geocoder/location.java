@@ -13,11 +13,13 @@ import javax.persistence.*;
 @Embeddable
 public class location {
 
-	public location()
-	{}
+	public location(){
+		
+	}
 
 	private String lat;
 	private String lng;
+	
 	public String getLat() {
 		return lat;
 	}
@@ -30,5 +32,4 @@ public class location {
 	public void setLng(String lng) {
 		this.lng = lng;
 	}
-
 }

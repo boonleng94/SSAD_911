@@ -38,8 +38,8 @@ public class Geocoder implements Serializable
     public static final String OUTPUT_JSON = "json";
     private final String output = OUTPUT_JSON;
 
-    public Geocoder()
-    {
+    public Geocoder(){
+    	
     }
 
     public Response decode(String response) throws JsonParseException, JsonMappingException, IOException

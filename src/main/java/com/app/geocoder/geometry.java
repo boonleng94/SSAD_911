@@ -8,15 +8,19 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Embeddable
 public class geometry {
-	public geometry()
-	{}
+	
+	public geometry(){
+		
+	}
+	
 	public location getLocation() {
 		return Location;
 	}
+	
 	public void setLocation(location location) {
 		Location = location;
 	}
+	
 	@Embedded
 	private location Location;
-	
 }

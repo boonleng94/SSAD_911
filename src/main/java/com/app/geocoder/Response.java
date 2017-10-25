@@ -22,8 +22,9 @@ public class Response  implements Serializable{
 	private results[] results;
 	private String Status;
 	
-	public Response()
-	{}
+	public Response(){
+		
+	}
 
 	public results[] getResults() {
 		return results;
@@ -40,5 +41,4 @@ public class Response  implements Serializable{
 	public void setStatus(String status) {
 		Status = status;
 	}
-	
 }

@@ -12,6 +12,7 @@ import wicket.contrib.gmap.api.GLatLng;
 
 @RestController 
 public class GeocoderController {
+	
 	@Autowired
 	private GeocoderService geocoderService;
 	
@@ -20,6 +21,7 @@ public class GeocoderController {
 	{
 		return geocoderService.convertToGeoCode(address);
 	}
+	
 	@RequestMapping("/convert")
 	public Response getGeoCode2() throws IOException
 	{

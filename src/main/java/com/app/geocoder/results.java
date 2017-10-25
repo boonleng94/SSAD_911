@@ -16,10 +16,8 @@ import javax.persistence.*;
 public class results implements Serializable{
 
 	@Embedded
-	 private geometry geometry;
-	 private String formatted_address;
-
-	
+	private geometry geometry;
+	private String formatted_address;
 
 	public geometry getGeometry() {
 		return geometry;
@@ -37,7 +35,7 @@ public class results implements Serializable{
 		this.formatted_address = formatted_address;
 	}
 
-
-	 
-	    public results() {}
+	public results(){
+		
+	}
 }

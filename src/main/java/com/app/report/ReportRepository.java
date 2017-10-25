@@ -22,5 +22,4 @@ public interface ReportRepository extends CrudRepository<Report, String>{
 	
 	@Query("select DISTINCT(c.crisisID) from Report c where c.crisisID > 0")
 	public List<Integer> getCrisisIDs();
-	
 }

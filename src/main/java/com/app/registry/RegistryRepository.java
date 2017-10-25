@@ -23,5 +23,4 @@ public interface RegistryRepository extends CrudRepository<Registry, String>{
 	@Modifying
 	@Query("delete from Registry where nric = :nric")
 	void delete(@Param("nric") int nric);
-
 }
