@@ -32,12 +32,9 @@
       <form class="form-signin" action="/login" method="POST" style="padding-top:0;">
         <br />
         <label for="inputUsername" class="sr-only">Username</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus style="margin-bottom:10px;">
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-        <label><input type="checkbox" value="remember-me"> Remember me</label>
-        </div>       
         <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
       </form>
     </div>

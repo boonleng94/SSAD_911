@@ -1,12 +1,12 @@
 package com.app.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +18,9 @@ import com.app.report.Report;
 import com.app.report.ReportController;
 import com.app.user.User;
 import com.app.user.UserController;
+import com.mysql.fabric.xmlrpc.base.Array;
+
+import scala.annotation.meta.field;
 
 @Controller
 @SessionAttributes("userID")
@@ -137,6 +140,11 @@ public class WebpageController implements ErrorController{
 		if (userController.isLiaisonOfficer((int) model.get("userID"))) {
 			model.put("name", user.getName());
 			model.put("report", reportController.getReport(Integer.valueOf(reportID)));
+			
+			List<Integer> ints = reportController.getAllCrisisIDs();
+			Collections.sort(ints);
+			model.put("crisisIDs", ints);
+
 			return new ModelAndView("officereditreport");
 		}
 		else {
@@ -150,12 +158,9 @@ public class WebpageController implements ErrorController{
 	 * Mapping for saving POSTed report to update
 	 */
 	@RequestMapping(value ="/officerUpdateReport", method=RequestMethod.POST)
-	public ModelAndView updateReportPage(@RequestParam String reportID, @RequestParam String date, @RequestParam String callStartTime, @RequestParam String callEndTime, 
-			@RequestParam String callerLocation, @RequestParam String callCoord_n, @RequestParam String callCoord_e, @RequestParam String callerName, @RequestParam String callerNric, 
-			@RequestParam String dob, @RequestParam String callerVerified, @RequestParam String authenticity, @RequestParam String reason, @RequestParam String incidentCategory, 
-			@RequestParam String incidentNature, @RequestParam String incidentDate, @RequestParam String estimatedStartTime, /*@RequestParam String estimatedEndTime, */
-			@RequestParam String noOfCasualties, @RequestParam String incidentLocation, @RequestParam String incidentCoord_n, @RequestParam String incidentCoord_e, 
-			@RequestParam String additionalNotes, @RequestParam String operatorUserID, @RequestParam String crisisID, @RequestParam String action, ModelMap model) {
+	public ModelAndView updateReportPage(@RequestParam String reportID, @RequestParam String authenticity, @RequestParam String reason, @RequestParam String incidentCategory, 
+			@RequestParam String incidentNature, @RequestParam String incidentLocation, @RequestParam String incidentCoord_n, @RequestParam String incidentCoord_e, 
+			@RequestParam String crisisID, @RequestParam String additionalNotes, @RequestParam String action, ModelMap model) {
 		
 		if(model.get("userID") == null || (int) model.get("userID") == 0 || !userController.isLiaisonOfficer((int) model.get("userID"))) {
 			model.put("message", "Only Liaison Officers can access this page.");
@@ -164,23 +169,31 @@ public class WebpageController implements ErrorController{
 		}
 		else{
 			model.put("name", user.getName());
-			model.put("report", reportController.getReport(Integer.valueOf(reportID)));
-			//STORE POST DATA INTO MODEL
-			Report tempReport = new Report(Integer.parseInt(reportID), date, callStartTime, callEndTime, callerLocation, callCoord_n, callCoord_e, callerName, callerNric, dob,
-					((callerVerified.equals("Yes")) ? true  : false), authenticity, reason, incidentCategory, incidentNature, incidentDate, estimatedStartTime, "0000000", 
-					Integer.parseInt(noOfCasualties), incidentLocation, incidentCoord_n, incidentCoord_e, additionalNotes, Integer.parseInt(operatorUserID), "Verified", (int) model.get("userID"), Integer.parseInt(crisisID));
 			
-			Report savedReport = reportController.updateReportOfficer(tempReport, (int) model.get("userID"), Integer.parseInt(reportID));
+			Report updatedReport = reportController.getReport(Integer.valueOf(reportID));
+			updatedReport.setIncidentCategory(incidentCategory);
+			updatedReport.setIncidentNature(incidentNature);
+			updatedReport.setIncidentLocation(incidentLocation);
+			updatedReport.setIncidentCoord_n(incidentCoord_n);
+			updatedReport.setIncidentCoord_e(incidentCoord_e);
+			updatedReport.setCrisisID(Integer.parseInt(crisisID));
+			updatedReport.setAdditionalNotes(additionalNotes);
+			updatedReport.setAuthenticity(authenticity);
+			updatedReport.setReason(reason);
 			
 			if(action.equals("submit")){
-				User user = userController.getUserToSubmitReport(savedReport.getOfficerUserID());
-				NineOneOneClient.createCallReport(savedReport, user);
-				savedReport.setStatus("Sent");
-				Report submittedReport = reportController.updateReportOfficer(savedReport, (int) model.get("userID"), Integer.parseInt(reportID));
+				try {
+					User user = userController.getUserToSubmitReport(updatedReport.getOfficerUserID());
+					NineOneOneClient.createCallReport(updatedReport, user);
+					updatedReport.setStatus("Sent");
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println("can't submit");
+				}
 			}
+			Report savedReport = reportController.updateReportOfficer(updatedReport, (int) model.get("userID"), Integer.parseInt(reportID));
 			
-			//Everything is updated, but error message still returns page not available
-			return new ModelAndView("/home");
+			return new ModelAndView("redirect:/home");
 		}
 	}
 	
@@ -213,7 +226,7 @@ public class WebpageController implements ErrorController{
 	/**
 	 * Mapping for error page
 	 */
-	@RequestMapping(ERRORPATH)
+	//@RequestMapping(ERRORPATH)
 	public ModelAndView errorPage(ModelMap model) {
 		model.put("message", "This page is not available.");
 		model.put("redirect", "/");

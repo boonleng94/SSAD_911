@@ -12,11 +12,13 @@
 
 		<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 		<link href="static/css/bootstrap.min.css" rel="stylesheet">
+<!--
 		<link href="static/css/style.css" rel="stylesheet">
 		<link href="static/css/login.css" rel="stylesheet" >
+-->
 
 		<!-- Custom styles for this template -->
-		<link rel="stylesheet" href="css/custom.css">
+		<link rel="stylesheet" href="static/css/custom.css">
 
 		<title>Crisis Management System | Home</title>
 	</head>

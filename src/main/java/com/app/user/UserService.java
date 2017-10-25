@@ -50,5 +50,5 @@ public class UserService {
 
 	public List<User> getUserByLiaisonOfficer(boolean liaisonOfficer){
 		return userRepository.findByLiaisonOfficer(liaisonOfficer);
-	}
+	}	
 }

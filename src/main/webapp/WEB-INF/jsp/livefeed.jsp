@@ -12,11 +12,9 @@
 
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/css/style.css" rel="stylesheet">
-    <link href="static/css/login.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="static/css/custom.css">
 
     <title>Crisis Management System | Home</title>
     <style type="text/css">
@@ -67,14 +65,15 @@
                     <tr>
                         <td class="auto-style1">
                             <div class="table-entry">
-                                <!--<img src="http://192.168.1.119:6888/video/live.mjpg?id=39e327af-cc42-d083-0f65-32453e2c13b2" height="280" width ="280" alt="live-feed-video"/>
-                                <img src="http://192.168.1.119:6888/video/live.mjpg?id=39e327af-cc42-d083-0f65-32453e2c13b2" height="280" width ="280" alt="live-feed-video"/>
-                                <img src="http://192.168.1.119:6888/video/live.mjpg?id=39e327af-cc42-d083-0f65-32453e2c13b2" height="280" width ="280" alt="live-feed-video"/>
-                                <img src="http://192.168.1.119:6888/video/live.mjpg?id=39e327af-cc42-d083-0f65-32453e2c13b2" height="280" width ="280" alt="live-feed-video"/> -->
-                                <img src="http://192.168.1.119:6888/video/live.mjpg?id=39e327af-cc42-d083-0f65-32453e2c13b2" height="1120" width ="1120" alt="live-feed-video"/>
+								<img src="http://10.27.131.195:6888/video/live.mjpg?id=6d5529e2-2dd4-1d3e-bd77-8093d6ca0347" height="280" width ="280" alt="live-feed-video"/>
+								<img src="http://10.27.131.195:6888/video/live.mjpg?id=6d5529e2-2dd4-1d3e-bd77-8093d6ca0347" height="280" width ="280" alt="live-feed-video"/>
+								<img src="http://10.27.131.195:6888/video/live.mjpg?id=6d5529e2-2dd4-1d3e-bd77-8093d6ca0347" height="280" width ="280" alt="live-feed-video"/>
+								<img src="http://10.27.131.195:6888/video/live.mjpg?id=6d5529e2-2dd4-1d3e-bd77-8093d6ca0347" height="280" width ="280" alt="live-feed-video"/>
+								<!--<img src="http://192.168.1.119:6888/video/live.mjpg?id=39e327af-cc42-d083-0f65-32453e2c13b2" height="1120" width ="1120" alt="live-feed-video"/> -->
                             </div>
                         </td>
-                        <td>
+<!--
+						<td>
 					<p class="lead">Crisis Details</p>
 					<div class="form-group">
 						<label for="new_category" class="col-sm-4 control-label">Emergency Category</label>
@@ -114,11 +113,11 @@
 						<div class="col-sm-3">
 							<label class="form-control" id="new_incident_coordinates_north">${north_coordi}</label>
 						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">N</div>
+						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">Latitude</div>
 						<div class="col-sm-3">
 							<label class="form-control" id="new_incident_coordinates_east">${east_coordi}</label>
 						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">E</div>
+						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">Longitude</div>
 					</div>
 					<div class="col-sm-12">
 						<div class="col-sm-8 col-sm-offset-2"><hr></div>
@@ -129,6 +128,7 @@
 						</div>
 					</div>
                         </td>
+-->
                     </tr>
                 </tbody>
             </table>

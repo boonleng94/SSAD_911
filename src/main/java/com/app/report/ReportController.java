@@ -57,4 +57,8 @@ public class ReportController {
 	public List<Report> getAllReportsforLO(){
 		return reportService.getReportsByCategoryAndNotStatus("CAT1", "Drafted");
 	}
+
+	public List<Integer> getAllCrisisIDs(){
+		return reportService.getAllCrisisIDs();
+	}
 }

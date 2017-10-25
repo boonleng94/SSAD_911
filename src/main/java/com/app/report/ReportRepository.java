@@ -19,4 +19,8 @@ public interface ReportRepository extends CrudRepository<Report, String>{
 	@Modifying
 	@Query("delete from Report where reportID = :reportID")
 	void delete(@Param("reportID") int reportID);
+	
+	@Query("select DISTINCT(c.crisisID) from Report c where c.crisisID > 0")
+	public List<Integer> getCrisisIDs();
+	
 }

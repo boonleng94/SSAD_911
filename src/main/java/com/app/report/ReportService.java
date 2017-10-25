@@ -45,4 +45,8 @@ public class ReportService {
 		reports.get(0);
 		return reportRepository.findByIncidentCategoryAndStatusNot("CAT1", "Drafted");
 	}
+	
+	public List<Integer> getAllCrisisIDs(){
+		return reportRepository.getCrisisIDs();
+	}
 }

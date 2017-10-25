@@ -1,5 +1,6 @@
 <!-- index.html -->
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 
 	<head>
@@ -10,15 +11,34 @@
 		<!-- Bootstrap Core CSS -->
 		<!--	<link rel="stylesheet" href="static/css/bootstrap.min.css">-->
 		<link rel="stylesheet" href="static/css/bootstrap.css">
-
+<!--
+		<link href="static/css/style.css" rel="stylesheet">
+		<link href="static/css/login.css" rel="stylesheet" >
+-->
 		<!-- Custom styles for this template -->
 		<link rel="stylesheet" href="static/css/custom.css">
-
-		<!-- jQuery -->
-		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		
 
 		<!-- Bootstrap Core JavaScript -->
 		<script src="static/js/bootstrap.min.js"></script>  
+		<!-- jQuery -->
+		<script src="static/js/jquery-1.11.1.min.js"></script>
+
+		<script>
+			function selectC() {
+				document.getElementById('crisisIDSelector').style.display = 'block';
+				document.getElementById('crisisID').style.display = 'none';
+			}
+
+			function create() {
+				document.getElementById('crisisIDSelector').style.display = 'none';
+				document.getElementById('crisisID').style.display = 'block';
+			}
+			
+			function setCrisisID() {
+				document.getElementById('crisisID').value=document.getElementById('crisisIDSelector').value;
+			}
+		</script>
 
 		<!-- Custom JavaScript -->
 		<script src="static/js/main.js"></script>
@@ -62,78 +82,46 @@
 			<form class="form-horizontal" action="/officerUpdateReport" method="POST">
 				<!-- left column -->
 				<input type="hidden" value=${report.reportID} name="reportID"/>
-				<input type="hidden" value=${report.operatorUserID} name="operatorUserID"/>
 				<div class="col-sm-6">
 					<p class="lead">Call Information</p>
 					<div class="form-group">
-						<label for="new_date_of_call" class="col-sm-4 control-label">Date of call</label>
-						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_date_of_call" placeholder="" value="1994-11-05" name="date">
+						<label for="new_date_of_call" class="col-sm-4 control-label">Date of call </br> (YYYY-MM-DD)</label>
+						<div class="col-sm-8 entry-placeholder">
+							${report.date}
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_call_start_time" class="col-sm-4 control-label">Call start time</label>
-						<div class="col-sm-8">
-							<input type="time" class="form-control" id="new_call_start_time" placeholder="" name="callStartTime" value="${report.callStartTime}">
+						<div class="col-sm-8 entry-placeholder">
+							${report.callStartTime} hrs
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_call_end_time" class="col-sm-4 control-label">Call end time</label>
-						<div class="col-sm-8">
-							<input type="time" class="form-control" id="new_name" placeholder="" name="callEndTime" value="${report.callEndTime}">
+						<div class="col-sm-8 entry-placeholder">
+							${report.callEndTime} hrs
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_call_location" class="col-sm-4 control-label">Call Location</label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_call_location" placeholder="" name="callerLocation" value="${report.callerLocation}">
+						<div class="col-sm-8 entry-placeholder">
+							${report.callerLocation}
 						</div>
 					</div>
 					<div class="form-group" style="margin-bottom: 5px;">
 						<label for="new_call_coordinates" class="col-sm-4 control-label">Call Coordinates</label>
-						<div class="col-sm-3" style="width: 20%; padding-right: 5px;">
-							<input type="text" class="form-control" id="new_call_coordinates_north" placeholder="" name="callCoord_n" value="${report.callCoord_n}"	>
-						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px; padding:0;">Latitude</div>
-						<div class="col-sm-3" style="width: 20%; padding-right: 5px;">
-							<input type="text" class="form-control" id="new_call_coordinates_east" placeholder="" name="callCoord_e" value="${report.callCoord_e}">
-						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px; padding:0;">Longitude</div>
-					</div>
-					<div class="form-group">
-						<div class="getCoordsBtn col-sm-4 col-sm-offset-4" style="margin-left: 31%; width:240px; float:right;">
-								<button class="btn btn-secondary btn-block" type="submit" name="getCallerCoords" value="getCallerCoords" >Get Caller Coordinates</button>
+						<div class="col-sm-8 entry-placeholder">
+							${report.callCoord_n} Latitude, ${report.callCoord_e} Longitude
 						</div>
 					</div>
 					<div class="col-sm-12">
 						<div class="col-sm-8 col-sm-offset-2"><hr></div>
 					</div>
-					<div class="form-group">
-						<label for="new_caller_name" class="col-sm-4 control-label">Caller Name</label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_caller_name" placeholder="" name="callerName" value="${report.callerName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="new_caller_ic" class="col-sm-4 control-label">Caller IC Number</label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_caller_ic" placeholder="" name="callerNric" value="${report.callerNric}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="new_caller_dob" class="col-sm-4 control-label">Caller Date of Birth</label>
-						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_caller_dob" placeholder="" name="dob" value="${report.dob}">
-						</div>
-					</div>
+					
 					<div class="form-group">
 						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified</label>
 						<div class="col-sm-4 entry-placeholder" id="new_caller_verified" style="margin-top: 7px;">
 							${report.callerVerified == false ? "No" : "Yes"}
-							<input type="hidden" value=${report.callerVerified} name="callerVerified"/>
-						</div>
-						<div class="col-sm-4">
-							<button class="btn btn-secondary btn-block" type="button" name="verifyCaller" name="verifyCaller" >Verify Caller</button>
 						</div>
 					</div>
 					
@@ -207,26 +195,16 @@
 						</div>
 					</div>
 					
-					<div class="col-sm-12" style="height:49px;">
-						<div class="col-sm-8 col-sm-offset-2"><hr></div>
-					</div>
-					
 					<div class="form-group">
 						<label for="new_estimated_start_date" class="col-sm-4 control-label">Estimated Start Date</label>
-						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_estimated_start_date" placeholder="" name="incidentDate" value="${report.incidentDate}">
+						<div class="col-sm-8 entry-placeholder">
+							${report.incidentDate}
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_estimated_start_time" class="col-sm-4 control-label">Estimated Start Time</label>
-						<div class="col-sm-8">
-							<input type="time" class="form-control" id="new_estimated_start_time" placeholder="" name="estimatedStartTime" value="${report.callStartTime}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="new_casualties" class="col-sm-4 control-label">Estimated Casualties</label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_casualties" placeholder="" name="noOfCasualties" value="${report.noOfCasualties}">
+						<div class="col-sm-8 entry-placeholder">
+							${report.callStartTime} hrs
 						</div>
 					</div>
 					<div class="form-group">
@@ -246,30 +224,51 @@
 						</div>
 						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px; padding:0;">Longitude</div>
 					</div>
-					<div class="form-group" style="margin-bottom: 5px;">
-						<div class="getCoordsBtn col-sm-4 col-sm-offset-4" style="margin-left: 31%; width:240px; float:right;">
-								<button class="btn btn-secondary btn-block" type="submit" name="getIncidentCoords" onclick="location.href='/getCoords'" value="getIncidentCoords">Get Incident Coordinates</button>
-						</div>
-					</div>
 					
 					<div class="form-group">
 						<div class="" style="width: 95%; margin:auto;">
-								<button class="btn btn-secondary btn-block" type="submit" name="checkLiveFeeds" onclick="location.href='/checkLiveFeeds'" value="checkLiveFeeds">Check Live Feeds</button>
+<!--							<form class="navbar-form navbar-right" action="#" method="POST" target="_blank">-->
+							<button class="btn btn-secondary btn-block" type="button" name="checkLiveFeeds" value="checkLiveFeeds" onClick="window.open('http://localhost:8080/livefeed', 'b', 'height=750,width=768'); return false;">Check Live Feed</button>
+<!--							</form>-->
 						</div>
 					</div>
 
+					<div class="col-sm-12" style="height:30px;">
+						<div class="col-sm-8 col-sm-offset-2"><hr></div>
+					</div>
+					
+					<div class="form-group" style="padding:0 15px; ">
+						<p class="lead" style="margin-bottom:0px">Crisis ID</p>
+					</div>
 					<div class="form-group">
-						<label for="new_crisis_id" class="col-sm-4 control-label">Crisis ID</label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_crisis_id" placeholder="" name="crisisID" value="${report.crisisID}">
+						<label class="col-sm-6 control-label"><input type="radio" name="crisisIDRadio" class="col-sm-1 control-label" value="choose" onchange="selectC();" checked> Choose from existing Crisis ID</label>
+						<label class="col-sm-6 control-label"><input type="radio" name="crisisIDRadio" class="col-sm-1 control-label" value="create" onchange="create();"> Create new Crisis ID</label>
+					</div>
+					<div class="form-group">
+						
+						<div class="col-sm-8" style="padding-right: 5px;">
+							<select class="form-control" id="crisisIDSelector" name="crisisIDSelector" onchange="setCrisisID();">
+								<option value="" disabled selected>Select an option</option>
+								<c:forEach items="${crisisIDs}" var="cid"> 
+									<c:choose>
+										<c:when test = "${cid == report.crisisID}">
+											<option value="${cid}" selected>${cid}</option>
+										</c:when>    
+										<c:otherwise>
+											<option value="${cid}">${cid}</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</select>
+							<input type="text" class="form-control" id="crisisID" placeholder="" name="crisisID" value="${report.crisisID}" style="display:none;">
 						</div>
 					</div>
 
 					<div class="form-group col-sm-4" style=""></div>
-					<div class="form-group col-sm-8" style="height: 30px;"><hr></div>
+					<div class="form-group col-sm-8" style="height: 20px;"><hr></div>
 					
 					<div class="form-group" style="padding:0 15px;">
-						<p class="lead">Additional Notes</p>
+						<p class="lead" style="margin-bottom:10px;">Additional Notes</p>
 						<textarea class="form-control" rows="5" id="notes" name="additionalNotes">${report.additionalNotes}</textarea>
 					</div>
 				</div>
