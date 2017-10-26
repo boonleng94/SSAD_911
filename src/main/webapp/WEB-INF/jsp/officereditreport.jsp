@@ -25,14 +25,17 @@
 		<script src="static/js/jquery-1.11.1.min.js"></script>
 
 		<script>
-			function selectC() {
-				document.getElementById('crisisIDSelector').style.display = 'block';
-				document.getElementById('crisisID').style.display = 'none';
-			}
-
-			function create() {
-				document.getElementById('crisisIDSelector').style.display = 'none';
-				document.getElementById('crisisID').style.display = 'block';
+			
+			window.selectCrisisOption = function() {
+				var x = document.querySelector('input[name="crisisIDRadio"]:checked').value;
+				if(document.querySelector('input[name="crisisIDRadio"]:checked').value == "choose"){
+					document.getElementById('crisisIDSelector').style.display = 'inline';
+					document.getElementById('crisisID').style.display = 'none';
+				}
+				else{
+					document.getElementById('crisisIDSelector').style.display = 'none';
+					document.getElementById('crisisID').style.display = 'inline';
+				}
 			}
 			
 			function setCrisisID() {
@@ -40,24 +43,24 @@
 			}
 			
 			function getCoordinates(){
-			    $.ajax({
-			        var add = document.getElementById('address').value;
+				$.ajax({
+					var add = document.getElementById('address').value;
 					url: "http://localhost:8080/convert/${add}", 
-			        type: "GET",
-			        data: { format: "json"}, 
-			        dataType: "jsonp",
-			        success: function(data) {
-			            var coord = data.results.split(",");
-			            var long = coord[0];
-			            var lat = coord[1];
-			        	//document.getElementById("longtitude").innerHTML = long;
-			        	//document.getElementById("latitude").innerHTML = lat;
-			        	//$('#longtitude').html(long);
-			        	//$('#latitude').html(lat);
-			        	//<a href="#" onclick="return getSuccessOutput();"> test success </a> | <a href="#" onclick="return getFailOutput(); return false;"> test failure</a>
-			        	//<div id="output">waiting for action</div>*/
-			        },
-			    });
+					type: "GET",
+					data: { format: "json"}, 
+					   dataType: "jsonp",
+					   success: function(data) {
+					var coord = data.results.split(",");
+					var long = coord[0];
+					var lat = coord[1];
+					//document.getElementById("longtitude").innerHTML = long;
+					//document.getElementById("latitude").innerHTML = lat;
+					//$('#longtitude').html(long);
+					//$('#latitude').html(lat);
+					//<a href="#" onclick="return getSuccessOutput();"> test success </a> | <a href="#" onclick="return getFailOutput(); return false;"> test failure</a>
+					//<div id="output">waiting for action</div>*/
+				},
+			});
 		</script>
 
 		<!-- Custom JavaScript -->
@@ -105,25 +108,25 @@
 				<div class="col-sm-6">
 					<p class="lead">Call Information</p>
 					<div class="form-group">
-						<label for="new_date_of_call" class="col-sm-4 control-label">Date of call </br> (YYYY-MM-DD)</label>
+						<label for="new_date_of_call" class="col-sm-4 control-label">Date of call<span style="color:red;">*</span> </br> (YYYY-MM-DD)</label>
 						<div class="col-sm-8 entry-placeholder">
 							${report.date}
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_call_start_time" class="col-sm-4 control-label">Call start time</label>
+						<label for="new_call_start_time" class="col-sm-4 control-label">Call start time<span style="color:red;">*</span></label>
 						<div class="col-sm-8 entry-placeholder">
 							${report.callStartTime} hrs
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_call_end_time" class="col-sm-4 control-label">Call end time</label>
+						<label for="new_call_end_time" class="col-sm-4 control-label">Call end time<span style="color:red;">*</span></label>
 						<div class="col-sm-8 entry-placeholder">
 							${report.callEndTime} hrs
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_call_location" class="col-sm-4 control-label">Call Location</label>
+						<label for="new_call_location" class="col-sm-4 control-label">Call Location<span style="color:red;">*</span></label>
 						<div class="col-sm-8 entry-placeholder">
 							${report.callerLocation}
 						</div>
@@ -139,7 +142,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified</label>
+						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified<span style="color:red;">*</span></label>
 						<div class="col-sm-4 entry-placeholder" id="new_caller_verified" style="margin-top: 7px;">
 							${report.callerVerified == false ? "No" : "Yes"}
 						</div>
@@ -150,7 +153,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="new_authenticity" class="col-sm-4 control-label">Authenticity of Call</label>
+						<label for="new_authenticity" class="col-sm-4 control-label">Authenticity of Call<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
 							<select class="form-control" id="new_call_authenticity" name="authenticity">
 								<option value="" disabled selected>Select an option</option>
@@ -172,7 +175,7 @@
 				<div class="col-sm-6">
 					<p class="lead">Incident Details</p>
 					<div class="form-group">
-						<label for="new_category" class="col-sm-4 control-label">Emergency Category</label>
+						<label for="new_category" class="col-sm-4 control-label">Emergency Category<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
 							<select class="form-control" id="new_category" name="incidentCategory">
 								<option value="" disabled selected>Select a Category</option>
@@ -183,7 +186,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_nature" class="col-sm-4 control-label">Nature of Incident</label>
+						<label for="new_nature" class="col-sm-4 control-label">Nature of Incident<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
 							<select class="form-control" id="new_nature" name="incidentNature">
 								<option value="" disabled selected>Select an option</option>
@@ -228,7 +231,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_incident_location" class="col-sm-4 control-label">Incident Location</label>
+						<label for="new_incident_location" class="col-sm-4 control-label">Incident Location<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="new_call_location" placeholder="" name="incidentLocation" value="${report.incidentLocation}">
 						</div>
@@ -244,6 +247,13 @@
 						</div>
 						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px; padding:0;">Longitude</div>
 					</div>
+
+					<div class="form-group">
+						<label for="new_incident_location" class="col-sm-4 control-label"></label>
+						<div class="col-sm-8">
+							<button class="btn btn-secondary btn-block" type="button" name="getIncidentCoordinates">Get Coordinates</button>
+						</div>
+					</div>
 					
 					<div class="form-group">
 						<div class="" style="width: 95%; margin:auto;">
@@ -258,11 +268,11 @@
 					</div>
 					
 					<div class="form-group" style="padding:0 15px; ">
-						<p class="lead" style="margin-bottom:0px">Crisis ID</p>
+						<p class="lead" style="margin-bottom:0px">Crisis ID<span style="color:red;">*</span></p>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-6 control-label"><input type="radio" name="crisisIDRadio" class="col-sm-1 control-label" value="choose" onchange="selectC();" checked> Choose from existing Crisis ID</label>
-						<label class="col-sm-6 control-label"><input type="radio" name="crisisIDRadio" class="col-sm-1 control-label" value="create" onchange="create();"> Create new Crisis ID</label>
+						<label class="col-sm-6 control-label"><input type="radio" name="crisisIDRadio" class="col-sm-1 control-label" value="choose" onchange="selectCrisisOption()" checked> Choose from existing Crisis ID</label>
+						<label class="col-sm-6 control-label"><input type="radio" name="crisisIDRadio" class="col-sm-1 control-label" value="create" onchange="selectCrisisOption()"> Create new Crisis ID</label>
 					</div>
 					<div class="form-group">
 						
