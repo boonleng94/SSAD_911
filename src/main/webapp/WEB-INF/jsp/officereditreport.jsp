@@ -38,6 +38,26 @@
 			function setCrisisID() {
 				document.getElementById('crisisID').value=document.getElementById('crisisIDSelector').value;
 			}
+			
+			function getCoordinates(){
+			    $.ajax({
+			        var add = document.getElementById('address').value;
+					url: "http://localhost:8080/convert/${add}", 
+			        type: "GET",
+			        data: { format: "json"}, 
+			        dataType: "jsonp",
+			        success: function(data) {
+			            var coord = data.results.split(",");
+			            var long = coord[0];
+			            var lat = coord[1];
+			        	//document.getElementById("longtitude").innerHTML = long;
+			        	//document.getElementById("latitude").innerHTML = lat;
+			        	//$('#longtitude').html(long);
+			        	//$('#latitude').html(lat);
+			        	//<a href="#" onclick="return getSuccessOutput();"> test success </a> | <a href="#" onclick="return getFailOutput(); return false;"> test failure</a>
+			        	//<div id="output">waiting for action</div>*/
+			        },
+			    });
 		</script>
 
 		<!-- Custom JavaScript -->
