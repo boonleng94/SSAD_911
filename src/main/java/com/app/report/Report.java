@@ -46,7 +46,9 @@ public class Report {
 	private String dateTimeModified;
 
 	public Report() {
-		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date currentDate = new Date();		
+		this.dateTimeModified = dateFormat.format(currentDate);
 	}
     
 	public Report(int reportID, String date, String callStartTime, String callEndTime, String callerLocation,
@@ -88,6 +90,7 @@ public class Report {
 		Date currentDate = new Date();		
 		this.dateTimeModified = dateFormat.format(currentDate);
 	}
+	
 	
 	public int getReportID() {
 		return reportID;

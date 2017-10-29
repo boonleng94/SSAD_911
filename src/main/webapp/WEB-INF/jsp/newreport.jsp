@@ -1,5 +1,6 @@
 <!-- index.html -->
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 
 	<head>
@@ -19,9 +20,37 @@
 
 		<!-- Bootstrap Core JavaScript -->
 		<script src="static/js/bootstrap.min.js"></script>  
-
+		
+		<!--EXTERNAL API TO HANDLE GOOGLE MAPS GEOCODING-->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		
+		
 		<!-- Custom JavaScript -->
 		<script src="static/js/main.js"></script>
+		
+		<script>
+		//TO GET COORDINATES BASED ON INPUT LOCATION USING GEOCODING///////////////
+			function geocode() {
+				//Get location from input field
+				var location = $('input[name="InLocation"]').val();
+				//Get response from axios and Google Maps API
+				axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+					params: {
+						address: location,
+						//API Key
+						key: 'AIzaSyCSn7J0hFZHs7XALKzNXdfzt8-aPUcP-Ss'
+					}
+				}).then(function(response) {
+					//if a response is recieved, display the latitude and longitude into the respective input fields
+					$('input[name="InCoordNorth"]').val(response.data.results[0].geometry.location.lat);
+					$('input[name="InCoordEast"]').val(response.data.results[0].geometry.location.lng);
+				}).catch(function(error) {
+					//Catches any error and displays JS popup box 
+					alert(error + ". Please check for spelling errors and be more specific with the location.");
+				});
+			}
+		
+		</script>
 
 		<title>Crisis Management System | New Report</title>
 	</head>
@@ -59,42 +88,42 @@
 				<h1>New Report</h1>
 				<div class="col-sm-6 col-sm-offset-3"><hr></div>
 			</div>
-			<form class="form-horizontal">
+			<form class="form-horizontal" action="/addReport" method="POST">
 				<!-- left column -->
 				<div class="col-sm-6">
 					<p class="lead">Call Information</p>
 					<div class="form-group">
 						<label for="new_date_of_call" class="col-sm-4 control-label">Date of call</label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_date_of_call" placeholder="">
+							<input type="date" class="form-control" id="new_date_of_call" name="newDateOfCall" placeholder="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_call_start_time" class="col-sm-4 control-label">Call start time</label>
 						<div class="col-sm-8">
-							<input type="time" class="form-control" id="new_call_start_time" placeholder="">
+							<input type="time" class="form-control" id="new_call_start_time" name="newCallStartTime" placeholder="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_call_end_time" class="col-sm-4 control-label">Call end time</label>
 						<div class="col-sm-8">
-							<input type="time" class="form-control" id="new_name" placeholder="">
+							<input type="time" class="form-control" id="new_call_end_time" name="newCallEndTime" placeholder="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_call_location" class="col-sm-4 control-label">Call Location</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_call_location" placeholder="">
+							<input type="text" class="form-control" id="new_call_location" name="newCallLocation" placeholder="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_call_coordinates" class="col-sm-4 control-label">Call Coordinates</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="new_call_coordinates_north" placeholder="">
+							<input type="text" class="form-control" id="new_call_coordinates_north" name="newCallCoordNorth" placeholder="">
 						</div>
 						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">N</div>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="new_call_coordinates_east" placeholder="">
+							<input type="text" class="form-control" id="new_call_coordinates_east" name="newCallCoordEast" placeholder="">
 						</div>
 						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">E</div>
 					</div>
@@ -109,24 +138,24 @@
 					<div class="form-group">
 						<label for="new_caller_name" class="col-sm-4 control-label">Caller Name</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_caller_name" placeholder="">
+							<input type="text" class="form-control" id="new_caller_name" name="newCallerName" placeholder="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_caller_ic" class="col-sm-4 control-label">Caller IC Number</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_caller_ic" placeholder="">
+							<input type="text" class="form-control" id="new_caller_ic" name = "newCallerIC"placeholder="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_caller_dob" class="col-sm-4 control-label">Caller Date of Birth</label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_caller_dob" placeholder="">
+							<input type="date" class="form-control" id="new_caller_dob" name="newCallerDOB" placeholder="">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified</label>
-						<div class="col-sm-4 entry-placeholder" id="new_caller_verified" style="margin-top: 7px;">
+						<label for="new_caller_verified" class="col-sm-4 control-label" >Caller Verified</label>
+						<div class="col-sm-4 entry-placeholder" id="new_caller_verified"  style="margin-top: 7px;">
 							No
 						</div>
 						<div class="col-sm-4">
@@ -137,20 +166,20 @@
 						<div class="col-sm-8 col-sm-offset-2"><hr></div>
 					</div>
 					<div class="form-group">
-						<label for="new_authenticity" class="col-sm-4 control-label">Authenticity of Call</label>
+						<label for="new_authenticity" class="col-sm-4 control-label">Authenticity of Call<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_call_authenticity">
+							<select class="form-control" id="new_call_authenticity" name="authenticity">
 								<option value="" disabled selected>Select an option</option>
-								<option value="unsure">Unsure</option>
-								<option value="authentic">Authentic</option>
-								<option value="prank">Prank Call</option>
+								<option value="Unsure">Unsure</option>
+								<option value="Authentic">Authentic</option>
+								<option value="Prank">Prank Call</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_reason" class="col-sm-4 control-label">Reason</label>
 						<div class="col-sm-8">
-							<textarea class="form-control" rows="3" id="new_reason"></textarea>
+							<textarea class="form-control" rows="3" id="new_reason" name="newReason"></textarea>
 						</div>
 					</div>
 				</div>
@@ -161,18 +190,19 @@
 					<div class="form-group">
 						<label for="new_category" class="col-sm-4 control-label">Emergency Category</label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_category">
+							<select class="form-control" id="new_category" name="newCat">
 								<option value="" disabled selected>Select a Category</option>
-								<option value="1">Category 1</option>
-								<option value="2">Category 2</option>
-								<option value="3">Category 3</option>
+								<option value="CAT1">Category 1</option>
+								<option value="CAT2">Category 2</option>
+								<option value="CAT3">Category 3</option>
 							</select>
 						</div>
+						
 					</div>
 					<div class="form-group">
 						<label for="new_nature" class="col-sm-4 control-label">Nature of Incident</label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_nature">
+							<select class="form-control" id="new_nature" name="newNature">
 								<option value="" disabled selected>Select an option</option>
 								<option value="Aggravated Assault">Aggravated Assault</option>
 								<option value="Arson">Arson</option>
@@ -207,42 +237,42 @@
 					<div class="form-group">
 						<label for="new_estimated_start_date" class="col-sm-4 control-label">Estimated Start Date</label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_estimated_start_date" placeholder="">
+							<input type="date" class="form-control" id="new_estimated_start_date" name="newEstStartDate" placeholder="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_estimated_start_time" class="col-sm-4 control-label">Estimated Start Time</label>
 						<div class="col-sm-8">
-							<input type="time" class="form-control" id="new_estimated_start_time" placeholder="">
+							<input type="time" class="form-control" id="new_estimated_start_time" name="newEstStartTime" placeholder="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_incident_location" class="col-sm-4 control-label">Incident Location</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_call_location" placeholder="">
+							<input type="text" class="form-control" id="new_call_location" name="InLocation" placeholder="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_incident_coordinates" class="col-sm-4 control-label">Incident Coordinates</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="new_incident_coordinates_north" placeholder="">
+							<input type="text" class="form-control" id="new_incident_coordinates_north" name="InCoordNorth" placeholder="">
 						</div>
 						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">N</div>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="new_incident_coordinates_east" placeholder="">
+							<input type="text" class="form-control" id="new_incident_coordinates_east" name="InCoordEast" placeholder="">
 						</div>
 						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">E</div>
 					</div>
 					<div class="col-sm-12">
 						<div class="col-sm-4 col-sm-offset-4">
-							<button class="btn btn-secondary btn-block" type="submit">Get Coordinates</button>
+							<button class="btn btn-secondary btn-block" type="button" name="getIncidentCoordinates" onclick="geocode();">Get Coordinates</button>
 						</div>
 					</div>
 					<div class="form-group col-sm-4"></div>
 					<div class="form-group col-sm-8" style="height: 40px;"><hr></div>
 					<div class="form-group" style="padding:0 15px;">
 						<p class="lead">Additional Notes</p>
-						<textarea class="form-control" rows="10" id="notes"></textarea>
+						<textarea class="form-control" rows="10" id="notes" name="notes"></textarea>
 					</div>
 				</div>
 				<div class="col-sm-6 col-sm-offset-3"><hr></div>
@@ -250,10 +280,10 @@
 				<div class="col-sm-12">
 					<div class="form-group form-group-sm">
 						<div class="col-sm-3 col-sm-offset-3">
-							<button type="button" class="btn btn-block btn-secondary" id="new_submit">Save as Draft</button>
+							<button type="submit" class="btn btn-block btn-secondary" id="new_submit"name="action" value="draft">Save as Draft</button>
 						</div>
 						<div class="col-sm-3">
-							<button type="button" class="btn btn-block btn-primary" id="new_submit" disabled="disabled">Submit for Authentication</button>
+							<button type="submit" class="btn btn-block btn-primary" id="new_submit" name="action" value="save" >Submit for Authentication</button>
 						</div>
 					</div>
 				</div>

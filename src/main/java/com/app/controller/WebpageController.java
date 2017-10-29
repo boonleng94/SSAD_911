@@ -95,11 +95,12 @@ public class WebpageController implements ErrorController{
 				
 				return new ModelAndView("officerhome");
 			}
-			else
-				model.put("reportList", reportController.getAllOperatorReports((int) model.get("userID")));
+			else{
+				List<Report> reports = reportController.getAllOperatorReports((int) model.get("userID"));
+				model.put("OpsReportList", reports);
 				return new ModelAndView("operatorhome");
 		}
-
+		}
 	}
 	
 	/**
@@ -124,6 +125,7 @@ public class WebpageController implements ErrorController{
 		else {
 			user =  userController.getUserByUserID((int) model.get("userID"));
 			model.put("name", user.getName());
+			model.put("userID", (int) model.get("userID"));
 			return new ModelAndView("newreport");
 		}
 	}
@@ -153,7 +155,8 @@ public class WebpageController implements ErrorController{
 		else {
 			user =  userController.getUserByUserID((int) model.get("userID"));
 			model.put("name", user.getName());
-			return new ModelAndView("newreport");
+			model.put("report", reportController.getReport(Integer.valueOf(reportID)));
+			return new ModelAndView("operatoredit");
 		}
 	}
 	
@@ -303,4 +306,115 @@ public class WebpageController implements ErrorController{
 		model.put("reportID", reportID);
 		return new ModelAndView("redirect:/editReport");//check user service 
 	}
+
+	@RequestMapping(value ="/addReport", method=RequestMethod.POST)//Done but need to map to jsp
+	public ModelAndView addReportPage(@RequestParam String authenticity,@RequestParam String newCat,@RequestParam String newNature,
+			@RequestParam String newDateOfCall,@RequestParam String newCallStartTime
+			,@RequestParam String newCallEndTime,@RequestParam String newCallLocation,@RequestParam String newCallCoordNorth, 
+			@RequestParam String newCallCoordEast,@RequestParam String newCallerName ,@RequestParam String newCallerIC,
+			@RequestParam String newCallerDOB,@RequestParam String newReason,
+			@RequestParam String newEstStartDate,@RequestParam String newEstStartTime,@RequestParam String InLocation,
+			@RequestParam String InCoordNorth,@RequestParam String InCoordEast,@RequestParam String notes,
+			@RequestParam String action,ModelMap model) {
+		
+		if(model.get("userID") == null || (int) model.get("userID") == 0 || userController.isLiaisonOfficer((int) model.get("userID"))) {
+			model.put("message", "Only Operators can access this page.");
+			model.put("redirect", "/");
+			return new ModelAndView("/message");
+		}
+		else{
+			Report temp= new Report();
+			int userID=(int) model.get("userID");
+			temp.setIncidentCategory(newCat);
+			temp.setIncidentNature(newNature);
+			temp.setAuthenticity(authenticity);
+			temp.setDate(newDateOfCall);
+			temp.setCallStartTime(newCallStartTime);
+			temp.setCallEndTime(newCallEndTime);
+			temp.setCallerLocation(newCallLocation);
+			temp.setCallCoord_n(newCallCoordNorth);
+			temp.setCallCoord_e(newCallCoordEast);
+			temp.setCallerName(newCallerName);
+			temp.setCallerNric(newCallerIC);
+			temp.setDob(newCallerDOB);
+			temp.setReason(newReason);
+			temp.setIncidentDate(newEstStartDate);
+			temp.setEstimatedStartTime(newEstStartTime);
+			temp.setIncidentLocation(InLocation);
+			temp.setIncidentCoord_n(InCoordNorth);
+			temp.setIncidentCoord_e(InCoordEast);
+			temp.setAdditionalNotes(notes);
+			if(action.equals("save"))
+			{
+				if(newCat.equals("CAT 1"))
+				{
+					temp.setStatus("Saved,Awaiting LO action");
+				}
+				else
+				{
+				temp.setStatus("Saved");
+				}
+			}
+			else
+			{
+				temp.setStatus("Saved as Draft");
+			}
+			
+			reportController.addReport(temp, userID);
+			//need to set officer if not officer cannot view
+			//model.put("report", reportController.getReport(reportID)/*Sends report object. To call variable, use report.(name)*/);
+			//STORE POST DATA INTO MODEL
+			
+			System.out.println("newDateOfCall: "+newDateOfCall);
+			System.out.println("newCallStartTime: "+newCallStartTime);
+			System.out.println("newCallEndTime: "+newCallEndTime);
+			System.out.println("newCallLocation: "+newCallLocation);
+			System.out.println("newCallCoordNorth: "+newCallCoordNorth);
+			System.out.println("newCallCoordEast: "+newCallCoordEast);
+			System.out.println("newCallerName: "+newCallerName);
+			System.out.println("newCallerIC: "+newCallerIC);
+			System.out.println("newCallerDOB: "+newCallerDOB);
+			System.out.println("newReason: "+newReason);
+			System.out.println("newEstStartDate: "+newEstStartDate);
+			System.out.println("newEstStartTime: "+newEstStartTime);
+			System.out.println("InLocation: "+InLocation);
+			System.out.println("InCoordNorth: "+InCoordNorth);
+			System.out.println("InCoordEast: "+InCoordEast);
+			System.out.println("notes: "+notes);
+			System.out.println("action: "+action);
+
+			//reportController.updateReport(updatedReport, (int) model.get("userID"), reportID);
+			
+			return new ModelAndView("redirect:/home");
+		}
+	}
+	
+	
+	@RequestMapping(value ="/OpsUpdateReport", method=RequestMethod.POST)//Done but need to map to jsp
+	public ModelAndView opsUpdate(@RequestParam String authenticity,@RequestParam String incidentCategory,@RequestParam String incidentNature,@RequestParam String reportID,@RequestParam String reason,@RequestParam String incidentLocation,
+			@RequestParam String incidentCoord_n,@RequestParam String incidentCoord_e,@RequestParam String additionalNotes,
+			ModelMap model) {
+		
+		if(model.get("userID") == null || (int) model.get("userID") == 0 || userController.isLiaisonOfficer((int) model.get("userID"))) {
+			model.put("message", "Only Operators can access this page.");
+			model.put("redirect", "/");
+			return new ModelAndView("/message");
+		}
+		else{
+			System.out.println(incidentCategory);
+			Report temp= reportController.getReport(Integer.valueOf(reportID));
+			temp.setAuthenticity(authenticity);
+			temp.setIncidentNature(incidentNature);
+			temp.setReason(reason);
+			temp.setIncidentCategory(incidentCategory);
+			temp.setIncidentLocation(incidentLocation);
+			temp.setIncidentCoord_n(incidentCoord_n);
+			temp.setIncidentCoord_e(incidentCoord_e);
+			temp.setAdditionalNotes(additionalNotes);
+					
+			reportController.updateReport(temp, (int) model.get("userID"), Integer.valueOf(reportID));			
+			return new ModelAndView("redirect:/home");
+		}
+	}
+	
 }

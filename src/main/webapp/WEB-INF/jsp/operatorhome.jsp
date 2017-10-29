@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 
 	<head>
@@ -63,20 +64,26 @@
 							<th>Date & Time Modified</th>
 							<th>Nature of Incident</th>
 							<th>Status</th>
-							<th>Verifying LO</th>
+
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td><div class="table-entry">A-1</div></td>
-							<td><div class="table-entry">01-Jan-2017, 11:11 AM</div></td>
-							<td><div class="table-entry">01-Jan-2017, 12:12 PM</div></td>
-							<td><div class="table-entry">Lorum ipsum</div></td>
-							<td><div class="table-entry">Verified</div></td>
-							<td><div class="table-entry">John Doe</div></td>
-							<td><button type="button" class="btn btn-block btn-secondary" id="new_modify">Modify</button></td>
-						</tr>
+						<c:forEach var="report" items="${OpsReportList}">  
+							<tr> 
+								<td><div class="table-entry">${report.reportID}</div></td>
+								<td><div class="table-entry">${report.date} ${report.callStartTime}</div></td>
+								<td><div class="table-entry">${report.dateTimeModified}</div></td>
+								<td><div class="table-entry">${report.incidentNature}</div></td>
+								<td><div class="table-entry">${report.status}</div></td>
+
+								<td>
+									<form action="/editReport" method="post">
+										<button type="submit" class="btn btn-block btn-secondary" id="new_modify" name="reportID" value="${report.reportID}">Modify</button>
+									</form>
+								</td>					
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
