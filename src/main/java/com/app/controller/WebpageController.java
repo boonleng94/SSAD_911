@@ -346,18 +346,12 @@ public class WebpageController implements ErrorController{
 			temp.setAdditionalNotes(notes);
 			if(action.equals("save"))
 			{
-				if(newCat.equals("CAT 1"))
-				{
-					temp.setStatus("Saved,Awaiting LO action");
-				}
-				else
-				{
-				temp.setStatus("Saved");
-				}
+				temp.setStatus("Submitted");
+
 			}
 			else
 			{
-				temp.setStatus("Saved as Draft");
+				temp.setStatus("Drafted");
 			}
 			
 			reportController.addReport(temp, userID);
@@ -392,7 +386,7 @@ public class WebpageController implements ErrorController{
 	
 	@RequestMapping(value ="/OpsUpdateReport", method=RequestMethod.POST)//Done but need to map to jsp
 	public ModelAndView opsUpdate(@RequestParam String authenticity,@RequestParam String incidentCategory,@RequestParam String incidentNature,@RequestParam String reportID,@RequestParam String reason,@RequestParam String incidentLocation,
-			@RequestParam String incidentCoord_n,@RequestParam String incidentCoord_e,@RequestParam String additionalNotes,
+			@RequestParam String incidentCoord_n,@RequestParam String incidentCoord_e,@RequestParam String additionalNotes,@RequestParam String action,
 			ModelMap model) {
 		
 		if(model.get("userID") == null || (int) model.get("userID") == 0 || userController.isLiaisonOfficer((int) model.get("userID"))) {
@@ -411,6 +405,15 @@ public class WebpageController implements ErrorController{
 			temp.setIncidentCoord_n(incidentCoord_n);
 			temp.setIncidentCoord_e(incidentCoord_e);
 			temp.setAdditionalNotes(additionalNotes);
+			if(action.equals("save"))
+			{
+				temp.setStatus("Submitted");
+
+			}
+			else
+			{
+				temp.setStatus("Drafted");
+			}
 					
 			reportController.updateReport(temp, (int) model.get("userID"), Integer.valueOf(reportID));			
 			return new ModelAndView("redirect:/home");

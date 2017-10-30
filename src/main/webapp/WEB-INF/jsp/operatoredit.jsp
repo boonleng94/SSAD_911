@@ -18,6 +18,8 @@
 		<!-- Custom styles for this template -->
 		<link rel="stylesheet" href="static/css/custom.css">
 		
+		<!--EXTERNAL API TO HANDLE GOOGLE MAPS GEOCODING-->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 		<!-- Bootstrap Core JavaScript -->
 		<script src="static/js/bootstrap.min.js"></script>  
@@ -42,25 +44,27 @@
 				document.getElementById('crisisID').value=document.getElementById('crisisIDSelector').value;
 			}
 			
-			function getCoordinates(){
-				$.ajax({
-					var add = document.getElementById('address').value;
-					url: "http://localhost:8080/convert/${add}", 
-					type: "GET",
-					data: { format: "json"}, 
-					   dataType: "jsonp",
-					   success: function(data) {
-					var coord = data.results.split(",");
-					var long = coord[0];
-					var lat = coord[1];
-					//document.getElementById("longtitude").innerHTML = long;
-					//document.getElementById("latitude").innerHTML = lat;
-					//$('#longtitude').html(long);
-					//$('#latitude').html(lat);
-					//<a href="#" onclick="return getSuccessOutput();"> test success </a> | <a href="#" onclick="return getFailOutput(); return false;"> test failure</a>
-					//<div id="output">waiting for action</div>*/
-				},
-			});
+			//TO GET COORDINATES BASED ON INPUT LOCATION USING GEOCODING///////////////
+			function geocode() {
+				//Get location from input field
+				alert($('input[name="incidentLocation"]').val());
+				var location = $('input[name="incidentLocation"]').val();
+				//Get response from axios and Google Maps API
+				axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+					params: {
+						address: location,
+						//API Key
+						key: 'AIzaSyCSn7J0hFZHs7XALKzNXdfzt8-aPUcP-Ss'
+					}
+				}).then(function(response) {
+					//if a response is recieved, display the latitude and longitude into the respective input fields
+					$('input[name="incidentCoord_n"]').val(response.data.results[0].geometry.location.lat);
+					$('input[name="incidentCoord_e"]').val(response.data.results[0].geometry.location.lng);
+				}).catch(function(error) {
+					//Catches any error and displays JS popup box 
+					alert(error + ". Please check for spelling errors and be more specific with the location.");
+				});
+			}
 		</script>
 
 		<!-- Custom JavaScript -->
@@ -155,7 +159,7 @@
 					<div class="form-group">
 						<label for="new_authenticity" class="col-sm-4 control-label">Authenticity of Call<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_call_authenticity" name="authenticity">
+							<select class="form-control" id="new_call_authenticity" name="authenticity" required>
 								<option value="" disabled selected>Select an option</option>
 								<option value="Unsure" ${report.authenticity == "Unsure" ? 'selected="selected"' : ''}>Unsure</option>
 								<option value="Authentic" ${report.authenticity == "Authentic" ? 'selected="selected"' : ''}>Authentic</option>
@@ -177,7 +181,7 @@
 					<div class="form-group">
 						<label for="new_category" class="col-sm-4 control-label">Emergency Category<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_category" name="incidentCategory">
+							<select class="form-control" id="new_category" name="incidentCategory" required>
 								<option value="" disabled selected>Select a Category</option>
 								<option value="CAT1" ${report.incidentCategory == "CAT1" ? 'selected="selected"' : ''}>Category 1</option>
 								<option value="CAT2" ${report.incidentCategory == "CAT2" ? 'selected="selected"' : ''}>Category 2</option>
@@ -188,7 +192,7 @@
 					<div class="form-group">
 						<label for="new_nature" class="col-sm-4 control-label">Nature of Incident<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_nature" name="incidentNature">
+							<select class="form-control" id="new_nature" name="incidentNature" required>
 								<option value="" disabled selected>Select an option</option>
 								<option value="Aggravated Assault" ${report.incidentCategory == "Aggravated Assault" ? 'selected="selected"' : ''}>Aggravated Assault</option>
 								<option value="Arson" ${report.incidentNature == "Arson" ? 'selected="selected"' : ''}>Arson</option>
@@ -233,7 +237,7 @@
 					<div class="form-group">
 						<label for="new_incident_location" class="col-sm-4 control-label">Incident Location<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_call_location" placeholder="" name="incidentLocation" value="${report.incidentLocation}">
+							<input type="text" class="form-control" id="new_call_location" placeholder="" name="incidentLocation" value="${report.incidentLocation}" required>
 						</div>
 					</div>
 					<div class="form-group" style="margin-bottom: 5px;">
@@ -251,7 +255,7 @@
 					<div class="form-group">
 						<label for="new_incident_location" class="col-sm-4 control-label"></label>
 						<div class="col-sm-8">
-							<button class="btn btn-secondary btn-block" type="button" name="getIncidentCoordinates">Get Coordinates</button>
+							<button class="btn btn-secondary btn-block" type="button" name="getIncidentCoordinates" onClick="geocode()">Get Coordinates</button>
 						</div>
 					</div>
 					
@@ -271,7 +275,7 @@
 							<button type="submit" class="btn btn-block btn-secondary" id="new_draft" name="action" value="save">Save as Draft</button>
 						</div>
 						<div class="col-sm-3">
-							<button type="submit" class="btn btn-block btn-primary" id="new_submit" >Submit for Authentication</button>
+							<button type="submit" class="btn btn-block btn-primary" id="new_submit" name="action" value="draft">Submit for Authentication</button>
 <!--						<button type="button" class="btn btn-block btn-primary" id="new_submit" disabled="disabled">Submit for Authentication</button>-->
 						</div>
 					</div>

@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="static/css/custom.css">
 
 		<!-- jQuery -->
-		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="static/js/jquery-1.11.1.min.js"></script>
 
 		<!-- Bootstrap Core JavaScript -->
 		<script src="static/js/bootstrap.min.js"></script>  
@@ -32,6 +32,7 @@
 		//TO GET COORDINATES BASED ON INPUT LOCATION USING GEOCODING///////////////
 			function geocode() {
 				//Get location from input field
+				alert($('input[name="InLocation"]').val());
 				var location = $('input[name="InLocation"]').val();
 				//Get response from axios and Google Maps API
 				axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
@@ -49,9 +50,31 @@
 					alert(error + ". Please check for spelling errors and be more specific with the location.");
 				});
 			}
+		function geocode2() {
+				//Get location from input field
+				alert($('input[name="newCallLocation"]').val());
+				var location = $('input[name="newCallLocation"]').val();
+				//Get response from axios and Google Maps API
+				axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+					params: {
+						address: location,
+						//API Key
+						key: 'AIzaSyCSn7J0hFZHs7XALKzNXdfzt8-aPUcP-Ss'
+					}
+				}).then(function(response) {
+					//if a response is recieved, display the latitude and longitude into the respective input fields
+					$('input[name="newCallCoordNorth"]').val(response.data.results[0].geometry.location.lat);
+					$('input[name="newCallCoordEast"]').val(response.data.results[0].geometry.location.lng);
+				}).catch(function(error) {
+					//Catches any error and displays JS popup box 
+					alert(error + ". Please check for spelling errors and be more specific with the location.");
+				});
+			}
+	
 		
 		</script>
 
+		
 		<title>Crisis Management System | New Report</title>
 	</head>
 
@@ -93,27 +116,27 @@
 				<div class="col-sm-6">
 					<p class="lead">Call Information</p>
 					<div class="form-group">
-						<label for="new_date_of_call" class="col-sm-4 control-label">Date of call</label>
+						<label for="new_date_of_call" class="col-sm-4 control-label">Date of call<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_date_of_call" name="newDateOfCall" placeholder="">
+							<input type="date" class="form-control" id="new_date_of_call" name="newDateOfCall" placeholder="" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_call_start_time" class="col-sm-4 control-label">Call start time</label>
+						<label for="new_call_start_time" class="col-sm-4 control-label">Call start time<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="time" class="form-control" id="new_call_start_time" name="newCallStartTime" placeholder="">
+							<input type="time" class="form-control" id="new_call_start_time" name="newCallStartTime" placeholder="" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_call_end_time" class="col-sm-4 control-label">Call end time</label>
+						<label for="new_call_end_time" class="col-sm-4 control-label">Call end time<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="time" class="form-control" id="new_call_end_time" name="newCallEndTime" placeholder="">
+							<input type="time" class="form-control" id="new_call_end_time" name="newCallEndTime" placeholder="" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_call_location" class="col-sm-4 control-label">Call Location</label>
+						<label for="new_call_location" class="col-sm-4 control-label">Call Location<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_call_location" name="newCallLocation" placeholder="">
+							<input type="text" class="form-control" id="new_call_location" name="newCallLocation" placeholder="" required>
 						</div>
 					</div>
 					<div class="form-group">
@@ -129,37 +152,37 @@
 					</div>
 					<div class="col-sm-12">
 						<div class="col-sm-4 col-sm-offset-4">
-							<button class="btn btn-secondary btn-block" type="submit">Get Coordinates</button>
+							<button class="btn btn-secondary btn-block" type="button" name="GetCoordLoc" onclick="geocode2();">Get Coordinates</button>
 						</div>
 					</div>
 					<div class="col-sm-12">
 						<div class="col-sm-8 col-sm-offset-2"><hr></div>
 					</div>
 					<div class="form-group">
-						<label for="new_caller_name" class="col-sm-4 control-label">Caller Name</label>
+						<label for="new_caller_name" class="col-sm-4 control-label">Caller Name<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_caller_name" name="newCallerName" placeholder="">
+							<input type="text" class="form-control" id="new_caller_name" name="newCallerName" placeholder="" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_caller_ic" class="col-sm-4 control-label">Caller IC Number</label>
+						<label for="new_caller_ic" class="col-sm-4 control-label">Caller IC Number<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_caller_ic" name = "newCallerIC"placeholder="">
+							<input type="text" class="form-control" id="new_caller_ic" name = "newCallerIC"placeholder="" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_caller_dob" class="col-sm-4 control-label">Caller Date of Birth</label>
+						<label for="new_caller_dob" class="col-sm-4 control-label">Caller Date of Birth<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="new_caller_dob" name="newCallerDOB" placeholder="">
+							<input type="date" class="form-control" id="new_caller_dob" name="newCallerDOB" placeholder="" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_caller_verified" class="col-sm-4 control-label" >Caller Verified</label>
+						<label for="new_caller_verified" class="col-sm-4 control-label" >Caller Verified<span style="color:red;">*</span></label>
 						<div class="col-sm-4 entry-placeholder" id="new_caller_verified"  style="margin-top: 7px;">
 							No
 						</div>
 						<div class="col-sm-4">
-							<button class="btn btn-secondary btn-block" type="submit">Verify Caller</button>
+							<button class="btn btn-secondary btn-block" type="button" onclick="callAjax();">Verify Caller</button>
 						</div>
 					</div>
 					<div class="col-sm-12">
@@ -168,7 +191,7 @@
 					<div class="form-group">
 						<label for="new_authenticity" class="col-sm-4 control-label">Authenticity of Call<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_call_authenticity" name="authenticity">
+							<select class="form-control" id="new_call_authenticity" name="authenticity" required>
 								<option value="" disabled selected>Select an option</option>
 								<option value="Unsure">Unsure</option>
 								<option value="Authentic">Authentic</option>
@@ -188,10 +211,10 @@
 				<div class="col-sm-6">
 					<p class="lead">Incident Details</p>
 					<div class="form-group">
-						<label for="new_category" class="col-sm-4 control-label">Emergency Category</label>
+						<label for="new_category" class="col-sm-4 control-label">Emergency Category<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_category" name="newCat">
-								<option value="" disabled selected>Select a Category</option>
+							<select class="form-control" id="new_category" name="newCat" required>
+								<option value="" disabled selected required>Select a Category</option>
 								<option value="CAT1">Category 1</option>
 								<option value="CAT2">Category 2</option>
 								<option value="CAT3">Category 3</option>
@@ -200,9 +223,9 @@
 						
 					</div>
 					<div class="form-group">
-						<label for="new_nature" class="col-sm-4 control-label">Nature of Incident</label>
+						<label for="new_nature" class="col-sm-4 control-label">Nature of Incident<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_nature" name="newNature">
+							<select class="form-control" id="new_nature" name="newNature" required>
 								<option value="" disabled selected>Select an option</option>
 								<option value="Aggravated Assault">Aggravated Assault</option>
 								<option value="Arson">Arson</option>
@@ -247,9 +270,9 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_incident_location" class="col-sm-4 control-label">Incident Location</label>
+						<label for="new_incident_location" class="col-sm-4 control-label">Incident Location<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_call_location" name="InLocation" placeholder="">
+							<input type="text" class="form-control" id="new_call_location" name="InLocation" placeholder="" required>
 						</div>
 					</div>
 					<div class="form-group">
