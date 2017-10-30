@@ -1,114 +1,121 @@
 <!-- index.html -->
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<html lang="en">
+	<html lang="en">
 
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<head>
+			<!-- Required meta tags -->
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<!-- Bootstrap Core CSS -->
-		<!--	<link rel="stylesheet" href="static/css/bootstrap.min.css">-->
-		<link rel="stylesheet" href="static/css/bootstrap.css">
-<!--
-		<link href="static/css/style.css" rel="stylesheet">
-		<link href="static/css/login.css" rel="stylesheet" >
--->
-		<!-- Custom styles for this template -->
-		<link rel="stylesheet" href="static/css/custom.css">
-		
+			<!-- Bootstrap Core CSS -->
+			<!--	<link rel="stylesheet" href="static/css/bootstrap.min.css">-->
+			<link rel="stylesheet" href="static/css/bootstrap.css">
 
-		<!-- Bootstrap Core JavaScript -->
-		<script src="static/js/bootstrap.min.js"></script>  
-		<!-- jQuery -->
-		<script src="static/js/jquery-1.11.1.min.js"></script>
+			<!-- Custom styles for this template -->
+			<link rel="stylesheet" href="static/css/custom.css">
 
-		<script>
-			
-			window.selectCrisisOption = function() {
-				var x = document.querySelector('input[name="crisisIDRadio"]:checked').value;
-				if(document.querySelector('input[name="crisisIDRadio"]:checked').value == "choose"){
-					document.getElementById('crisisIDSelector').style.display = 'inline';
-					document.getElementById('crisisID').style.display = 'none';
+
+			<!-- Bootstrap Core JavaScript -->
+			<script src="static/js/bootstrap.min.js"></script>
+			<!-- jQuery -->
+			<script src="static/js/jquery-3.2.1.min.js"></script>
+
+			<!--EXTERNAL API TO HANDLE GOOGLE MAPS GEOCODING-->
+			<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+			<script>
+				window.selectCrisisOption = function() {
+					var x = document.querySelector('input[name="crisisIDRadio"]:checked').value;
+					if (document.querySelector('input[name="crisisIDRadio"]:checked').value == "choose") {
+						document.getElementById('crisisIDSelector').style.display = 'inline';
+						document.getElementById('crisisID').style.display = 'none';
+					} else {
+						document.getElementById('crisisIDSelector').style.display = 'none';
+						document.getElementById('crisisID').style.display = 'inline';
+					}
 				}
-				else{
-					document.getElementById('crisisIDSelector').style.display = 'none';
-					document.getElementById('crisisID').style.display = 'inline';
+
+				function setCrisisID() {
+					document.getElementById('crisisID').value = document.getElementById('crisisIDSelector').value;
 				}
-			}
-			
-			function setCrisisID() {
-				document.getElementById('crisisID').value=document.getElementById('crisisIDSelector').value;
-			}
-			
-			function getCoordinates(){
-				$.ajax({
-					var add = document.getElementById('address').value;
-					url: "http://localhost:8080/convert/${add}", 
-					type: "GET",
-					data: { format: "json"}, 
-					   dataType: "jsonp",
-					   success: function(data) {
-					var coord = data.results.split(",");
-					var long = coord[0];
-					var lat = coord[1];
-					//document.getElementById("longtitude").innerHTML = long;
-					//document.getElementById("latitude").innerHTML = lat;
-					//$('#longtitude').html(long);
-					//$('#latitude').html(lat);
-					//<a href="#" onclick="return getSuccessOutput();"> test success </a> | <a href="#" onclick="return getFailOutput(); return false;"> test failure</a>
-					//<div id="output">waiting for action</div>*/
-				},
-			});
-		</script>
 
-		<!-- Custom JavaScript -->
-		<script src="static/js/main.js"></script>
+				//TO GET COORDINATES BASED ON INPUT LOCATION USING GEOCODING///////////////
+				function geocode() {
+					//Get location from input field
+					var location = $('input[name="incidentLocation"]').val();
+					//Get response from axios and Google Maps API
+					axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+						params: {
+							address: location,
+							//API Key
+							key: 'AIzaSyCSn7J0hFZHs7XALKzNXdfzt8-aPUcP-Ss'
+						}
+					}).then(function(response) {
+						//if a response is recieved, display the latitude and longitude into the respective input fields
+						$('input[name="incidentCoord_n"]').val(response.data.results[0].geometry.location.lat);
+						$('input[name="incidentCoord_e"]').val(response.data.results[0].geometry.location.lng);
+					}).catch(function(error) {
+						//Catches any error and displays JS popup box 
+						alert(error + ". Please check for spelling errors and be more specific with the location.");
+					});
+				}
+				///////////////////////////////////////////////////////////////////////
 
-		<title>Crisis Management System | Edit Report</title>
-	</head>
+			</script>
 
-	<body>
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="/home">Crisis Management System: 911 Call Center</a>
+			<!-- Custom JavaScript -->
+			<script src="static/js/main.js"></script>
+
+			<title>Crisis Management System | Edit Report</title>
+		</head>
+
+		<body>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="/home">Crisis Management System: 911 Call Center</a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<div style="margin: 15px">Logged in as: ${name} [ID: ${userID}]</div>
+							</li>
+							<li>
+								<form class="navbar-form navbar-right" action="/logout" method="POST">
+									<button type="logout" class="btn btn-secondary">Logout</button>
+								</form>
+							</li>
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
 				</div>
+				<!-- /.container-fluid -->
+			</nav>
 
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav navbar-right">
-						<li><div style="margin: 15px">Logged in as: ${name} [ID: ${userID}]</div></li>
-						<li>
-							<form class="navbar-form navbar-right" action="/logout" method="POST">
-								<button type="logout" class="btn btn-secondary">Logout</button>
-							</form>
-						</li>
-					</ul>
-				</div><!-- /.navbar-collapse -->
-			</div><!-- /.container-fluid -->
-		</nav>
-
-		<div class="container">
-			<div class="col-sm-12 text-center" style="margin-bottom: 30px">
-				<h1>Edit Report ${report.reportID}</h1>
-				<div class="col-sm-6 col-sm-offset-3"><hr></div>
-			</div>
-			<form class="form-horizontal" action="/officerUpdateReport" method="POST">
-				<!-- left column -->
-				<input type="hidden" value=${report.reportID} name="reportID"/>
-				<div class="col-sm-6">
-					<p class="lead">Call Information</p>
-					<div class="form-group">
-						<label for="new_date_of_call" class="col-sm-4 control-label">Date of call<span style="color:red;">*</span> </br> (YYYY-MM-DD)</label>
+			<div class="container">
+				<div class="col-sm-12 text-center" style="margin-bottom: 30px">
+					<h1>Edit Report ${report.reportID}</h1>
+					<div class="col-sm-6 col-sm-offset-3">
+						<hr>
+					</div>
+				</div>
+				<form class="form-horizontal" action="/officerUpdateReport" method="POST">
+					<!-- left column -->
+					<input type="hidden" value=${report.reportID} name="reportID" />
+					<div class="col-sm-6">
+						<p class="lead">Call Information</p>
+						<div class="form-group">
+							<label for="new_date_of_call" class="col-sm-4 control-label">Date of call<span style="color:red;">*</span> </br> (YYYY-MM-DD)</label>
 						<div class="col-sm-8 entry-placeholder">
 							${report.date}
 						</div>
@@ -138,24 +145,28 @@
 						</div>
 					</div>
 					<div class="col-sm-12">
-						<div class="col-sm-8 col-sm-offset-2"><hr></div>
+						<div class="col-sm-8 col-sm-offset-2">
+							<hr>
+						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified<span style="color:red;">*</span></label>
 						<div class="col-sm-4 entry-placeholder" id="new_caller_verified" style="margin-top: 7px;">
 							${report.callerVerified == false ? "No" : "Yes"}
 						</div>
 					</div>
-					
+
 					<div class="col-sm-12">
-						<div class="col-sm-8 col-sm-offset-2"><hr></div>
+						<div class="col-sm-8 col-sm-offset-2">
+							<hr>
+						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="new_authenticity" class="col-sm-4 control-label">Authenticity of Call<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_call_authenticity" name="authenticity">
+							<select class="form-control" id="new_call_authenticity" name="authenticity" required>
 								<option value="" disabled selected>Select an option</option>
 								<option value="Unsure" ${report.authenticity == "Unsure" ? 'selected="selected"' : ''}>Unsure</option>
 								<option value="Authentic" ${report.authenticity == "Authentic" ? 'selected="selected"' : ''}>Authentic</option>
@@ -169,7 +180,7 @@
 							<textarea class="form-control" rows="5" id="new_reason" name="reason">${report.reason}</textarea>
 						</div>
 					</div>
-				</div>
+					</div>
 
 				<!-- right column -->
 				<div class="col-sm-6">
@@ -177,7 +188,7 @@
 					<div class="form-group">
 						<label for="new_category" class="col-sm-4 control-label">Emergency Category<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_category" name="incidentCategory">
+							<select class="form-control" id="new_category" name="incidentCategory" required>
 								<option value="" disabled selected>Select a Category</option>
 								<option value="CAT1" ${report.incidentCategory == "CAT1" ? 'selected="selected"' : ''}>Category 1</option>
 								<option value="CAT2" ${report.incidentCategory == "CAT2" ? 'selected="selected"' : ''}>Category 2</option>
@@ -188,7 +199,7 @@
 					<div class="form-group">
 						<label for="new_nature" class="col-sm-4 control-label">Nature of Incident<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<select class="form-control" id="new_nature" name="incidentNature">
+							<select class="form-control" id="new_nature" name="incidentNature" required>
 								<option value="" disabled selected>Select an option</option>
 								<option value="Aggravated Assault" ${report.incidentCategory == "Aggravated Assault" ? 'selected="selected"' : ''}>Aggravated Assault</option>
 								<option value="Arson" ${report.incidentNature == "Arson" ? 'selected="selected"' : ''}>Arson</option>
@@ -217,7 +228,7 @@
 							</select>
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="new_estimated_start_date" class="col-sm-4 control-label">Estimated Start Date</label>
 						<div class="col-sm-8 entry-placeholder">
@@ -233,7 +244,7 @@
 					<div class="form-group">
 						<label for="new_incident_location" class="col-sm-4 control-label">Incident Location<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_call_location" placeholder="" name="incidentLocation" value="${report.incidentLocation}">
+							<input type="text" class="form-control" id="new_call_location" placeholder="" name="incidentLocation" value="${report.incidentLocation}" required>
 						</div>
 					</div>
 					<div class="form-group" style="margin-bottom: 5px;">
@@ -251,22 +262,24 @@
 					<div class="form-group">
 						<label for="new_incident_location" class="col-sm-4 control-label"></label>
 						<div class="col-sm-8">
-							<button class="btn btn-secondary btn-block" type="button" name="getIncidentCoordinates">Get Coordinates</button>
+							<button class="btn btn-secondary btn-block" type="button" name="getIncidentCoordinates" onclick="geocode();">Get Coordinates</button>
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<div class="" style="width: 95%; margin:auto;">
-<!--							<form class="navbar-form navbar-right" action="#" method="POST" target="_blank">-->
+							<!--							<form class="navbar-form navbar-right" action="#" method="POST" target="_blank">-->
 							<button class="btn btn-secondary btn-block" type="button" name="checkLiveFeeds" value="checkLiveFeeds" onClick="window.open('http://localhost:8080/livefeed', 'b', 'height=750,width=768'); return false;">Check Live Feed</button>
-<!--							</form>-->
+							<!--							</form>-->
 						</div>
 					</div>
 
 					<div class="col-sm-12" style="height:30px;">
-						<div class="col-sm-8 col-sm-offset-2"><hr></div>
+						<div class="col-sm-8 col-sm-offset-2">
+							<hr>
+						</div>
 					</div>
-					
+
 					<div class="form-group" style="padding:0 15px; ">
 						<p class="lead" style="margin-bottom:0px">Crisis ID<span style="color:red;">*</span></p>
 					</div>
@@ -275,9 +288,9 @@
 						<label class="col-sm-6 control-label"><input type="radio" name="crisisIDRadio" class="col-sm-1 control-label" value="create" onchange="selectCrisisOption()"> Create new Crisis ID</label>
 					</div>
 					<div class="form-group">
-						
+
 						<div class="col-sm-8" style="padding-right: 5px;">
-							<select class="form-control" id="crisisIDSelector" name="crisisIDSelector" onchange="setCrisisID();">
+							<select class="form-control" id="crisisIDSelector" name="crisisIDSelector" onchange="setCrisisID();" required>
 								<option value="" disabled selected>Select an option</option>
 								<c:forEach items="${crisisIDs}" var="cid"> 
 									<c:choose>
@@ -290,19 +303,23 @@
 									</c:choose>
 								</c:forEach>
 							</select>
-							<input type="text" class="form-control" id="crisisID" placeholder="" name="crisisID" value="${report.crisisID}" style="display:none;">
+							<input type="text" class="form-control" id="crisisID" placeholder="" name="crisisID" value="${report.crisisID}" style="display:none;" required>
 						</div>
 					</div>
 
 					<div class="form-group col-sm-4" style=""></div>
-					<div class="form-group col-sm-8" style="height: 20px;"><hr></div>
-					
+					<div class="form-group col-sm-8" style="height: 20px;">
+						<hr>
+					</div>
+
 					<div class="form-group" style="padding:0 15px;">
 						<p class="lead" style="margin-bottom:10px;">Additional Notes</p>
 						<textarea class="form-control" rows="5" id="notes" name="additionalNotes">${report.additionalNotes}</textarea>
 					</div>
 				</div>
-				<div class="col-sm-6 col-sm-offset-3"><hr></div>
+				<div class="col-sm-6 col-sm-offset-3">
+					<hr>
+				</div>
 
 				<div class="col-sm-12">
 					<div class="form-group form-group-sm">
@@ -311,11 +328,12 @@
 						</div>
 						<div class="col-sm-3">
 							<button type="submit" class="btn btn-block btn-primary" id="new_submit" name="action" value="submit">Submit for Authentication</button>
-<!--						<button type="button" class="btn btn-block btn-primary" id="new_submit" disabled="disabled">Submit for Authentication</button>-->
+							<!--						<button type="button" class="btn btn-block btn-primary" id="new_submit" disabled="disabled">Submit for Authentication</button>-->
 						</div>
 					</div>
 				</div>
-			</form>
-		</div>
-	</body>
-</html>
+				</form>
+			</div>
+		</body>
+
+	</html>

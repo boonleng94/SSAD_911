@@ -1,39 +1,38 @@
 <!-- index.html -->
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<html lang="en">
+	<html lang="en">
 
 	<head>
+		<title>Crisis Management System | New Report</title>
+
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 		<!-- Bootstrap Core CSS -->
-		<!--	<link rel="stylesheet" href="static/css/bootstrap.min.css">-->
 		<link rel="stylesheet" href="static/css/bootstrap.css">
 
 		<!-- Custom styles for this template -->
 		<link rel="stylesheet" href="static/css/custom.css">
 
 		<!-- jQuery -->
-		<script src="static/js/jquery-1.11.1.min.js"></script>
+		<script src="static/js/jquery-3.2.1.min.js"></script>
 
 		<!-- Bootstrap Core JavaScript -->
-		<script src="static/js/bootstrap.min.js"></script>  
-		
+		<script src="static/js/bootstrap.min.js"></script>
+
 		<!--EXTERNAL API TO HANDLE GOOGLE MAPS GEOCODING-->
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-		
-		
+
 		<!-- Custom JavaScript -->
 		<script src="static/js/main.js"></script>
-		
+
 		<script>
-		//TO GET COORDINATES BASED ON INPUT LOCATION USING GEOCODING///////////////
+			//TO GET COORDINATES BASED ON INPUT LOCATION USING GEOCODING///////////////
 			function geocode() {
-				//Get location from input field
-				alert($('input[name="InLocation"]').val());
-				var location = $('input[name="InLocation"]').val();
+				//Get location from input field=
+				var location = $('input[name="inLocation"]').val();
 				//Get response from axios and Google Maps API
 				axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
 					params: {
@@ -43,16 +42,16 @@
 					}
 				}).then(function(response) {
 					//if a response is recieved, display the latitude and longitude into the respective input fields
-					$('input[name="InCoordNorth"]').val(response.data.results[0].geometry.location.lat);
-					$('input[name="InCoordEast"]').val(response.data.results[0].geometry.location.lng);
+					$('input[name="incidentCoord_n"]').val(response.data.results[0].geometry.location.lat);
+					$('input[name="incidentCoord_e"]').val(response.data.results[0].geometry.location.lng);
 				}).catch(function(error) {
 					//Catches any error and displays JS popup box 
 					alert(error + ". Please check for spelling errors and be more specific with the location.");
 				});
 			}
-		function geocode2() {
+
+			function geocode2() {
 				//Get location from input field
-				alert($('input[name="newCallLocation"]').val());
 				var location = $('input[name="newCallLocation"]').val();
 				//Get response from axios and Google Maps API
 				axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
@@ -70,12 +69,51 @@
 					alert(error + ". Please check for spelling errors and be more specific with the location.");
 				});
 			}
-	
-		
-		</script>
+			
+			function verifyCaller() {
+				var data = {};
+				data["nric"] = $("#new_caller_ic").val();
+				data["name"] = $("#new_caller_name").val();
+				data["address"] = "";
+				data["dob"] = $("#new_caller_dob").val();
 
-		
-		<title>Crisis Management System | New Report</title>
+				$.ajax({
+					type : "POST",
+					contentType : "application/json",
+					url : "/verifyCaller",
+					data : JSON.stringify(data),
+					dataType : 'json',
+					timeout : 100000,
+					success : function(data) {
+						console.log("SUCCESS: ", data);
+						
+						if(data == true){
+							var x = 'Yes';
+							alert("Caller is verified");
+							alert($("input[name='verified']").val());
+							$("#new_caller_verified").text("Yes");
+							$("input[name='verified']").val(x);
+							alert($("input[name='verified']").val());
+						}
+						else{
+							var x = 'No';
+							alert("Caller is not verified");
+							alert($("input[name='verified']").val());
+							$("#new_caller_verified").text("No");
+							$("input[name='verified']").val(x);
+							//ERROR HERE OMG. always return undefined value even after setting YES / NO
+							alert($("input[name='verified']").val());
+						}
+					},
+					error : function(e) {
+						console.log("ERROR: ", e);
+					},
+					done : function(e) {
+						alert("DONE");
+					}
+				});
+			}
+		</script>
 	</head>
 
 	<body>
@@ -95,21 +133,25 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right">
-						<li><div style="margin: 15px">Logged in as: ${name} [ID: ${userID}]</div></li>
+						<li>
+							<div style="margin: 15px">Logged in as: ${name} [ID: ${userID}]</div>
+						</li>
 						<li>
 							<form class="navbar-form navbar-right" action="/logout" method="POST">
 								<button type="logout" class="btn btn-secondary">Logout</button>
 							</form>
 						</li>
 					</ul>
-				</div><!-- /.navbar-collapse -->
-			</div><!-- /.container-fluid -->
+				</div>
+			</div>
 		</nav>
 
 		<div class="container">
 			<div class="col-sm-12 text-center" style="margin-bottom: 30px">
 				<h1>New Report</h1>
-				<div class="col-sm-6 col-sm-offset-3"><hr></div>
+				<div class="col-sm-6 col-sm-offset-3">
+					<hr>
+				</div>
 			</div>
 			<form class="form-horizontal" action="/addReport" method="POST">
 				<!-- left column -->
@@ -139,24 +181,27 @@
 							<input type="text" class="form-control" id="new_call_location" name="newCallLocation" placeholder="" required>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="margin-bottom: 5px;">
 						<label for="new_call_coordinates" class="col-sm-4 control-label">Call Coordinates</label>
-						<div class="col-sm-3">
+						<div class="col-sm-3" style="width: 20%; padding-right: 5px;">
 							<input type="text" class="form-control" id="new_call_coordinates_north" name="newCallCoordNorth" placeholder="">
 						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">N</div>
-						<div class="col-sm-3">
+						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px; padding:0;">Latitude</div>
+						<div class="col-sm-3" style="width: 20%; padding-right: 5px;">
 							<input type="text" class="form-control" id="new_call_coordinates_east" name="newCallCoordEast" placeholder="">
 						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">E</div>
+						<div class="col-sm-2 entry-placeholder" style="margin-top: 7px;">Longitude</div>
 					</div>
-					<div class="col-sm-12">
-						<div class="col-sm-4 col-sm-offset-4">
-							<button class="btn btn-secondary btn-block" type="button" name="GetCoordLoc" onclick="geocode2();">Get Coordinates</button>
+					<div class="form-group">
+						<label for="new_incident_location" class="col-sm-4 control-label"></label>
+						<div class="col-sm-8">
+							<button class="btn btn-secondary btn-block" type="button" name="getIncidentCoordinates" onclick="geocode2();">Get Coordinates</button>
 						</div>
 					</div>
 					<div class="col-sm-12">
-						<div class="col-sm-8 col-sm-offset-2"><hr></div>
+						<div class="col-sm-8 col-sm-offset-2">
+							<hr>
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_caller_name" class="col-sm-4 control-label">Caller Name<span style="color:red;">*</span></label>
@@ -167,7 +212,7 @@
 					<div class="form-group">
 						<label for="new_caller_ic" class="col-sm-4 control-label">Caller IC Number<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_caller_ic" name = "newCallerIC"placeholder="" required>
+							<input type="text" class="form-control" id="new_caller_ic" name="newCallerIC" placeholder="" required>
 						</div>
 					</div>
 					<div class="form-group">
@@ -177,16 +222,19 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_caller_verified" class="col-sm-4 control-label" >Caller Verified<span style="color:red;">*</span></label>
-						<div class="col-sm-4 entry-placeholder" id="new_caller_verified"  style="margin-top: 7px;">
+						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified<span style="color:red;">*</span></label>
+						<div class="col-sm-4 entry-placeholder" id="new_caller_verified" style="margin-top: 7px;">
 							No
+							<input type="hidden" id="new_verified" name="verified" value="No">
 						</div>
 						<div class="col-sm-4">
-							<button class="btn btn-secondary btn-block" type="button" onclick="callAjax();">Verify Caller</button>
+							<button class="btn btn-secondary btn-block" type="button" onclick="verifyCaller();">Verify Caller</button>
 						</div>
 					</div>
 					<div class="col-sm-12">
-						<div class="col-sm-8 col-sm-offset-2"><hr></div>
+						<div class="col-sm-8 col-sm-offset-2">
+							<hr>
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_authenticity" class="col-sm-4 control-label">Authenticity of Call<span style="color:red;">*</span></label>
@@ -202,7 +250,7 @@
 					<div class="form-group">
 						<label for="new_reason" class="col-sm-4 control-label">Reason</label>
 						<div class="col-sm-8">
-							<textarea class="form-control" rows="3" id="new_reason" name="newReason"></textarea>
+							<textarea class="form-control" rows="3" id="new_reason" name="newReason" style="overflow:hidden;"></textarea>
 						</div>
 					</div>
 				</div>
@@ -220,7 +268,7 @@
 								<option value="CAT3">Category 3</option>
 							</select>
 						</div>
-						
+
 					</div>
 					<div class="form-group">
 						<label for="new_nature" class="col-sm-4 control-label">Nature of Incident<span style="color:red;">*</span></label>
@@ -255,7 +303,9 @@
 						</div>
 					</div>
 					<div class="col-sm-12">
-						<div class="col-sm-8 col-sm-offset-2"><hr></div>
+						<div class="col-sm-8 col-sm-offset-2">
+							<hr>
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="new_estimated_start_date" class="col-sm-4 control-label">Estimated Start Date</label>
@@ -272,45 +322,51 @@
 					<div class="form-group">
 						<label for="new_incident_location" class="col-sm-4 control-label">Incident Location<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="new_call_location" name="InLocation" placeholder="" required>
+							<input type="text" class="form-control" id="new_call_location" name="inLocation" placeholder="" required>
 						</div>
+					</div>
+					<div class="form-group" style="margin-bottom: 5px;">
+						<label for="new_incident_coordinates" class="col-sm-4 control-label">Incident Coordinates</label>
+						<div class="col-sm-3" style="width: 20%; padding-right: 5px;">
+							<input type="text" class="form-control" id="new_incident_coordinates_north" placeholder="" name="incidentCoord_n" value="${report.incidentCoord_n}">
+						</div>
+						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px; padding:0;">Latitude</div>
+						<div class="col-sm-3" style="width: 20%; padding-right: 5px;">
+							<input type="text" class="form-control" id="new_incident_coordinates_east" placeholder="" name="incidentCoord_e" value="${report.incidentCoord_e}">
+						</div>
+						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px; padding:0;">Longitude</div>
 					</div>
 					<div class="form-group">
-						<label for="new_incident_coordinates" class="col-sm-4 control-label">Incident Coordinates</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="new_incident_coordinates_north" name="InCoordNorth" placeholder="">
-						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">N</div>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="new_incident_coordinates_east" name="InCoordEast" placeholder="">
-						</div>
-						<div class="col-sm-1 entry-placeholder" style="margin-top: 7px;">E</div>
-					</div>
-					<div class="col-sm-12">
-						<div class="col-sm-4 col-sm-offset-4">
+						<label for="new_incident_location" class="col-sm-4 control-label"></label>
+						<div class="col-sm-8">
 							<button class="btn btn-secondary btn-block" type="button" name="getIncidentCoordinates" onclick="geocode();">Get Coordinates</button>
 						</div>
 					</div>
-					<div class="form-group col-sm-4"></div>
-					<div class="form-group col-sm-8" style="height: 40px;"><hr></div>
+					<div class="form-group" style="height: 40px;">
+						<hr>
+					</div>
 					<div class="form-group" style="padding:0 15px;">
 						<p class="lead">Additional Notes</p>
-						<textarea class="form-control" rows="10" id="notes" name="notes"></textarea>
+						<textarea class="form-control" rows="10" id="notes" name="notes" style="overflow:hidden;"></textarea>
 					</div>
 				</div>
-				<div class="col-sm-6 col-sm-offset-3"><hr></div>
+				
+				<div class="col-sm-6 col-sm-offset-3">
+					<hr>
+				</div>
 
 				<div class="col-sm-12">
 					<div class="form-group form-group-sm">
 						<div class="col-sm-3 col-sm-offset-3">
-							<button type="submit" class="btn btn-block btn-secondary" id="new_submit"name="action" value="draft">Save as Draft</button>
+							<button type="submit" class="btn btn-block btn-secondary" id="new_submit" name="action" value="draft">Save as Draft</button>
 						</div>
 						<div class="col-sm-3">
-							<button type="submit" class="btn btn-block btn-primary" id="new_submit" name="action" value="save" >Submit for Authentication</button>
+							<button type="submit" class="btn btn-block btn-primary" id="new_submit" name="action" value="save">Submit for Authentication</button>
 						</div>
 					</div>
 				</div>
 			</form>
 		</div>
 	</body>
-</html>
+
+	</html>

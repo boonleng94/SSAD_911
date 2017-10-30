@@ -1,49 +1,46 @@
 <!-- index.html -->
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<html lang="en">
+	<html lang="en">
 
 	<head>
+		<title>Crisis Management System | Edit Report</title>
+
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 		<!-- Bootstrap Core CSS -->
-		<!--	<link rel="stylesheet" href="static/css/bootstrap.min.css">-->
 		<link rel="stylesheet" href="static/css/bootstrap.css">
-<!--
-		<link href="static/css/style.css" rel="stylesheet">
-		<link href="static/css/login.css" rel="stylesheet" >
--->
+
 		<!-- Custom styles for this template -->
 		<link rel="stylesheet" href="static/css/custom.css">
-		
+
 		<!--EXTERNAL API TO HANDLE GOOGLE MAPS GEOCODING-->
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 		<!-- Bootstrap Core JavaScript -->
-		<script src="static/js/bootstrap.min.js"></script>  
+		<script src="static/js/bootstrap.min.js"></script>
+
 		<!-- jQuery -->
-		<script src="static/js/jquery-1.11.1.min.js"></script>
+		<script src="static/js/jquery-3.2.1.min.js"></script>
 
 		<script>
-			
 			window.selectCrisisOption = function() {
 				var x = document.querySelector('input[name="crisisIDRadio"]:checked').value;
-				if(document.querySelector('input[name="crisisIDRadio"]:checked').value == "choose"){
+				if (document.querySelector('input[name="crisisIDRadio"]:checked').value == "choose") {
 					document.getElementById('crisisIDSelector').style.display = 'inline';
 					document.getElementById('crisisID').style.display = 'none';
-				}
-				else{
+				} else {
 					document.getElementById('crisisIDSelector').style.display = 'none';
 					document.getElementById('crisisID').style.display = 'inline';
 				}
 			}
-			
+
 			function setCrisisID() {
-				document.getElementById('crisisID').value=document.getElementById('crisisIDSelector').value;
+				document.getElementById('crisisID').value = document.getElementById('crisisIDSelector').value;
 			}
-			
+
 			//TO GET COORDINATES BASED ON INPUT LOCATION USING GEOCODING///////////////
 			function geocode() {
 				//Get location from input field
@@ -65,12 +62,45 @@
 					alert(error + ". Please check for spelling errors and be more specific with the location.");
 				});
 			}
+
+			function verifyCaller() {
+				var data = {};
+				data["nric"] = $("#new_caller_ic").val();
+				data["name"] = $("#new_caller_name").val();
+				data["address"] = "";
+				data["dob"] = $("#new_caller_dob").val();
+
+				$.ajax({
+					type: "POST",
+					contentType: "application/json",
+					url: "/verifyCaller",
+					data: JSON.stringify(data),
+					dataType: 'json',
+					timeout: 100000,
+					success: function(data) {
+						console.log("SUCCESS: ", data);
+
+						if (data == true) {
+							alert("Caller is verfied");
+							$("#new_caller_verified").text("Yes");
+						} else {
+							alert("Caller is not verfied");
+							$("#new_caller_verified").text("No");
+						}
+					},
+					error: function(e) {
+						console.log("ERROR: ", e);
+					},
+					done: function(e) {
+						alert("DONE");
+					}
+				});
+			}
+
 		</script>
 
 		<!-- Custom JavaScript -->
 		<script src="static/js/main.js"></script>
-
-		<title>Crisis Management System | Edit Report</title>
 	</head>
 
 	<body>
@@ -90,25 +120,29 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right">
-						<li><div style="margin: 15px">Logged in as: ${name} [ID: ${userID}]</div></li>
+						<li>
+							<div style="margin: 15px">Logged in as: ${name} [ID: ${userID}]</div>
+						</li>
 						<li>
 							<form class="navbar-form navbar-right" action="/logout" method="POST">
 								<button type="logout" class="btn btn-secondary">Logout</button>
 							</form>
 						</li>
 					</ul>
-				</div><!-- /.navbar-collapse -->
-			</div><!-- /.container-fluid -->
+				</div>
+			</div>
 		</nav>
 
 		<div class="container">
 			<div class="col-sm-12 text-center" style="margin-bottom: 30px">
 				<h1>Edit Report ${report.reportID}</h1>
-				<div class="col-sm-6 col-sm-offset-3"><hr></div>
+				<div class="col-sm-6 col-sm-offset-3">
+					<hr>
+				</div>
 			</div>
 			<form class="form-horizontal" action="/OpsUpdateReport" method="POST">
 				<!-- left column -->
-				<input type="hidden" value=${report.reportID} name="reportID"/>
+				<input type="hidden" value=${report.reportID} name="reportID" />
 				<div class="col-sm-6">
 					<p class="lead">Call Information</p>
 					<div class="form-group">
@@ -142,20 +176,46 @@
 						</div>
 					</div>
 					<div class="col-sm-12">
-						<div class="col-sm-8 col-sm-offset-2"><hr></div>
-					</div>
-					
-					<div class="form-group">
-						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified<span style="color:red;">*</span></label>
-						<div class="col-sm-4 entry-placeholder" id="new_caller_verified" name="callerVerified" style="margin-top: 7px;">
-							${report.callerVerified == false ? "No" : "Yes"}
+						<div class="col-sm-8 col-sm-offset-2">
+							<hr>
 						</div>
 					</div>
-					
-					<div class="col-sm-12">
-						<div class="col-sm-8 col-sm-offset-2"><hr></div>
+
+					<div class="form-group">
+						<label for="new_caller_name" class="col-sm-4 control-label">Caller Name<span style="color:red;">*</span></label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="new_caller_name" name="newCallerName" placeholder="" value="${report.callerName}" required>
+						</div>
 					</div>
-					
+					<div class="form-group">
+						<label for="new_caller_ic" class="col-sm-4 control-label">Caller IC Number<span style="color:red;">*</span></label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="new_caller_ic" name="newCallerIC" placeholder="" value="${report.callerNric}" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="new_caller_dob" class="col-sm-4 control-label">Caller Date of Birth<span style="color:red;">*</span></label>
+						<div class="col-sm-8">
+							<input type="date" class="form-control" id="new_caller_dob" name="newCallerDOB" placeholder="" value="${report.dob}" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified<span style="color:red;">*</span></label>
+						<div class="col-sm-4 entry-placeholder" id="new_caller_verified" style="margin-top: 7px;">
+							${report.callerVerified == true ? 'Yes' : 'No'}
+							<input type="hidden" class="" id="new_verified" name="verified" value="${report.callerVerified}">
+						</div>
+						<div class="col-sm-4">
+							<button class="btn btn-secondary btn-block" type="button" onclick="verifyCaller();">Verify Caller</button>
+						</div>
+					</div>
+
+					<div class="col-sm-12">
+						<div class="col-sm-8 col-sm-offset-2">
+							<hr>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<label for="new_authenticity" class="col-sm-4 control-label">Authenticity of Call<span style="color:red;">*</span></label>
 						<div class="col-sm-8">
@@ -170,7 +230,7 @@
 					<div class="form-group">
 						<label for="new_reason" class="col-sm-4 control-label">Reason</label>
 						<div class="col-sm-8">
-							<textarea class="form-control" rows="5" id="new_reason" name="reason">${report.reason}</textarea>
+							<textarea class="form-control" rows="5" id="new_reason" name="reason" style="overflow:hidden">${report.reason}</textarea>
 						</div>
 					</div>
 				</div>
@@ -221,7 +281,7 @@
 							</select>
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="new_estimated_start_date" class="col-sm-4 control-label">Estimated Start Date</label>
 						<div class="col-sm-8 entry-placeholder">
@@ -258,16 +318,20 @@
 							<button class="btn btn-secondary btn-block" type="button" name="getIncidentCoordinates" onClick="geocode()">Get Coordinates</button>
 						</div>
 					</div>
-					
+
 					<div class="form-group col-sm-4" style=""></div>
-					<div class="form-group col-sm-8" style="height: 20px;"><hr></div>
-					
+					<div class="form-group col-sm-8" style="height: 20px;">
+						<hr>
+					</div>
+
 					<div class="form-group" style="padding:0 15px;">
 						<p class="lead" style="margin-bottom:10px;">Additional Notes</p>
-						<textarea class="form-control" rows="5" id="notes" name="additionalNotes">${report.additionalNotes}</textarea>
+						<textarea class="form-control" rows="10" id="notes" name="additionalNotes">${report.additionalNotes}</textarea>
 					</div>
 				</div>
-				<div class="col-sm-6 col-sm-offset-3"><hr></div>
+				<div class="col-sm-6 col-sm-offset-3">
+					<hr>
+				</div>
 
 				<div class="col-sm-12">
 					<div class="form-group form-group-sm">
@@ -276,11 +340,12 @@
 						</div>
 						<div class="col-sm-3">
 							<button type="submit" class="btn btn-block btn-primary" id="new_submit" name="action" value="draft">Submit for Authentication</button>
-<!--						<button type="button" class="btn btn-block btn-primary" id="new_submit" disabled="disabled">Submit for Authentication</button>-->
+							<!--						<button type="button" class="btn btn-block btn-primary" id="new_submit" disabled="disabled">Submit for Authentication</button>-->
 						</div>
 					</div>
 				</div>
 			</form>
 		</div>
 	</body>
-</html>
+
+	</html>

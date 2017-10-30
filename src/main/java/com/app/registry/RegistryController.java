@@ -20,13 +20,11 @@ public class RegistryController {
 		return registryService.getAllRegistry();
 	}
 	
-	//curly braces for inputs
 	@RequestMapping("/registry/{id}")
 	public Registry getRegistry(@PathVariable String nric){ //need use @pathvariable. convention to keep names same
 		return registryService.getRegistry(nric);
 	}
 	
-	//method to save report
 	@RequestMapping(method=RequestMethod.POST, value="/registry")
 	public void addRegistry(@RequestBody Registry report, @PathVariable String nric){
 		registryService.addRegistry(report);
@@ -40,5 +38,9 @@ public class RegistryController {
 	@RequestMapping(method=RequestMethod.DELETE, value="/registry/{nric}")
 	public void deleteReport(@PathVariable String nric){
 		registryService.deleteReport(nric);
+	}
+
+	public Registry getRegistryToVerify(String nric){ //need use @pathvariable. convention to keep names same
+		return registryService.getRegistry(nric);
 	}
 }

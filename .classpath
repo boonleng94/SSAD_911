@@ -23,9 +23,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
-	<classpathentry kind="lib" path="lib/gmap2-1.4.17.2.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-all-1.9.0.jar"/>
-	<classpathentry kind="lib" path="lib/lombok.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import com.app.user.User;
+
 public interface RegistryRepository extends CrudRepository<Registry, String>{
 	
 	//creating a custom .findBy function that finds reports based on operatorId // SYNTAX IS: findByEntityAttribute
@@ -23,4 +25,6 @@ public interface RegistryRepository extends CrudRepository<Registry, String>{
 	@Modifying
 	@Query("delete from Registry where nric = :nric")
 	void delete(@Param("nric") int nric);
+	
+	public Registry findFirstByNric(String nric);
 }

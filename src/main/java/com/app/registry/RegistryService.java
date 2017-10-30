@@ -19,7 +19,7 @@ public class RegistryService {
 	}
 
 	public Registry getRegistry(String nric){
-		return registryRepository.findOne(nric);
+		return registryRepository.findFirstByNric(nric);
 	}
 	
 	public void addRegistry(Registry registry){

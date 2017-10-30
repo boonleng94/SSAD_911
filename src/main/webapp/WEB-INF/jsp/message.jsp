@@ -3,7 +3,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Crisis Management System | Warning</title>
-		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+		<!-- jQuery -->
+		<script src="static/js/jquery-3.2.1.min.js"></script>
 		<script>
 			var message="${message}";
 			var redirect="${redirect}";

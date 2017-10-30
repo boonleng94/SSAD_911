@@ -1,28 +1,34 @@
 package com.app.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.app.cmoapi.NineOneOneClient;
-import com.app.geocoder.*;
+import com.app.registry.Registry;
+import com.app.registry.RegistryController;
 import com.app.report.Report;
 import com.app.report.ReportController;
 import com.app.user.User;
 import com.app.user.UserController;
-import com.mysql.fabric.xmlrpc.base.Array;
-
-import scala.annotation.meta.field;
 
 @Controller
 @SessionAttributes("userID")
@@ -31,9 +37,9 @@ public class WebpageController implements ErrorController{
 	@Autowired
 	UserController userController;
 	@Autowired 
-	GeocoderController geocodercontroller;	
-	@Autowired
 	ReportController reportController;
+	@Autowired 
+	RegistryController registryController;
 	
 	User user = new User();
 	private static final String ERRORPATH = "/error";
@@ -51,10 +57,8 @@ public class WebpageController implements ErrorController{
 			userInSession = (int) model.get("userID");
 		}
 
-		//if session has user
 		if(userInSession == 0)
 			return new ModelAndView("login");
-		//else go to homepage
 		else {
 			return new ModelAndView("redirect:/home");
 		}
@@ -75,19 +79,6 @@ public class WebpageController implements ErrorController{
 		else {
 			model.put("name", user.getName());
 			if (userController.isLiaisonOfficer((int) model.get("userID"))){
-				//DRAFTED / SUBMITTED / VERIFIED / SENT
-				
-//				for (Report report : reports) {
-//					String startDateString = "06/27/2007";
-//					DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); 
-//					Date startDate;
-//					try {
-//					    startDate = df.parse(startDateString);
-//					    report.setDate(df.format(startDate));
-//					} catch (ParseException e) {
-//					    e.printStackTrace();
-//					}
-//				}
 
 				List<Report> reports = reportController.getAllReportsforLO();
 				model.put("operatorList", userController.getAllOperators());
@@ -99,7 +90,7 @@ public class WebpageController implements ErrorController{
 				List<Report> reports = reportController.getAllOperatorReports((int) model.get("userID"));
 				model.put("OpsReportList", reports);
 				return new ModelAndView("operatorhome");
-		}
+			}
 		}
 	}
 	
@@ -174,8 +165,7 @@ public class WebpageController implements ErrorController{
 			return new ModelAndView("/message");
 		}
 		else{
-			model.put("report", reportController.getReport(Integer.valueOf(reportID))/*Sends report object. To call variable, use report.(name)*/);
-			//STORE POST DATA INTO MODEL
+			model.put("report", reportController.getReport(Integer.valueOf(reportID)));
 			
 			Report updatedReport = reportController.getReport(Integer.valueOf(reportID));
 			updatedReport.setIncidentCategory(incidentCategory);
@@ -233,7 +223,7 @@ public class WebpageController implements ErrorController{
 	/**
 	 * Mapping for error page
 	 */
-	//@RequestMapping(ERRORPATH)
+	@RequestMapping(ERRORPATH)
 	public ModelAndView errorPage(ModelMap model) {
 		model.put("message", "This page is not available.");
 		model.put("redirect", "/");
@@ -284,38 +274,35 @@ public class WebpageController implements ErrorController{
 		model.put("redirect", "/");
 		return new ModelAndView("/message");
 	}
-	@RequestMapping(value="/getgeo")
-	public ModelAndView getGeoCode (ModelMap model,@RequestParam String address, @RequestParam String reportID)
+	
+	@PostMapping(value="/verifyCaller")
+	public ResponseEntity verifyCaller (@Valid @RequestBody Registry search, Errors errors)
 	{
-		Response response=null;
-		try {
-			 response= geocodercontroller.getGeoCode(address);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		results[] Result=response.getResults();
-		geometry geo = Result[2].getGeometry();//Change number if query does not work
-		location loc =geo.getLocation();
-		model.put("lat",loc.getLat() );
-		model.put("lng", loc.getLng());
-		
-		//update database
-		
-		//send post with report ID parameter to editreport
-		model.put("reportID", reportID);
-		return new ModelAndView("redirect:/editReport");//check user service 
+		Boolean result = false;
+
+        //If error, just return a 400 bad request, along with the error message
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body("Error");
+        }
+
+        Registry registry= registryController.getRegistryToVerify(search.getNric());
+
+        if (registry == null || !registry.getName().equals(search.getName()) || !registry.getDob().equals(search.getDob())) {
+            result = false;
+        } else {
+            result = true;
+        }
+
+        return ResponseEntity.ok(result);
 	}
 
-	@RequestMapping(value ="/addReport", method=RequestMethod.POST)//Done but need to map to jsp
-	public ModelAndView addReportPage(@RequestParam String authenticity,@RequestParam String newCat,@RequestParam String newNature,
-			@RequestParam String newDateOfCall,@RequestParam String newCallStartTime
-			,@RequestParam String newCallEndTime,@RequestParam String newCallLocation,@RequestParam String newCallCoordNorth, 
-			@RequestParam String newCallCoordEast,@RequestParam String newCallerName ,@RequestParam String newCallerIC,
-			@RequestParam String newCallerDOB,@RequestParam String newReason,
-			@RequestParam String newEstStartDate,@RequestParam String newEstStartTime,@RequestParam String InLocation,
-			@RequestParam String InCoordNorth,@RequestParam String InCoordEast,@RequestParam String notes,
-			@RequestParam String action,ModelMap model) {
+	@RequestMapping(value ="/addReport", method=RequestMethod.POST)
+	public ModelAndView addReportPage(@RequestParam String newDateOfCall,@RequestParam String newCallStartTime, @RequestParam String newCallEndTime,
+			@RequestParam String newCallLocation,@RequestParam String newCallCoordNorth, @RequestParam String newCallCoordEast,
+			@RequestParam String newCallerName ,@RequestParam String newCallerIC, @RequestParam String newCallerDOB,@RequestParam String verified, 
+			@RequestParam String authenticity, @RequestParam String newReason, @RequestParam String newCat, @RequestParam String newNature, 
+			@RequestParam String newEstStartDate,@RequestParam String newEstStartTime, @RequestParam String inLocation,@RequestParam String incidentCoord_n,
+			@RequestParam String incidentCoord_e,@RequestParam String notes, @RequestParam String action,ModelMap model) {
 		
 		if(model.get("userID") == null || (int) model.get("userID") == 0 || userController.isLiaisonOfficer((int) model.get("userID"))) {
 			model.put("message", "Only Operators can access this page.");
@@ -340,14 +327,21 @@ public class WebpageController implements ErrorController{
 			temp.setReason(newReason);
 			temp.setIncidentDate(newEstStartDate);
 			temp.setEstimatedStartTime(newEstStartTime);
-			temp.setIncidentLocation(InLocation);
-			temp.setIncidentCoord_n(InCoordNorth);
-			temp.setIncidentCoord_e(InCoordEast);
+			temp.setIncidentLocation(inLocation);
+			temp.setIncidentCoord_n(incidentCoord_n);
+			temp.setIncidentCoord_e(incidentCoord_e);
 			temp.setAdditionalNotes(notes);
+			if(verified.equals("Yes"))
+			{
+				temp.setCallerVerified(true);
+			}
+			else
+			{
+				temp.setCallerVerified(false);
+			}
 			if(action.equals("save"))
 			{
 				temp.setStatus("Submitted");
-
 			}
 			else
 			{
@@ -355,47 +349,24 @@ public class WebpageController implements ErrorController{
 			}
 			
 			reportController.addReport(temp, userID);
-			//need to set officer if not officer cannot view
-			//model.put("report", reportController.getReport(reportID)/*Sends report object. To call variable, use report.(name)*/);
-			//STORE POST DATA INTO MODEL
-			
-			System.out.println("newDateOfCall: "+newDateOfCall);
-			System.out.println("newCallStartTime: "+newCallStartTime);
-			System.out.println("newCallEndTime: "+newCallEndTime);
-			System.out.println("newCallLocation: "+newCallLocation);
-			System.out.println("newCallCoordNorth: "+newCallCoordNorth);
-			System.out.println("newCallCoordEast: "+newCallCoordEast);
-			System.out.println("newCallerName: "+newCallerName);
-			System.out.println("newCallerIC: "+newCallerIC);
-			System.out.println("newCallerDOB: "+newCallerDOB);
-			System.out.println("newReason: "+newReason);
-			System.out.println("newEstStartDate: "+newEstStartDate);
-			System.out.println("newEstStartTime: "+newEstStartTime);
-			System.out.println("InLocation: "+InLocation);
-			System.out.println("InCoordNorth: "+InCoordNorth);
-			System.out.println("InCoordEast: "+InCoordEast);
-			System.out.println("notes: "+notes);
-			System.out.println("action: "+action);
-
-			//reportController.updateReport(updatedReport, (int) model.get("userID"), reportID);
-			
 			return new ModelAndView("redirect:/home");
 		}
 	}
 	
 	
-	@RequestMapping(value ="/OpsUpdateReport", method=RequestMethod.POST)//Done but need to map to jsp
-	public ModelAndView opsUpdate(@RequestParam String authenticity,@RequestParam String incidentCategory,@RequestParam String incidentNature,@RequestParam String reportID,@RequestParam String reason,@RequestParam String incidentLocation,
+	@RequestMapping(value ="/OpsUpdateReport", method=RequestMethod.POST)
+	public ModelAndView opsUpdate(@RequestParam String authenticity,@RequestParam String incidentCategory,@RequestParam String incidentNature,
+			@RequestParam String reportID,@RequestParam String newCallerName ,@RequestParam String newCallerIC,
+			@RequestParam String newCallerDOB, @RequestParam Boolean verified, @RequestParam String reason,@RequestParam String incidentLocation,
 			@RequestParam String incidentCoord_n,@RequestParam String incidentCoord_e,@RequestParam String additionalNotes,@RequestParam String action,
 			ModelMap model) {
-		
+	
 		if(model.get("userID") == null || (int) model.get("userID") == 0 || userController.isLiaisonOfficer((int) model.get("userID"))) {
 			model.put("message", "Only Operators can access this page.");
 			model.put("redirect", "/");
 			return new ModelAndView("/message");
 		}
 		else{
-			System.out.println(incidentCategory);
 			Report temp= reportController.getReport(Integer.valueOf(reportID));
 			temp.setAuthenticity(authenticity);
 			temp.setIncidentNature(incidentNature);
@@ -405,10 +376,13 @@ public class WebpageController implements ErrorController{
 			temp.setIncidentCoord_n(incidentCoord_n);
 			temp.setIncidentCoord_e(incidentCoord_e);
 			temp.setAdditionalNotes(additionalNotes);
+			temp.setCallerName(newCallerName);
+			temp.setCallerNric(newCallerIC);
+			temp.setDob(newCallerDOB);
+			temp.setCallerVerified(verified);
 			if(action.equals("save"))
 			{
 				temp.setStatus("Submitted");
-
 			}
 			else
 			{
@@ -419,5 +393,4 @@ public class WebpageController implements ErrorController{
 			return new ModelAndView("redirect:/home");
 		}
 	}
-	
 }
