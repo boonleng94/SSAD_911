@@ -204,6 +204,8 @@ CREATE TABLE `911`.`graylist` (
   `graylistID` int(11) NOT NULL AUTO_INCREMENT,
   `callerNumber` INT NOT NULL,
   `callerNric` VARCHAR(9) NOT NULL,
-  `reason` VARCHAR(256) NOT NULL);
+  `reason` VARCHAR(256) NOT NULL,
+  PRIMARY KEY (`graylistID`),
+  UNIQUE KEY `graylistID_UNIQUE` (`graylistID`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `911`.`graylist` (`callerNumber`, `callerNric`, `reason`) VALUES ('84562586', 'S9449973I', 'Called multiple times regarding same incident and not iwlling to give further information but had a laughing tone during the conversation');
  

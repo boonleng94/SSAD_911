@@ -48,7 +48,7 @@
 					//Catches any error and displays JS popup box 
 					alert(error + ". Please check for spelling errors and be more specific with the location.");
 				});
-			}
+			};
 
 			function geocode2() {
 				//Get location from input field
@@ -68,9 +68,10 @@
 					//Catches any error and displays JS popup box 
 					alert(error + ". Please check for spelling errors and be more specific with the location.");
 				});
-			}
-			
+			};
+
 			function verifyCaller() {
+
 				var data = {};
 				data["nric"] = $("#new_caller_ic").val();
 				data["name"] = $("#new_caller_name").val();
@@ -78,60 +79,59 @@
 				data["dob"] = $("#new_caller_dob").val();
 
 				$.ajax({
-					type : "POST",
-					contentType : "application/json",
-					url : "/verifyCaller",
-					data : JSON.stringify(data),
-					dataType : 'json',
-					timeout : 100000,
-					success : function(data) {
+					type: "POST",
+					contentType: "application/json",
+					url: "/verifyCaller",
+					data: JSON.stringify(data),
+					dataType: 'json',
+					timeout: 100000,
+					success: function(data) {
 						console.log("SUCCESS: ", data);
-						
-						if(data == true){
-							var x = 'Yes';
+
+						if (data == true) {
 							alert("Caller is verified");
 							alert($("input[name='verified']").val());
 							$("#new_caller_verified").text("Yes");
-							$("input[name='verified']").val(x);
+							$("input[name='verified']").val("Yes");
 							alert($("input[name='verified']").val());
-						}
-						else{
+						} else {
 							var x = 'No';
 							alert("Caller is not verified");
 							alert($("input[name='verified']").val());
 							$("#new_caller_verified").text("No");
-							$("input[name='verified']").val(x);
+							$("input[name='verified']").val("No");
 							//ERROR HERE OMG. always return undefined value even after setting YES / NO
 							alert($("input[name='verified']").val());
 						}
 					},
-					error : function(e) {
+					error: function(e) {
 						console.log("ERROR: ", e);
 					},
-					done : function(e) {
+					done: function(e) {
 						alert("DONE");
 					}
 				});
 			}
-			
+
 			function checkGraylist() {
 				//$("#new_caller_number").val()
-				$.post("/checkGraylist", {84562586}, 
-					function(count){
+				$.post("/checkGraylist", 84562586,
+					function(count) {
 						console.log("GRAYLISTCOUNT: ", count);
-				});
+					});
 			}
-			
+
 			function addGraylist() {
 				var data = {};
 				data["callerNumber"] = $("#new_caller_number").val();
 				data["callerNric"] = $("#new_caller_ic").val();
 				data["reason"] = $("#newReason").val();
-				$.post("/addGraylist", data, 
-					function(result){
+				$.post("/addGraylist", data,
+					function(result) {
 						console.log("GRAYLIST ADDITION RESULT: ", result);
-				});
+					});
 			}
+
 		</script>
 	</head>
 
@@ -244,7 +244,6 @@
 						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified<span style="color:red;">*</span></label>
 						<div class="col-sm-4 entry-placeholder" id="new_caller_verified" style="margin-top: 7px;">
 							No
-							<input type="hidden" id="new_verified" name="verified" value="No">
 						</div>
 						<div class="col-sm-4">
 							<button class="btn btn-secondary btn-block" type="button" onclick="verifyCaller();">Verify Caller</button>
@@ -270,6 +269,12 @@
 						<label for="new_reason" class="col-sm-4 control-label">Reason</label>
 						<div class="col-sm-8">
 							<textarea class="form-control" rows="3" id="new_reason" name="newReason" style="overflow:hidden;"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label"></label>
+						<div class="col-sm-8">
+							<button class="btn btn-secondary btn-block" type="button" onclick="addGraylist();">Graylist Caller</button>
 						</div>
 					</div>
 				</div>
@@ -369,7 +374,7 @@
 						<textarea class="form-control" rows="10" id="notes" name="notes" style="overflow:hidden;"></textarea>
 					</div>
 				</div>
-				
+
 				<div class="col-sm-6 col-sm-offset-3">
 					<hr>
 				</div>

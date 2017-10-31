@@ -97,6 +97,25 @@
 				});
 			}
 
+			function checkGraylist() {
+				//$("#new_caller_number").val()
+				$.post("/checkGraylist", 84562586,
+					function(count) {
+						console.log("GRAYLISTCOUNT: ", count);
+					});
+			}
+
+			function addGraylist() {
+				var data = {};
+				data["callerNumber"] = $("#new_caller_number").val();
+				data["callerNric"] = $("#new_caller_ic").val();
+				data["reason"] = $("#newReason").val();
+				$.post("/addGraylist", data,
+					function(result) {
+						console.log("GRAYLIST ADDITION RESULT: ", result);
+					});
+			}
+
 		</script>
 
 		<!-- Custom JavaScript -->
@@ -203,9 +222,9 @@
 						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified<span style="color:red;">*</span></label>
 						<div class="col-sm-4 entry-placeholder" id="new_caller_verified" style="margin-top: 7px;">
 							${report.callerVerified == true ? 'Yes' : 'No'}
-							<input type="hidden" class="" id="new_verified" name="verified" value="${report.callerVerified}">
 						</div>
 						<div class="col-sm-4">
+							<input type="hidden" class="" id="new_verified" name="verified" value="${report.callerVerified}">
 							<button class="btn btn-secondary btn-block" type="button" onclick="verifyCaller();">Verify Caller</button>
 						</div>
 					</div>
@@ -231,6 +250,12 @@
 						<label for="new_reason" class="col-sm-4 control-label">Reason</label>
 						<div class="col-sm-8">
 							<textarea class="form-control" rows="5" id="new_reason" name="reason" style="overflow:hidden">${report.reason}</textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label"></label>
+						<div class="col-sm-8">
+							<button class="btn btn-secondary btn-block" type="button" onclick="addGraylist();">Graylist Caller</button>
 						</div>
 					</div>
 				</div>
@@ -336,10 +361,10 @@
 				<div class="col-sm-12">
 					<div class="form-group form-group-sm">
 						<div class="col-sm-3 col-sm-offset-3">
-							<button type="submit" class="btn btn-block btn-secondary" id="new_draft" name="action" value="save">Save as Draft</button>
+							<button type="submit" class="btn btn-block btn-secondary" id="new_draft" name="action" value="draft">Save as Draft</button>
 						</div>
 						<div class="col-sm-3">
-							<button type="submit" class="btn btn-block btn-primary" id="new_submit" name="action" value="draft">Submit for Authentication</button>
+							<button type="submit" class="btn btn-block btn-primary" id="new_submit" name="action" value="save">Submit for Authentication</button>
 							<!--						<button type="button" class="btn btn-block btn-primary" id="new_submit" disabled="disabled">Submit for Authentication</button>-->
 						</div>
 					</div>
