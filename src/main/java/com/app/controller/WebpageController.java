@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.app.cmoapi.NineOneOneClient;
+import com.app.graylist.Graylist;
+import com.app.graylist.GraylistController;
 import com.app.registry.Registry;
 import com.app.registry.RegistryController;
 import com.app.report.Report;
@@ -39,7 +41,9 @@ public class WebpageController implements ErrorController{
 	@Autowired 
 	ReportController reportController;
 	@Autowired 
-	RegistryController registryController;
+	RegistryController registryController;	
+	@Autowired 
+	GraylistController graylistController;
 	
 	User user = new User();
 	private static final String ERRORPATH = "/error";
@@ -295,6 +299,27 @@ public class WebpageController implements ErrorController{
 
         return ResponseEntity.ok(result);
 	}
+	
+	@PostMapping(value="/checkGraylist")
+	public long checkGraylist (@Valid @RequestBody int callerNumber)
+	{
+        long count = graylistController.getCallNumberCount(callerNumber);
+
+        return count;
+	}
+	
+	@PostMapping(value="/addGraylist")
+	public boolean verifyCaller (@Valid @RequestBody Graylist graylist, Errors errors)
+	{
+        //If error, just return a 400 bad request, along with the error message
+        if (errors.hasErrors()) {
+            return false;
+        }
+		
+        graylistController.addgraylist(graylist);
+		
+        return true;
+	}
 
 	@RequestMapping(value ="/addReport", method=RequestMethod.POST)
 	public ModelAndView addReportPage(@RequestParam String newDateOfCall,@RequestParam String newCallStartTime, @RequestParam String newCallEndTime,
@@ -352,7 +377,6 @@ public class WebpageController implements ErrorController{
 			return new ModelAndView("redirect:/home");
 		}
 	}
-	
 	
 	@RequestMapping(value ="/OpsUpdateReport", method=RequestMethod.POST)
 	public ModelAndView opsUpdate(@RequestParam String authenticity,@RequestParam String incidentCategory,@RequestParam String incidentNature,

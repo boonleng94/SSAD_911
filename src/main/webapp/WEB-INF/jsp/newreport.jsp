@@ -113,6 +113,25 @@
 					}
 				});
 			}
+			
+			function checkGraylist() {
+				//$("#new_caller_number").val()
+				$.post("/checkGraylist", {84562586}, 
+					function(count){
+						console.log("GRAYLISTCOUNT: ", count);
+				});
+			}
+			
+			function addGraylist() {
+				var data = {};
+				data["callerNumber"] = $("#new_caller_number").val();
+				data["callerNric"] = $("#new_caller_ic").val();
+				data["reason"] = $("#newReason").val();
+				$.post("/addGraylist", data, 
+					function(result){
+						console.log("GRAYLIST ADDITION RESULT: ", result);
+				});
+			}
 		</script>
 	</head>
 

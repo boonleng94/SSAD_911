@@ -198,3 +198,12 @@ CREATE TABLE `911`.`registry` (
 INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S9265146C', 'Tan Koon Long', 'S123456 #05-05', '121292');
 INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S9111342B', 'Jasvin Singh', 'S581561 #08-10', '050991');
 INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A', 'Rachel Siew Kuan Er', 'S984125 #16-16', '250582');
+
+7. Run this table to make GRAYLIST table and add 1 entry
+CREATE TABLE `911`.`graylist` (
+  `graylistID` int(11) NOT NULL AUTO_INCREMENT,
+  `callerNumber` INT NOT NULL,
+  `callerNric` VARCHAR(9) NOT NULL,
+  `reason` VARCHAR(256) NOT NULL);
+INSERT INTO `911`.`graylist` (`callerNumber`, `callerNric`, `reason`) VALUES ('84562586', 'S9449973I', 'Called multiple times regarding same incident and not iwlling to give further information but had a laughing tone during the conversation');
+ 
