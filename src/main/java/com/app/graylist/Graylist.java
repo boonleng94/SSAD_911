@@ -10,17 +10,15 @@ public class Graylist {
 	
 	@Id
 	private int graylistID;
-	private int callerNumber;
 	private String callerNric;
 	private String reason;
 
 	public Graylist() {
 	}
 	
-	public Graylist(int graylistID, int callerNumber, String callerNric, String reason) {
+	public Graylist(int graylistID, String callerNric, String reason) {
 		super();
 		this.graylistID = graylistID;
-		this.callerNumber = callerNumber;
 		this.callerNric = callerNric;
 		this.reason = reason;
 	}
@@ -31,13 +29,6 @@ public class Graylist {
 
 	public void setGraylistID(int graylistID) {
 		this.graylistID = graylistID;
-	}
-
-	public int getCallerNumber() {
-		return callerNumber;
-	}
-	public void setCallerNumber(int callerNumber) {
-		this.callerNumber = callerNumber;
 	}
 	public String getCallerNric() {
 		return callerNric;
@@ -54,7 +45,7 @@ public class Graylist {
 
 	@Override
 	public String toString() {
-		return "Graylist [graylistID=" + graylistID + ", callerNumber=" + callerNumber + ", callerNric=" + callerNric+ ", reason=" + reason + "]";
+		return "Graylist [graylistID=" + graylistID + ", callerNric=" + callerNric + ", reason=" + reason + "]";
 	}
 	
 }

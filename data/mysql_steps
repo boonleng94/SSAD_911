@@ -23,7 +23,7 @@ INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VA
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator2', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Operator_2', '0');
 INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('cmolo1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'CMOLO_1', '1');
 
-5. Run this to make REPORTS table and add 4 dummy reports:
+5. Run this to make REPORTS table and add dummy reports:
 CREATE TABLE `reports` (
   `reportID` int(11) NOT NULL AUTO_INCREMENT,
   `date` varchar(45) NOT NULL,
@@ -200,12 +200,14 @@ INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S911134
 INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A', 'Rachel Siew Kuan Er', 'S984125 #16-16', '250582');
 
 7. Run this table to make GRAYLIST table and add 1 entry
-CREATE TABLE `911`.`graylist` (
+CREATE TABLE `graylist` (
   `graylistID` int(11) NOT NULL AUTO_INCREMENT,
-  `callerNumber` INT NOT NULL,
-  `callerNric` VARCHAR(9) NOT NULL,
-  `reason` VARCHAR(256) NOT NULL,
+  `caller_nric` varchar(9) NOT NULL,
+  `reason` varchar(256) NOT NULL,
   PRIMARY KEY (`graylistID`),
-  UNIQUE KEY `graylistID_UNIQUE` (`graylistID`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `911`.`graylist` (`callerNumber`, `callerNric`, `reason`) VALUES ('84562586', 'S9449973I', 'Called multiple times regarding same incident and not iwlling to give further information but had a laughing tone during the conversation');
+  UNIQUE KEY `graylistID_UNIQUE` (`graylistID`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+
+INSERT INTO `911`.`graylist` (`callerNric`, `reason`) VALUES ('S9449973I', 'Called multiple times regarding same incident and not unwlling to give further information but had a laughing tone during the conversation');
+INSERT INTO `911`.`graylist` (`callerNric`, `reason`) VALUES ('S9549973I', 'Genuinely scared');
  

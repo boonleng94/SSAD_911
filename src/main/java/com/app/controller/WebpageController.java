@@ -150,7 +150,21 @@ public class WebpageController implements ErrorController{
 		else {
 			user =  userController.getUserByUserID((int) model.get("userID"));
 			model.put("name", user.getName());
-			model.put("report", reportController.getReport(Integer.valueOf(reportID)));
+			
+			Report report = reportController.getReport(Integer.valueOf(reportID));
+			model.put("report", report);
+
+			
+			List<Graylist> allGraylist = graylistController.getAllGraylist();
+			for(int i = 0; i < allGraylist.size(); i++){
+				if(allGraylist.get(i).getCallerNric().equals(report.getCallerNric())){
+					model.put("graylisted", true);
+					break;
+				}else if(i == allGraylist.size() - 1){
+					model.put("graylisted", false);
+				}
+			}
+			
 			return new ModelAndView("operatoredit");
 		}
 	}
@@ -300,25 +314,28 @@ public class WebpageController implements ErrorController{
         return ResponseEntity.ok(result);
 	}
 	
-	@PostMapping(value="/checkGraylist")
-	public long checkGraylist (@Valid @RequestBody int callerNumber)
-	{
-        long count = graylistController.getCallNumberCount(callerNumber);
-
-        return count;
-	}
-	
 	@PostMapping(value="/addGraylist")
-	public boolean verifyCaller (@Valid @RequestBody Graylist graylist, Errors errors)
+	public ResponseEntity verifyCaller (@Valid @RequestBody Graylist graylist, Errors errors)
 	{
         //If error, just return a 400 bad request, along with the error message
         if (errors.hasErrors()) {
-            return false;
+            return ResponseEntity.badRequest().body("Error from server");
         }
-		
-        graylistController.addgraylist(graylist);
-		
-        return true;
+		try{
+			List<Graylist> graylists = graylistController.getAllGraylist();
+			
+			for(int i = 0; i < graylists.size(); i++){
+				if(graylists.get(i).getCallerNric().equals(graylist.getCallerNric()) && graylists.get(i).getReason().equals(graylist.getReason())){
+		            return ResponseEntity.ok("Already graylisted with the same reason.");
+				}else if(i == graylists.size() - 1){
+			        graylistController.addgraylist(graylist);
+			        return ResponseEntity.ok(true);
+				}
+			}
+		}catch (Exception e) {
+            return ResponseEntity.ok(e.toString());
+		}
+        return ResponseEntity.ok("Something went wrong while graylisting. Did you enter a proper NRIC and reason?");
 	}
 
 	@RequestMapping(value ="/addReport", method=RequestMethod.POST)

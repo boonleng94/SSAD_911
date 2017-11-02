@@ -20,11 +20,6 @@ public class GraylistController {
 		return graylistService.getAllGraylist();
 	}
 	
-	@RequestMapping("/graylist/{callerNumber}")
-	public long getCallNumberCount(@PathVariable int callerNumber){ //need use @pathvariable. convention to keep names same
-		return graylistService.getCallerNumberCount(callerNumber);
-	}
-	
 	@RequestMapping(method=RequestMethod.POST, value="/graylist")
 	public void addgraylist(@RequestBody Graylist graylist){
 		graylistService.addGraylist(graylist);

@@ -90,18 +90,13 @@
 
 						if (data == true) {
 							alert("Caller is verified");
-							alert($("input[name='verified']").val());
 							$("#new_caller_verified").text("Yes");
 							$("input[name='verified']").val("Yes");
-							alert($("input[name='verified']").val());
 						} else {
 							var x = 'No';
 							alert("Caller is not verified");
-							alert($("input[name='verified']").val());
 							$("#new_caller_verified").text("No");
 							$("input[name='verified']").val("No");
-							//ERROR HERE OMG. always return undefined value even after setting YES / NO
-							alert($("input[name='verified']").val());
 						}
 					},
 					error: function(e) {
@@ -113,23 +108,41 @@
 				});
 			}
 
-			function checkGraylist() {
-				//$("#new_caller_number").val()
-				$.post("/checkGraylist", 84562586,
-					function(count) {
-						console.log("GRAYLISTCOUNT: ", count);
-					});
-			}
-
 			function addGraylist() {
+
+				if($("#new_caller_ic").val() == ""){
+					alert("Please enter a NRIC");
+					return;
+				}
 				var data = {};
-				data["callerNumber"] = $("#new_caller_number").val();
 				data["callerNric"] = $("#new_caller_ic").val();
-				data["reason"] = $("#newReason").val();
-				$.post("/addGraylist", data,
-					function(result) {
-						console.log("GRAYLIST ADDITION RESULT: ", result);
-					});
+				data["reason"] = $("#new_reason").val();
+
+				$.ajax({
+					type: "POST",
+					contentType: "application/json",
+					url: "/addGraylist",
+					data: JSON.stringify(data),
+					dataType: 'json',
+					timeout: 100000,
+					success: function(data) {
+						console.log("SUCCESS: ", data);
+
+						if (data == true) {
+							alert("Caller is added");
+							$("#new_graylist").text("Yes");
+						} else{
+							alert("Caller is not added. " + data);
+						}
+					},
+					error: function(e) {
+						console.log("ERROR: ", e);
+						alert("Caller is not added. " + e.responseText);
+					},
+					done: function(e) {
+						alert("Caller is not added. " + e.responseText);
+					}
+				});
 			}
 
 		</script>
@@ -241,12 +254,22 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified<span style="color:red;">*</span></label>
+						<label for="new_caller_verified" class="col-sm-4 control-label">Caller Verified</label>
 						<div class="col-sm-4 entry-placeholder" id="new_caller_verified" style="margin-top: 7px;">
 							No
 						</div>
 						<div class="col-sm-4">
+							<input type="hidden" class="" id="new_verified" name="verified" value="No">
 							<button class="btn btn-secondary btn-block" type="button" onclick="verifyCaller();">Verify Caller</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="new_graylist" class="col-sm-4 control-label">Caller Graylisted</label>
+						<div class="col-sm-4 entry-placeholder" id="new_graylist" style="margin-top: 7px;">
+							${graylisted == true ? 'Yes' : 'No'}
+						</div>
+						<div class="col-sm-4">
+							<button class="btn btn-secondary btn-block" type="button" onclick="addGraylist();">Graylist Caller</button>
 						</div>
 					</div>
 					<div class="col-sm-12">
@@ -269,12 +292,6 @@
 						<label for="new_reason" class="col-sm-4 control-label">Reason</label>
 						<div class="col-sm-8">
 							<textarea class="form-control" rows="3" id="new_reason" name="newReason" style="overflow:hidden;"></textarea>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label"></label>
-						<div class="col-sm-8">
-							<button class="btn btn-secondary btn-block" type="button" onclick="addGraylist();">Graylist Caller</button>
 						</div>
 					</div>
 				</div>

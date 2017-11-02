@@ -18,9 +18,9 @@ public class GraylistService {
 		return graylist;
 	}
 
-	public long getCallerNumberCount(int callerNumber){
-		return graylistRepository.countByCallerNumber(callerNumber);
-	}
+//	public long getCallerNricCount(int callerNric){
+//		return graylistRepository.countByCallerNric(callerNric);
+//	}
 	
 	public void addGraylist(Graylist graylist){
 		graylistRepository.save(graylist);

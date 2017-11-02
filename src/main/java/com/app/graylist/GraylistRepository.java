@@ -10,9 +10,9 @@ import org.springframework.data.repository.query.Param;
 public interface GraylistRepository extends CrudRepository<Graylist, String>{
 	
 	//creating a custom .findBy function that finds reports based on operatorId // SYNTAX IS: findByEntityAttribute
-	public List<Graylist> findByCallerNumber(int callerNumber);
-
-	public long countByCallerNumber(int callerNumber);
+//	public List<Graylist> findByCallerNric(int callerNric);
+//
+//	public long countByCallerNric(int callerNric);
 
 	/*@Modifying
 	@Query("from Graylist where callerNumber = :callerNumber")
