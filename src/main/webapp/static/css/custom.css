@@ -1,4 +1,16 @@
 /* Custom CSS Stylesheet */
+.btn-secondary{
+	background-color: #eee;
+    color: #337ab7;
+    border-color: #337ab7;
+}
+
+.btn-secondary:hover{
+	background-color: #337ab7;
+    color: #eee;
+    border-color: #337ab7;
+}
+
 .entry-placeholder {
 	margin-top: 6px;
 }

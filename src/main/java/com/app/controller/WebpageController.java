@@ -33,7 +33,7 @@ import com.app.user.User;
 import com.app.user.UserController;
 
 @Controller
-@SessionAttributes("userID")
+@SessionAttributes({"userID", "name"})
 public class WebpageController implements ErrorController{
 	
 	@Autowired
@@ -81,7 +81,7 @@ public class WebpageController implements ErrorController{
 			return new ModelAndView("/message");
 		} 
 		else {
-			model.put("name", user.getName());
+			//model.put("name", model.get("name"));
 			if (userController.isLiaisonOfficer((int) model.get("userID"))){
 
 				List<Report> reports = reportController.getAllReportsforLO();
@@ -119,8 +119,8 @@ public class WebpageController implements ErrorController{
 		}
 		else {
 			user =  userController.getUserByUserID((int) model.get("userID"));
-			model.put("name", user.getName());
-			model.put("userID", (int) model.get("userID"));
+			model.put("name", model.get("name"));
+			model.put("userID", model.get("userID"));
 			return new ModelAndView("newreport");
 		}
 	}
@@ -138,7 +138,7 @@ public class WebpageController implements ErrorController{
 		}
 		
 		if (userController.isLiaisonOfficer((int) model.get("userID"))) {
-			model.put("name", user.getName());
+			//model.put("name", (int) model.get("name"));
 			model.put("report", reportController.getReport(Integer.valueOf(reportID)));
 			
 			List<Integer> ints = reportController.getAllCrisisIDs();
@@ -149,7 +149,7 @@ public class WebpageController implements ErrorController{
 		}
 		else {
 			user =  userController.getUserByUserID((int) model.get("userID"));
-			model.put("name", user.getName());
+			//model.put("name", model.get("name"));
 			
 			Report report = reportController.getReport(Integer.valueOf(reportID));
 			model.put("report", report);
@@ -228,7 +228,7 @@ public class WebpageController implements ErrorController{
 		
 		if (userController.isLiaisonOfficer((int) model.get("userID"))) {
 			user =  userController.getUserByUserID((int) model.get("userID"));
-			model.put("name", user.getName());
+			//model.put("name", model.get("name"));
 			return new ModelAndView("livefeed");
 		}
 		else {
@@ -277,6 +277,7 @@ public class WebpageController implements ErrorController{
 		}
 		else{
 			model.put("userID", user.getUserID());
+			model.put("name", user.getName());
 			return new ModelAndView("redirect:/home");
 		}
 	}
