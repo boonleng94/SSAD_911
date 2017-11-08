@@ -15,6 +15,8 @@ public interface ReportRepository extends CrudRepository<Report, String>{
 	public Report findByReportID(int userID);
 		
 	public List<Report> findByIncidentCategoryAndStatusNot(@Param("incidentCategory") String incidentCategory, @Param("status") String status);
+
+	public List<Report> findByStatusNot(@Param("status") String status);
 		
 	@Modifying
 	@Query("delete from Report where reportID = :reportID")

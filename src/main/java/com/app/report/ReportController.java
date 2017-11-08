@@ -20,10 +20,9 @@ public class ReportController {
 		return reportService.getAllReports();
 	}
 
-	//get all reports from 1 operator via ID
-	@RequestMapping("/operator/{userID}/report")
-	public List<Report> getAllOperatorReports(@PathVariable int userID){
-		return reportService.getAllOperatorReports(userID);
+	//get all reports not sent by LO via ID
+	public List<Report> getAllOperatorReports(){
+		return reportService.getAllOperatorReports();
 	}
 	
 	//curly braces for inputs

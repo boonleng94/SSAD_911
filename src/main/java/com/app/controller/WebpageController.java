@@ -91,7 +91,8 @@ public class WebpageController implements ErrorController{
 				return new ModelAndView("officerhome");
 			}
 			else{
-				List<Report> reports = reportController.getAllOperatorReports((int) model.get("userID"));
+//				List<Report> reports = reportController.getAllOperatorReports((int) model.get("userID"));
+				List<Report> reports = reportController.getAllOperatorReports();
 				model.put("OpsReportList", reports);
 				return new ModelAndView("operatorhome");
 			}

@@ -327,7 +327,7 @@
 							<button type="submit" class="btn btn-block btn-secondary" id="new_draft" name="action" value="save">Save as Draft</button>
 						</div>
 						<div class="col-sm-3">
-							<button type="submit" class="btn btn-block btn-primary" id="new_submit" name="action" value="submit">Submit for Authentication</button>
+							<button type="submit" class="btn btn-block btn-primary" id="new_submit" name="action" value="submit">Escalate Report to CMO</button>
 							<!--						<button type="button" class="btn btn-block btn-primary" id="new_submit" disabled="disabled">Submit for Authentication</button>-->
 						</div>
 					</div>

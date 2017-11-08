@@ -66,7 +66,7 @@ public class NineOneOneClient {
 						+ " crisisDetails=" + map.get("crisisDetails"));
 			}
 		} else {
-			System.out.println("No report exist----------");
+			System.out.println("No report exists----------");
 		}
 	}
 
@@ -87,7 +87,7 @@ public class NineOneOneClient {
 		
 		CallReport callReport = new CallReport(report.getReportID(), report.getCrisisID(), user.getName(), 
 				((user.getLiaisonOfficer() == true) ? "CMO Liaison Officer. "  : "Non-CMO Liaison Officer") , report.getIncidentNature() , report.getIncidentLocation() + 
-				"(" + report.getIncidentCoord_n() + "," + report.getIncidentCoord_e() + ")", report.getIncidentDate(), report.getEstimatedStartTime(), report.getAdditionalNotes());
+				"/" + report.getIncidentCoord_n() + "/" + report.getIncidentCoord_e(), report.getIncidentDate(), report.getEstimatedStartTime(), report.getAdditionalNotes());
 		callReport.setCallReportID(444);
 		
 		URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/callReport/", callReport, CallReport.class);

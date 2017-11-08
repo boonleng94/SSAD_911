@@ -18,9 +18,9 @@ public class ReportService {
 		return reports;
 	}
 	
-	public List<Report> getAllOperatorReports(int userID){
+	public List<Report> getAllOperatorReports(){
 		List<Report> reports = new ArrayList<>();
-		reportRepository.findByOperatorUserID(userID).forEach(reports::add); //query all reports based on operatorId
+		reportRepository.findByStatusNot("Sent").forEach(reports::add); //query all reports based on operatorId
 		return reports;
 	}
 
