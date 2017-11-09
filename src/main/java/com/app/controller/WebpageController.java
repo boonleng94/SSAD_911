@@ -196,7 +196,7 @@ public class WebpageController implements ErrorController{
 			updatedReport.setAdditionalNotes(additionalNotes);
 			updatedReport.setAuthenticity(authenticity);
 			updatedReport.setReason(reason);
-			
+			updatedReport.setOfficerUserID((int) model.get("userID"));
 			if(action.equals("submit")){
 				try {
 					User user = userController.getUserToSubmitReport(updatedReport.getOfficerUserID());
@@ -204,7 +204,7 @@ public class WebpageController implements ErrorController{
 					updatedReport.setStatus("Sent");
 				} catch (Exception e) {
 					// TODO: handle exception
-					System.out.println("can't submit");
+					System.out.println("can't submit" + e.toString());
 				}
 			}
 			Report savedReport = reportController.updateReportOfficer(updatedReport, (int) model.get("userID"), Integer.parseInt(reportID));

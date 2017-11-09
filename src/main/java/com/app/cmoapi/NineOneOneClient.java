@@ -18,7 +18,7 @@ import com.app.user.User;
 public class NineOneOneClient {
 
 	//public static final String REST_SERVICE_URI = "http://10.27.114.25:8080/911toCMO";
-	public static final String REST_SERVICE_URI = "http://localhost:8080/911toCMO";
+	public static final String REST_SERVICE_URI = "http://10.27.113.59:8080/911toCMO";
 	
 	// GET
 	@SuppressWarnings({ "unchecked"})
@@ -88,7 +88,7 @@ public class NineOneOneClient {
 		CallReport callReport = new CallReport(report.getReportID(), report.getCrisisID(), user.getName(), 
 				((user.getLiaisonOfficer() == true) ? "CMO Liaison Officer. "  : "Non-CMO Liaison Officer") , report.getIncidentNature() , report.getIncidentLocation() + 
 				"/" + report.getIncidentCoord_n() + "/" + report.getIncidentCoord_e(), report.getIncidentDate(), report.getEstimatedStartTime(), report.getAdditionalNotes());
-		callReport.setCallReportID(444);
+		//callReport.setCallReportID(444);
 		
 		URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/callReport/", callReport, CallReport.class);
 		System.out.println("Location : "+uri.toASCIIString());
