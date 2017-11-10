@@ -58,23 +58,18 @@
 
 	<div class="container">
 		<div class="table-responsive">
-			<div class="col-sm-12 text-center" style="margin-bottom: 30px">
+			<div class="col-sm-12 text-center" style="margin-bottom: 20px">
 				<h1>Live Feed</h1>
-				<div class="col-sm-6 col-sm-offset-3">
-					<hr>
-				</div>
 			</div>
 			<table class="table table-striped">
-				<thead>
-				</thead>
 				<tbody>
 					<tr>
 						<td class="auto-style1">
 							<div class="table-entry">
-								<img src="http://10.27.131.195:6888/video/live.mjpg?id=6d5529e2-2dd4-1d3e-bd77-8093d6ca0347" height="280" width="280" alt="live-feed-video" />
-								<img src="http://10.27.131.195:6888/video/live.mjpg?id=6d5529e2-2dd4-1d3e-bd77-8093d6ca0347" height="280" width="280" alt="live-feed-video" />
-								<img src="http://10.27.131.195:6888/video/live.mjpg?id=6d5529e2-2dd4-1d3e-bd77-8093d6ca0347" height="280" width="280" alt="live-feed-video" />
-								<img src="http://10.27.131.195:6888/video/live.mjpg?id=6d5529e2-2dd4-1d3e-bd77-8093d6ca0347" height="280" width="280" alt="live-feed-video" />
+								<img src="http://10.27.143.205:6888/video/live.mjpg?id=23cca9f5-530a-e387-85ec-4d045fc7fcd5" height="350" width="100%" alt="live-feed-video" />
+								<img src="http://10.27.143.205:6888/video/live.mjpg?id=23cca9f5-530a-e387-85ec-4d045fc7fcd5" height="350" width="100%" alt="live-feed-video" />
+								<img src="http://10.27.143.205:6888/video/live.mjpg?id=23cca9f5-530a-e387-85ec-4d045fc7fcd5" height="350" width="100%" alt="live-feed-video" />								
+								<img src="http://10.27.143.205:6888/video/live.mjpg?id=23cca9f5-530a-e387-85ec-4d045fc7fcd5" height="350" width="100%" alt="live-feed-video" />
 							</div>
 						</td>
 					</tr>

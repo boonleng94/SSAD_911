@@ -1,9 +1,7 @@
 package com.app.controller;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -139,7 +137,6 @@ public class WebpageController implements ErrorController{
 		}
 		
 		if (userController.isLiaisonOfficer((int) model.get("userID"))) {
-			//model.put("name", (int) model.get("name"));
 			model.put("report", reportController.getReport(Integer.valueOf(reportID)));
 			
 			List<Integer> ints = reportController.getAllCrisisIDs();
@@ -150,7 +147,6 @@ public class WebpageController implements ErrorController{
 		}
 		else {
 			user =  userController.getUserByUserID((int) model.get("userID"));
-			//model.put("name", model.get("name"));
 			
 			Report report = reportController.getReport(Integer.valueOf(reportID));
 			model.put("report", report);
