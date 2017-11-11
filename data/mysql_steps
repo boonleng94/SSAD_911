@@ -6,7 +6,7 @@
 CREATE USER '911_user'@'localhost' IDENTIFIED BY 'password';
 GRANT INSERT, SELECT, UPDATE, DELETE ON `911`.* TO '911_user'@'localhost';
 
-4. Run to make SCHEMA 911 and USER table
+4. Run below SQL to make 911 table and USER table
 CREATE SCHEMA `911`;
 CREATE TABLE `911`.`users` (
   `userID` INT NOT NULL AUTO_INCREMENT,
@@ -19,11 +19,8 @@ CREATE TABLE `911`.`users` (
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 1001;
-INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Operator_1', '0');
-INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator2', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Operator_2', '0');
-INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('cmolo1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'CMOLO_1', '1');
 
-5. Run this to make REPORTS table and add dummy reports:
+5. Run below SQL to make REPORTS table and add 1 dummy report and the 2 actual reports to be sent to CMO:
 CREATE TABLE `reports` (
   `reportID` int(11) NOT NULL AUTO_INCREMENT,
   `date` varchar(45) NOT NULL,
@@ -59,134 +56,6 @@ CREATE TABLE `reports` (
   CONSTRAINT `operatorID` FOREIGN KEY (`operator_userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-INSERT INTO `911`.`reports`
-(`reportID`,
-`date`,
-`call_start_time`,
-`call_end_time`,
-`caller_location`,
-`call_coord_n`,
-`call_coord_e`,
-`caller_name`,
-`caller_Nric`,
-`dob`,
-`caller_verified`,
-`authenticity`,
-`reason`,
-`incident_category`,
-`incident_nature`,
-`incident_date`,
-`estimated_start_time`,
-`estimated_end_time`,
-`no_of_casualties`,
-`incident_location`,
-`incident_coord_n`,
-`incident_coord_e`,
-`additional_notes`,
-`operator_userID`,
-`status`,
-`officer_userID`,
-`crisisID`,
-`date_time_modified`)
-VALUES
-('1', '1994-11-05', '13:14:14', '12:14:15', 'Hougang', '11.203', '102.391', 'Ivan', 'S9449973I', '1111-02-11', '0', 'Unsure', 'idkasdasdasdasdsdsdasdasdasdasdasd', 'CAT1', 'Motor Vehicle Accident', '0111-11-11', '13:14:14', '0000000', '100', 'Hougang', '11.203', '102.391', 'idkasdaasdasdasd', '1001', 'Verified', '1003', '1', '2017-10-24 00:19:16');
-
-INSERT INTO `911`.`reports`
-(`reportID`,
-`date`,
-`call_start_time`,
-`call_end_time`,
-`caller_location`,
-`call_coord_n`,
-`call_coord_e`,
-`caller_name`,
-`caller_Nric`,
-`dob`,
-`caller_verified`,
-`authenticity`,
-`reason`,
-`incident_category`,
-`incident_nature`,
-`incident_date`,
-`estimated_start_time`,
-`estimated_end_time`,
-`no_of_casualties`,
-`incident_location`,
-`incident_coord_n`,
-`incident_coord_e`,
-`additional_notes`,
-`operator_userID`,
-`status`,
-`officer_userID`,
-`crisisID`,
-`date_time_modified`)
-VALUES
-('2', '1994-11-05', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '', '0', 'Unsure', 'idk', 'CAT1', 'Terrorism', '', '13:14:14', '0000000', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1002', 'Verified', '1003', '1', '2017-10-23 23:58:08');
-
-INSERT INTO `911`.`reports`
-(`reportID`,
-`date`,
-`call_start_time`,
-`call_end_time`,
-`caller_location`,
-`call_coord_n`,
-`call_coord_e`,
-`caller_name`,
-`caller_Nric`,
-`dob`,
-`caller_verified`,
-`authenticity`,
-`reason`,
-`incident_category`,
-`incident_nature`,
-`incident_date`,
-`estimated_start_time`,
-`estimated_end_time`,
-`no_of_casualties`,
-`incident_location`,
-`incident_coord_n`,
-`incident_coord_e`,
-`additional_notes`,
-`operator_userID`,
-`status`,
-`officer_userID`,
-`crisisID`,
-`date_time_modified`)
-VALUES
-('3', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT1', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1001', 'Drafted', '-1', '-1', '');
-
-INSERT INTO `911`.`reports`
-(`reportID`,
-`date`,
-`call_start_time`,
-`call_end_time`,
-`caller_location`,
-`call_coord_n`,
-`call_coord_e`,
-`caller_name`,
-`caller_Nric`,
-`dob`,
-`caller_verified`,
-`authenticity`,
-`reason`,
-`incident_category`,
-`incident_nature`,
-`incident_date`,
-`estimated_start_time`,
-`estimated_end_time`,
-`no_of_casualties`,
-`incident_location`,
-`incident_coord_n`,
-`incident_coord_e`,
-`additional_notes`,
-`operator_userID`,
-`status`,
-`officer_userID`,
-`crisisID`,
-`date_time_modified`)
-VALUES
-('4', '12/03/2000', '13:14:14', '12:14:15', 'Hougang', '12 23 13', '12 43 14', 'Ivan', 'S9449973I', '12/03/2000', '0', 'Unsure', 'idk', 'CAT2', 'Terrorism', '12/03/2000', '12:44:44', '12:44:44', '100', 'Hougang', '22 33 11', '22 33 11', 'idk', '1001', 'Submitted', '-1', '-1', '');
-
 6. Run this to make REGISTRY table for verifications: 
 CREATE TABLE `911`.`registry` (
   `nric` VARCHAR(9) NOT NULL,
@@ -195,9 +64,6 @@ CREATE TABLE `911`.`registry` (
   `dob` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`nric`),
   UNIQUE INDEX `nric_UNIQUE` (`nric` ASC));
-INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S9265146C', 'Tan Koon Long', 'S123456 #05-05', '121292');
-INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S9111342B', 'Jasvin Singh', 'S581561 #08-10', '050991');
-INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S8295126A', 'Rachel Siew Kuan Er', 'S984125 #16-16', '250582');
 
 7. Run this table to make GRAYLIST table and add 1 entry
 CREATE TABLE `graylist` (
@@ -208,6 +74,150 @@ CREATE TABLE `graylist` (
   UNIQUE KEY `graylistID_UNIQUE` (`graylistID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
-INSERT INTO `911`.`graylist` (`callerNric`, `reason`) VALUES ('S9449973I', 'Called multiple times regarding same incident and not unwlling to give further information but had a laughing tone during the conversation');
-INSERT INTO `911`.`graylist` (`callerNric`, `reason`) VALUES ('S9549973I', 'Genuinely scared');
- 
+
+///////Things to do: DELETE ALL ROWS IN ALL TABLES AND RE-INSERT THE FOLLOWING DATA/////////////////////////////////////////////////////////////////
+
+INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Alan Goh', '0');
+
+INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('operator2', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Bob Tan', '0');
+
+INSERT INTO `911`.`users` (`username`, `password`, `name`, `liaison_officer`) VALUES ('cmolo1', 'b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342', 'Charlie Ruth', '1');
+
+
+INSERT INTO `911`.`reports`
+(`reportID`,
+`date`,
+`call_start_time`,
+`call_end_time`,
+`caller_location`,
+`call_coord_n`,
+`call_coord_e`,
+`caller_name`,
+`caller_Nric`,
+`dob`,
+`caller_verified`,
+`authenticity`,
+`reason`,
+`incident_category`,
+`incident_nature`,
+`incident_date`,
+`estimated_start_time`,
+`estimated_end_time`,
+`no_of_casualties`,
+`incident_location`,
+`incident_coord_n`,
+`incident_coord_e`,
+`additional_notes`,
+`operator_userID`,
+`status`,
+`officer_userID`,
+`crisisID`,
+`date_time_modified`)
+VALUES
+('1', '2017-11-05', '13:14:14', '12:14:15', 'Hougang', '11.203', '102.391', 'Ivan', 'S9449973I', '1111-02-11', '0', 'Authentic', 'Genuinely scared', 'CAT3', 'Arson', '2017-02-28', '13:14:14', '', '10', 'Hougang Avenue 8', '1.3750578', '103.8811523', 'Loansharks setting fire outside neighbour\'s door', '1001', 'Sent', '0', '0', '2017-10-25 11:45:35');
+
+INSERT INTO `911`.`reports`
+(`reportID`,
+`date`,
+`call_start_time`,
+`call_end_time`,
+`caller_location`,
+`call_coord_n`,
+`call_coord_e`,
+`caller_name`,
+`caller_Nric`,
+`dob`,
+`caller_verified`,
+`authenticity`,
+`reason`,
+`incident_category`,
+`incident_nature`,
+`incident_date`,
+`estimated_start_time`,
+`estimated_end_time`,
+`no_of_casualties`,
+`incident_location`,
+`incident_coord_n`,
+`incident_coord_e`,
+`additional_notes`,
+`operator_userID`,
+`status`,
+`officer_userID`,
+`crisisID`,
+`date_time_modified`)
+VALUES
+('10', '2017-11-10', '16:21', '16:25', 'Boat Quay', '1.2859963', '103.8501608', 'Dickie Tan', 'S7654321Z', '1995-12-30', '1', 'Authentic', 'Caller verfied ', 'CAT1', 'Invasion', '2017-11-14', '09:00', NULL, '0', 'Boat Quay', '1.2859963', '103.8501608', 'Air borne robots with jet packs and sniper rifles and missiles ', '1001', 'Submitted', '0', '0', '2017-11-10 16:22:38');
+
+INSERT INTO `911`.`reports`
+(`reportID`,
+`date`,
+`call_start_time`,
+`call_end_time`,
+`caller_location`,
+`call_coord_n`,
+`call_coord_e`,
+`caller_name`,
+`caller_Nric`,
+`dob`,
+`caller_verified`,
+`authenticity`,
+`reason`,
+`incident_category`,
+`incident_nature`,
+`incident_date`,
+`estimated_start_time`,
+`estimated_end_time`,
+`no_of_casualties`,
+`incident_location`,
+`incident_coord_n`,
+`incident_coord_e`,
+`additional_notes`,
+`operator_userID`,
+`status`,
+`officer_userID`,
+`crisisID`,
+`date_time_modified`)
+VALUES
+('11', '2017-11-14', '09:45', '09:48', 'Orchard Road', '1.3017996', '103.8377971', 'John Snow', 'S1234567A', '1994-01-01', '1', 'Authentic', 'Caller is verified.', 'CAT1', 'Invasion', '2017-11-14', '09:00', NULL, '0', 'Orchard Road', '1.3017996', '103.8377971', 'Armed Robots about 50. Destroying cars', '1001', 'Drafted', '0', '0', '2017-11-10 16:29:01');
+
+INSERT INTO `911`.`reports`
+(`reportID`,
+`date`,
+`call_start_time`,
+`call_end_time`,
+`caller_location`,
+`call_coord_n`,
+`call_coord_e`,
+`caller_name`,
+`caller_Nric`,
+`dob`,
+`caller_verified`,
+`authenticity`,
+`reason`,
+`incident_category`,
+`incident_nature`,
+`incident_date`,
+`estimated_start_time`,
+`estimated_end_time`,
+`no_of_casualties`,
+`incident_location`,
+`incident_coord_n`,
+`incident_coord_e`,
+`additional_notes`,
+`operator_userID`,
+`status`,
+`officer_userID`,
+`crisisID`,
+`date_time_modified`)
+VALUES
+('12', '2017-11-14', '09:46', '10:00', 'Sentosa Siloso beach', '1.2545582', '103.8147787', 'Priya D/O Parveen', 'S1234567Z', '1984-06-06', '1', 'Authentic', 'Caller verified. Genuine state of shock', 'CAT1', 'Invasion', '2017-11-14', '09:00', NULL, '0', 'Sentosa Siloso Beach', '1.2545582', '103.8147787', 'Robots taking people hostage', '1001', 'Drafted', '0', '0', '2017-11-10 16:31:59');
+
+
+INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S1234567A', 'John Snow', '1994-01-01', NULL);
+
+INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S1234567Z', 'Priya D/O Parveen', '1984-06-06', NULL);
+
+INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S7654321Z', 'Dickie Tan', '1995-12-30', NULL);
+
+
+INSERT INTO `911`.`graylist` (`callerNric`, `reason`) VALUES ('1', 'S1111111A', 'Called multiple times regarding same incident and not iwlling to give further information but had a laughing tone during the conversation');

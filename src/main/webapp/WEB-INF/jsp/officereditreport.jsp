@@ -291,7 +291,7 @@
 					<div class="form-group">
 
 						<div class="col-sm-8" style="padding-right: 5px;">
-							<select class="form-control" id="crisisIDSelector" name="crisisIDSelector" onchange="setCrisisID();" required>
+							<select class="form-control" id="crisisIDSelector" name="crisisIDSelector" onchange="setCrisisID();">
 								<option value="" disabled selected>Select an option</option>
 								<c:forEach items="${crisisIDs}" var="cid"> 
 									<c:choose>
@@ -304,7 +304,7 @@
 									</c:choose>
 								</c:forEach>
 							</select>
-							<input type="text" class="form-control" id="crisisID" placeholder="" name="crisisID" value="${report.crisisID}" style="display:none;" required>
+							<input type="text" class="form-control" id="crisisID" placeholder="" name="crisisID" value="${report.crisisID == "" ? '' : report.crisisID}" style="display:none;" required>
 						</div>
 					</div>
 

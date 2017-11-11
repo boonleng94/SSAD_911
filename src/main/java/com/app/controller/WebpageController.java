@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -79,7 +78,6 @@ public class WebpageController implements ErrorController{
 			return new ModelAndView("/message");
 		} 
 		else {
-			//model.put("name", model.get("name"));
 			if (userController.isLiaisonOfficer((int) model.get("userID"))){
 
 				List<Report> reports = reportController.getAllReportsforLO();
@@ -225,7 +223,6 @@ public class WebpageController implements ErrorController{
 		
 		if (userController.isLiaisonOfficer((int) model.get("userID"))) {
 			user =  userController.getUserByUserID((int) model.get("userID"));
-			//model.put("name", model.get("name"));
 			return new ModelAndView("livefeed");
 		}
 		else {
