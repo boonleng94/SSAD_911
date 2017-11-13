@@ -213,11 +213,11 @@ VALUES
 ('12', '2017-11-14', '09:46', '10:00', 'Sentosa Siloso beach', '1.2545582', '103.8147787', 'Priya D/O Parveen', 'S1234567Z', '1984-06-06', '1', 'Authentic', 'Caller verified. Genuine state of shock', 'CAT1', 'Invasion', '2017-11-14', '09:00', NULL, '0', 'Sentosa Siloso Beach', '1.2545582', '103.8147787', 'Robots taking people hostage', '1001', 'Drafted', '0', '0', '2017-11-10 16:31:59');
 
 
-INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S1234567A', 'John Snow', '1994-01-01', NULL);
+INSERT INTO `911`.`registry` (`nric`, `name`, `dob`, `address`) VALUES ('S1234567A', 'John Snow', '1994-01-01', '');
 
-INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S1234567Z', 'Priya D/O Parveen', '1984-06-06', NULL);
+INSERT INTO `911`.`registry` (`nric`, `name`,  `dob`, `address`) VALUES ('S1234567Z', 'Priya D/O Parveen', '1984-06-06', '');
 
-INSERT INTO `911`.`registry` (`nric`, `name`, `address`, `dob`) VALUES ('S7654321Z', 'Dickie Tan', '1995-12-30', NULL);
+INSERT INTO `911`.`registry` (`nric`, `name`, `dob`, `address`) VALUES ('S7654321Z', 'Dickie Tan', '1995-12-30', '');
 
 
-INSERT INTO `911`.`graylist` (`callerNric`, `reason`) VALUES ('1', 'S1111111A', 'Called multiple times regarding same incident and not iwlling to give further information but had a laughing tone during the conversation');
+INSERT INTO `911`.`graylist` (`caller_Nric`, `reason`) VALUES ( 'S1111111A', 'Called multiple times regarding same incident and not iwlling to give further information but had a laughing tone during the conversation');
