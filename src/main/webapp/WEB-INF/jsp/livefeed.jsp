@@ -64,15 +64,29 @@
 			<table class="table table-striped">
 				<tbody>
 					<tr>
+						<td class="auto-style1"> 
+						<div align="center">
+							<img src=" http://192.168.0.107:6888/video/live.mjpg?id=a11f167f-dfde-ca05-d838-90f375566751" height="400" width="70%" alt="live-feed-video" />
+						</div></td>
+					</tr>
+					<!--
+					<tr>
 						<td class="auto-style1">
-							<div class="table-entry">
-								<img src="http://10.27.143.205:6888/video/live.mjpg?id=23cca9f5-530a-e387-85ec-4d045fc7fcd5" height="350" width="100%" alt="live-feed-video" />
-								<img src="http://10.27.143.205:6888/video/live.mjpg?id=23cca9f5-530a-e387-85ec-4d045fc7fcd5" height="350" width="100%" alt="live-feed-video" />
-								<img src="http://10.27.143.205:6888/video/live.mjpg?id=23cca9f5-530a-e387-85ec-4d045fc7fcd5" height="350" width="100%" alt="live-feed-video" />								
-								<img src="http://10.27.143.205:6888/video/live.mjpg?id=23cca9f5-530a-e387-85ec-4d045fc7fcd5" height="350" width="100%" alt="live-feed-video" />
-							</div>
+							<img src="static/images/boatquay.png" height="350" width="100%" alt="boatquayattack"/>
+						</td> 
+						<td class="auto-style1">
+							<img src="static/images/sentosa.png" height="350" width="100%" alt="sentosaattack"/>
 						</td>
 					</tr>
+					<tr style="background-color:#f9f9f9">
+						<td class="auto-style1">
+							<img src="static/images/orchard.png" height="350" width="100%" alt="orchardattack"/>								
+						</td>
+						<td class="auto-style1">
+							<img src="http://10.27.143.205:6888/video/live.mjpg?id=23cca9f5-530a-e387-85ec-4d045fc7fcd5" height="350" width="100%" alt="live-feed-video" />
+						</td>
+					</tr>
+					-->
 				</tbody>
 			</table>
 		</div>
