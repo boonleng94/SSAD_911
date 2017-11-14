@@ -66,14 +66,14 @@
 <!--
 					<tr>
 						<td class="auto-style1"> 
-						<div align="center">
+						<div align="center"> <!--The URL TO REPLACE IS HERE-->
 							<img src="http://10.27.143.205:6888/video/live.mjpg?id=5af3dacc-a1d1-ffc6-b0fb-43a24c9e8bba" height="400" width="70%" alt="live-feed-video" />
 						</div></td>
 					</tr>
 -->
 					
 					<tr>
-						<td class="auto-style1">
+						<td class="auto-style1"> <!--The URL TO REPLACE IS HERE-->
 							<img src="http://10.27.143.205:6888/video/live.mjpg?id=188bb701-9db4-1a88-df9a-2cb9f45568ea" height="350" width="100%" alt="boatquayattack"/>
 						</td> 
 						<td class="auto-style1">

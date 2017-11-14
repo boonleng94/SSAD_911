@@ -17,6 +17,7 @@ import com.app.user.User;
 @Controller
 public class NineOneOneClient {
 
+	//THE IP TO CHANGE IS HERE
 	public static final String REST_SERVICE_URI = "http://10.27.113.59:8080/911toCMO";
 	
 	// GET
