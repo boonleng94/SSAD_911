@@ -269,7 +269,7 @@
 					<div class="form-group">
 						<div class="" style="width: 95%; margin:auto;">
 							<!--							<form class="navbar-form navbar-right" action="#" method="POST" target="_blank">-->
-							<button class="btn btn-secondary btn-block" type="button" name="checkLiveFeeds" value="checkLiveFeeds" onClick="window.open('http://localhost:8080/livefeed', 'b', 'height=750,width=768'); return false;">Check Live Feed</button>
+							<button class="btn btn-secondary btn-block" type="button" name="checkLiveFeeds" value="checkLiveFeeds" onClick="window.open('http://10.27.101.212:8080/livefeed', 'b', 'height=750,width=768'); return false;">Check Live Feed</button>
 							
 							<!--							</form>-->
 						</div>
